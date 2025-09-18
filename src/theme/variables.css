@@ -1,2 +1,12 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+
+:root {
+    color-scheme: light;
+}
+/*
+.item-input {
+    --padding-start: 0;
+    --padding-end: 0;
+}
+*/
