@@ -44,7 +44,7 @@ const App = () => (
     </IonApp>
 );
 
-// https://ionicframework.com/docs/api/tabs
+// https://ionicframework.com/docs/api/tabs#usage-with-router
 
 /*
 const App: React.FC = () => (

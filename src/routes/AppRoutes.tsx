@@ -1,4 +1,3 @@
-import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
 import Mapa from '../pages/Mapa';
@@ -12,10 +11,10 @@ const AppRoutes = () => (
         <Redirect exact path="/" to="/mapa" />
 
         <Route path="/mapa" render={() => <Mapa />} exact={true} />
-        <Route path="/ecopontos" component={Ecopontos} />
-        <Route path="/residuos" component={Residuos} />
-        <Route path="/chatbot" component={Chatbot} />
-        <Route path="/addecoponto" component={AddEcoponto} />
+        <Route path="/ecopontos" render={() => <Ecopontos />} exact={true} />
+        <Route path="/residuos" render={() => <Residuos />} exact={true} />
+        <Route path="/chatbot" render={() => <Chatbot />} exact={true} />
+        <Route path="/addecoponto" render={() => <AddEcoponto />} exact={true} />
     </>
 );
 
