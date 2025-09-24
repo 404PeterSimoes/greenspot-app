@@ -9,7 +9,8 @@ import {
     IonIcon,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { locationOutline } from 'ionicons/icons';
+import { locationOutline, trashOutline, helpOutline } from 'ionicons/icons';
+import recycleIcon from "./icon/recycle.svg"
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -54,19 +55,22 @@ const App = () => (
                 </IonRouterOutlet>
                 <IonTabBar slot="bottom">
                     <IonTabButton tab="mapa" href="/mapa">
-                        <IonIcon icon={locationOutline} />
+                        <IonIcon icon={locationOutline}/>
                         <IonLabel>Mapa</IonLabel>
                     </IonTabButton>
 
                     <IonTabButton tab="ecopontos" href="/ecopontos">
+                        <IonIcon src={recycleIcon}/>
                         <IonLabel>Ecopontos</IonLabel>
                     </IonTabButton>
 
                     <IonTabButton tab="residuos" href="/residuos">
+                        <IonIcon src={trashOutline}/>
                         <IonLabel>Resíduos</IonLabel>
                     </IonTabButton>
 
                     <IonTabButton tab="chatbot" href="/chatbot">
+                        <IonIcon src={helpOutline}/>
                         <IonLabel>Chatbot</IonLabel>
                     </IonTabButton>
                 </IonTabBar>
