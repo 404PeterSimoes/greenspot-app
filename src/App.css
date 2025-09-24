@@ -1,0 +1,8 @@
+:root {
+    color-scheme: light;
+}
+
+ion-tab-bar {
+    --background: #76ec43;
+    --color: black;
+}

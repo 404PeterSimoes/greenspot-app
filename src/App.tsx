@@ -1,5 +1,15 @@
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import {
+    IonApp,
+    IonLabel,
+    IonRouterOutlet,
+    IonTabBar,
+    IonTabButton,
+    IonTabs,
+    setupIonicReact,
+    IonIcon,
+} from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import { locationOutline } from 'ionicons/icons';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -30,6 +40,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import './App.css';
 import AppRoutes from './routes/AppRoutes';
 
 setupIonicReact();
@@ -37,9 +48,29 @@ setupIonicReact();
 const App = () => (
     <IonApp>
         <IonReactRouter>
-            <IonRouterOutlet>
-                <AppRoutes />
-            </IonRouterOutlet>
+            <IonTabs>
+                <IonRouterOutlet>
+                    <AppRoutes />
+                </IonRouterOutlet>
+                <IonTabBar slot="bottom">
+                    <IonTabButton tab="mapa" href="/mapa">
+                        <IonIcon icon={locationOutline} />
+                        <IonLabel>Mapa</IonLabel>
+                    </IonTabButton>
+
+                    <IonTabButton tab="ecopontos" href="/ecopontos">
+                        <IonLabel>Ecopontos</IonLabel>
+                    </IonTabButton>
+
+                    <IonTabButton tab="residuos" href="/residuos">
+                        <IonLabel>Resíduos</IonLabel>
+                    </IonTabButton>
+
+                    <IonTabButton tab="chatbot" href="/chatbot">
+                        <IonLabel>Chatbot</IonLabel>
+                    </IonTabButton>
+                </IonTabBar>
+            </IonTabs>
         </IonReactRouter>
     </IonApp>
 );
