@@ -46,6 +46,7 @@ import AppRoutes from './routes/AppRoutes';
 
 setupIonicReact();
 
+
 const App = () => (
     <IonApp>
         <IonReactRouter>

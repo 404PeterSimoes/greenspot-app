@@ -1,13 +1,35 @@
-import { IonContent, IonHeader } from '@ionic/react';
+// import './Mapa.css';
+import { useRef, useEffect } from 'react';
+import mapboxgl from 'mapbox-gl';
+import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/react';
+
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const Mapa = () => {
+    const mapboxtoken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+
+    const mapRef = useRef<mapboxgl.Map | null>(null);
+    const mapContainerRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        if (!mapContainerRef.current) return;
+
+        mapboxgl.accessToken = mapboxtoken;
+
+        mapRef.current = new mapboxgl.Map({
+            container: mapContainerRef.current,
+        });
+
+        return () => {
+            mapRef.current?.remove();
+        };
+    }, []);
+
     return (
         <>
-        <h1>Mapa</h1>
-        {/*
-            <IonHeader>aaa</IonHeader>
-            <IonContent>asdasd</IonContent>
-            */}
+            <IonContent fullscreen>
+                <div id="map-container" ref={mapContainerRef} />
+            </IonContent>
         </>
     );
 };
