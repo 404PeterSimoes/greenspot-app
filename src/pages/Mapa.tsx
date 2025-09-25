@@ -1,4 +1,4 @@
-// import './Mapa.css';
+import './Mapa.css';
 import { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/react';
@@ -18,6 +18,14 @@ const Mapa = () => {
 
         mapRef.current = new mapboxgl.Map({
             container: mapContainerRef.current,
+            center: [-8.525892398242028, 38.96373575159655],
+            zoom: 10.12,
+            // style: 'mapbox://styles/mapbox/standard-satellite',
+        });
+
+        mapRef.current.on('load', () => {
+            if (!mapRef.current) return;
+            mapRef.current.resize();
         });
 
         return () => {
@@ -27,7 +35,7 @@ const Mapa = () => {
 
     return (
         <>
-            <IonContent fullscreen>
+            <IonContent>
                 <div id="map-container" ref={mapContainerRef} />
             </IonContent>
         </>
