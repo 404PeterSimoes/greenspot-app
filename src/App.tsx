@@ -10,7 +10,7 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { locationOutline, trashOutline, helpOutline } from 'ionicons/icons';
-import recycleIcon from "./icon/recycle.svg"
+import recycleIcon from './icon/recycle.svg';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -46,6 +46,10 @@ import AppRoutes from './routes/AppRoutes';
 
 setupIonicReact();
 
+// Colocar mapa no principal, não usar outras paginas, pagina principal (Mapa) sempre em load
+// Ion-Modals irão estão integrados noutras pastas mas trazidas para o App.tsx
+
+// https://ionicframework.com/docs/api/modal#controller-modals
 
 const App = () => (
     <IonApp>
@@ -56,22 +60,22 @@ const App = () => (
                 </IonRouterOutlet>
                 <IonTabBar slot="bottom">
                     <IonTabButton tab="mapa" href="/mapa">
-                        <IonIcon icon={locationOutline}/>
+                        <IonIcon icon={locationOutline} />
                         <IonLabel>Mapa</IonLabel>
                     </IonTabButton>
 
                     <IonTabButton tab="ecopontos" href="/ecopontos">
-                        <IonIcon src={recycleIcon}/>
+                        <IonIcon src={recycleIcon} />
                         <IonLabel>Ecopontos</IonLabel>
                     </IonTabButton>
 
                     <IonTabButton tab="residuos" href="/residuos">
-                        <IonIcon src={trashOutline}/>
+                        <IonIcon src={trashOutline} />
                         <IonLabel>Resíduos</IonLabel>
                     </IonTabButton>
 
                     <IonTabButton tab="chatbot" href="/chatbot">
-                        <IonIcon src={helpOutline}/>
+                        <IonIcon src={helpOutline} />
                         <IonLabel>Chatbot</IonLabel>
                     </IonTabButton>
                 </IonTabBar>

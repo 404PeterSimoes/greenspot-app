@@ -10,11 +10,11 @@ const AppRoutes = () => (
     <>
         <Redirect exact path="/" to="/mapa" />
 
-        <Route path="/mapa" render={() => <Mapa />} exact={true} />
-        <Route path="/ecopontos" render={() => <Ecopontos />} exact={true} />
-        <Route path="/residuos" render={() => <Residuos />} exact={true} />
-        <Route path="/chatbot" render={() => <Chatbot />} exact={true} />
-        <Route path="/addecoponto" render={() => <AddEcoponto />} exact={true} />
+        <Route path="/mapa" component={Mapa} exact/>
+        <Route path="/ecopontos" component={Ecopontos} exact/>
+        <Route path="/residuos" component={Residuos} exact/>
+        <Route path="/chatbot" component={Chatbot} exact/>
+        <Route path="/addecoponto" component={AddEcoponto} exact/>
     </>
 );
 
