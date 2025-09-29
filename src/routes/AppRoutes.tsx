@@ -1,10 +1,10 @@
 import { Redirect, Route } from 'react-router-dom';
 
-import Mapa from '../pages/Mapa';
-import Ecopontos from '../pages/Ecopontos';
-import Residuos from '../pages/Residuos';
-import Chatbot from '../pages/Chatbot';
-import AddEcoponto from '../pages/AddEcoponto';
+import Mapa from '../components/Mapa';
+import Ecopontos from '../components/Modal/Ecopontos';
+import Residuos from '../components/Modal/Residuos';
+import Chatbot from '../components/Modal/Chatbot';
+import AddEcoponto from '../components/Modal/AddEcoponto';
 
 const AppRoutes = () => (
     <>

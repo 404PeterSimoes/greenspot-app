@@ -11,6 +11,7 @@ import {
 import { IonReactRouter } from '@ionic/react-router';
 import { locationOutline, trashOutline, helpOutline } from 'ionicons/icons';
 import recycleIcon from './icon/recycle.svg';
+import { Route, Redirect } from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -42,7 +43,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import './App.css';
-import AppRoutes from './routes/AppRoutes';
+import Home from './pages/Home';
 
 setupIonicReact();
 
@@ -56,26 +57,36 @@ const App = () => (
         <IonReactRouter>
             <IonTabs>
                 <IonRouterOutlet>
-                    <AppRoutes />
+                    <Route path="/home" component={Home} />
+                    <Route exact path="/" render={() => <Redirect to="/home" />} />
                 </IonRouterOutlet>
                 <IonTabBar slot="bottom">
-                    <IonTabButton tab="mapa" href="/mapa">
+                    <IonTabButton tab="home" href="/home">
                         <IonIcon icon={locationOutline} />
                         <IonLabel>Mapa</IonLabel>
                     </IonTabButton>
 
-                    <IonTabButton tab="ecopontos" href="/ecopontos">
-                        <IonIcon src={recycleIcon} />
+                    <IonTabButton
+                        tab="ecopontos"
+                        onClick={() => window.dispatchEvent(new CustomEvent('open-modal1'))}
+                    >
+                        <IonIcon icon={recycleIcon} />
                         <IonLabel>Ecopontos</IonLabel>
                     </IonTabButton>
 
-                    <IonTabButton tab="residuos" href="/residuos">
-                        <IonIcon src={trashOutline} />
-                        <IonLabel>Resíduos</IonLabel>
+                    <IonTabButton
+                        tab="residuos"
+                        onClick={() => window.dispatchEvent(new CustomEvent('open-modal2'))}
+                    >
+                        <IonIcon icon={trashOutline} />
+                        <IonLabel>Residuos</IonLabel>
                     </IonTabButton>
 
-                    <IonTabButton tab="chatbot" href="/chatbot">
-                        <IonIcon src={helpOutline} />
+                    <IonTabButton
+                        tab="chatbot"
+                        onClick={() => window.dispatchEvent(new CustomEvent('open-modal3'))}
+                    >
+                        <IonIcon icon={helpOutline} />
                         <IonLabel>Chatbot</IonLabel>
                     </IonTabButton>
                 </IonTabBar>
@@ -83,23 +94,5 @@ const App = () => (
         </IonReactRouter>
     </IonApp>
 );
-
-// https://ionicframework.com/docs/api/tabs#usage-with-router
-
-/*
-const App: React.FC = () => (
-    <IonApp>
-        <IonReactRouter>
-            <IonRouterOutlet>
-                <Route exact path="/home">
-                    <Home />
-                </Route>
-                <Route exact path="/">
-                    <Redirect to="/home" />
-                </Route>
-            </IonRouterOutlet>
-        </IonReactRouter>
-    </IonApp>
-);*/
 
 export default App;
