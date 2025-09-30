@@ -96,3 +96,51 @@ const App = () => (
 );
 
 export default App;
+
+// Forma que estava com home e tudo mais
+/*
+const App = () => (
+    <IonApp>
+        <IonReactRouter>
+            <IonTabs>
+                <IonRouterOutlet>
+                    <Route path="/home" component={Home} />
+                    <Route exact path="/" render={() => <Redirect to="/home" />} />
+                </IonRouterOutlet>
+                <IonTabBar slot="bottom">
+                    <IonTabButton tab="home" href="/home">
+                        <IonIcon icon={locationOutline} />
+                        <IonLabel>Mapa</IonLabel>
+                    </IonTabButton>
+
+                    <IonTabButton
+                        tab="ecopontos"
+                        onClick={() => window.dispatchEvent(new CustomEvent('open-modal1'))}
+                    >
+                        <IonIcon icon={recycleIcon} />
+                        <IonLabel>Ecopontos</IonLabel>
+                    </IonTabButton>
+
+                    <IonTabButton
+                        tab="residuos"
+                        onClick={() => window.dispatchEvent(new CustomEvent('open-modal2'))}
+                    >
+                        <IonIcon icon={trashOutline} />
+                        <IonLabel>Residuos</IonLabel>
+                    </IonTabButton>
+
+                    <IonTabButton
+                        tab="chatbot"
+                        onClick={() => window.dispatchEvent(new CustomEvent('open-modal3'))}
+                    >
+                        <IonIcon icon={helpOutline} />
+                        <IonLabel>Chatbot</IonLabel>
+                    </IonTabButton>
+                </IonTabBar>
+            </IonTabs>
+        </IonReactRouter>
+    </IonApp>
+);
+
+export default App;
+*/
