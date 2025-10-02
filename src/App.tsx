@@ -9,6 +9,7 @@ import {
     IonIcon,
     IonContent,
     IonTab,
+    IonModal,
 } from '@ionic/react';
 import { useState } from 'react';
 
@@ -47,6 +48,9 @@ import './theme/variables.css';
 import './App.css';
 
 import Mapa from './components/Mapa';
+import modalPageEcopontos from './components/Modal/modalEcopontos';
+import modalPageResiduos from './components/Modal/modalResiduos';
+import 
 
 setupIonicReact();
 
@@ -55,11 +59,30 @@ setupIonicReact();
 
 // https://ionicframework.com/docs/api/modal#controller-modals
 
-const App = () => {
+const App: React.FC = () => {
     const [designSelected, setDesignSelected] = useState('mapa');
+
+    const [showModalEcopontos, setModalEcopontos] = useState(false);
+    const [showModalResiduos, setModalResiduos] = useState(false);
+    const [showModalChatbot, setModalChatbot] = useState(false);
+
+
+    // Utilizar isOpen
 
     return (
         <IonApp>
+            <IonModal isOpen>
+                <modalEcopontos />
+            </IonModal>
+
+            <IonModal>
+                <modalResiduos />
+            </IonModal>
+
+            <IonModal>
+                <modalChatbot />
+            </IonModal>
+
             <IonTabs>
                 <IonTab tab="home">
                     <Mapa />
@@ -84,6 +107,7 @@ const App = () => {
                         onClick={() => {
                             console.log('ecopontos');
                             setDesignSelected('ecopontos');
+                            setModalEcopontos(true);
                         }}
                     >
                         <IonIcon icon={recycleIcon} />
