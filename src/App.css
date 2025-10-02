@@ -8,5 +8,11 @@ ion-tab-bar {
 }
 
 ion-tab-button:not(.designSelectedClass) {
-    --color-selected: rgba(0, 0, 0, 0.475);; 
+    --color-selected: rgba(0, 0, 0, 0.475);
+}
+
+.modal {
+    left: 0;
+    right: 0;
+    bottom: 60px; /* deixar espaço para a tab bar */
 }

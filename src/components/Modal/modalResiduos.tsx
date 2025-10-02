@@ -1,7 +1,7 @@
-const modalResiduos = () => {
+const ModalPageResiduos: React.FC = () => {
     return(
         <h1>Residuos</h1>
     )
 }
 
-export default modalResiduos;
+export default ModalPageResiduos;
