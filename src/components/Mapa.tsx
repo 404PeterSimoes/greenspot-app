@@ -37,7 +37,7 @@ const Mapa = () => {
     return (
         <>
             <IonPage>
-                <IonContent>
+                <IonContent fullscreen>
                     <div id="map-container" ref={mapContainerRef} />
                 </IonContent>
             </IonPage>

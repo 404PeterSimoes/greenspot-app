@@ -7,6 +7,8 @@ import {
     IonTabs,
     setupIonicReact,
     IonIcon,
+    IonContent,
+    IonTab,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { locationOutline, trashOutline, helpOutline } from 'ionicons/icons';
@@ -43,7 +45,8 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import './App.css';
-import Home from './pages/Home';
+
+import Mapa from './components/Mapa';
 
 setupIonicReact();
 
@@ -54,44 +57,36 @@ setupIonicReact();
 
 const App = () => (
     <IonApp>
-        <IonReactRouter>
-            <IonTabs>
-                <IonRouterOutlet>
-                    <Route path="/home" component={Home} />
-                    <Route exact path="/" render={() => <Redirect to="/home" />} />
-                </IonRouterOutlet>
-                <IonTabBar slot="bottom">
-                    <IonTabButton tab="home" href="/home">
-                        <IonIcon icon={locationOutline} />
-                        <IonLabel>Mapa</IonLabel>
-                    </IonTabButton>
+        <IonTabs>
+            <IonTab tab="home">
+                <Mapa />
+            </IonTab>
+            <IonTab tab="ecopontos">
+                <h2>Ecopontos</h2>
+            </IonTab>
 
-                    <IonTabButton
-                        tab="ecopontos"
-                        onClick={() => window.dispatchEvent(new CustomEvent('open-modal1'))}
-                    >
-                        <IonIcon icon={recycleIcon} />
-                        <IonLabel>Ecopontos</IonLabel>
-                    </IonTabButton>
+            <IonTabBar slot="bottom">
+                <IonTabButton tab="home" onClick={() => console.log('home')}>
+                    <IonIcon icon={locationOutline} />
+                    <IonLabel>Mapa</IonLabel>
+                </IonTabButton>
 
-                    <IonTabButton
-                        tab="residuos"
-                        onClick={() => window.dispatchEvent(new CustomEvent('open-modal2'))}
-                    >
-                        <IonIcon icon={trashOutline} />
-                        <IonLabel>Residuos</IonLabel>
-                    </IonTabButton>
+                <IonTabButton tab="home" onClick={() => console.log('ecopontos')}>
+                    <IonIcon icon={recycleIcon} />
+                    <IonLabel>Ecopontos</IonLabel>
+                </IonTabButton>
 
-                    <IonTabButton
-                        tab="chatbot"
-                        onClick={() => window.dispatchEvent(new CustomEvent('open-modal3'))}
-                    >
-                        <IonIcon icon={helpOutline} />
-                        <IonLabel>Chatbot</IonLabel>
-                    </IonTabButton>
-                </IonTabBar>
-            </IonTabs>
-        </IonReactRouter>
+                <IonTabButton tab="residuos">
+                    <IonIcon icon={trashOutline} />
+                    <IonLabel>Residuos</IonLabel>
+                </IonTabButton>
+
+                <IonTabButton tab="chatbot">
+                    <IonIcon icon={helpOutline} />
+                    <IonLabel>Chatbot</IonLabel>
+                </IonTabButton>
+            </IonTabBar>
+        </IonTabs>
     </IonApp>
 );
 
