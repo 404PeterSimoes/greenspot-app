@@ -10,10 +10,10 @@ import {
     IonContent,
     IonTab,
 } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
+import { useState } from 'react';
+
 import { locationOutline, trashOutline, helpOutline } from 'ionicons/icons';
 import recycleIcon from './icon/recycle.svg';
-import { Route, Redirect } from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -55,40 +55,69 @@ setupIonicReact();
 
 // https://ionicframework.com/docs/api/modal#controller-modals
 
-const App = () => (
-    <IonApp>
-        <IonTabs>
-            <IonTab tab="home">
-                <Mapa />
-            </IonTab>
-            <IonTab tab="ecopontos">
-                <h2>Ecopontos</h2>
-            </IonTab>
+const App = () => {
+    const [designSelected, setDesignSelected] = useState('mapa');
 
-            <IonTabBar slot="bottom">
-                <IonTabButton tab="home" onClick={() => console.log('home')}>
-                    <IonIcon icon={locationOutline} />
-                    <IonLabel>Mapa</IonLabel>
-                </IonTabButton>
+    return (
+        <IonApp>
+            <IonTabs>
+                <IonTab tab="home">
+                    <Mapa />
+                </IonTab>
 
-                <IonTabButton tab="home" onClick={() => console.log('ecopontos')}>
-                    <IonIcon icon={recycleIcon} />
-                    <IonLabel>Ecopontos</IonLabel>
-                </IonTabButton>
+                <IonTabBar slot="bottom">
+                    <IonTabButton
+                        tab="home"
+                        className={designSelected === 'mapa' ? 'designSelectedClass' : ''}
+                        onClick={() => {
+                            console.log('home');
+                            setDesignSelected('mapa');
+                        }}
+                    >
+                        <IonIcon icon={locationOutline} />
+                        <IonLabel>Mapa</IonLabel>
+                    </IonTabButton>
 
-                <IonTabButton tab="residuos">
-                    <IonIcon icon={trashOutline} />
-                    <IonLabel>Residuos</IonLabel>
-                </IonTabButton>
+                    <IonTabButton
+                        tab="home"
+                        className={designSelected === 'ecopontos' ? 'designSelectedClass' : ''}
+                        onClick={() => {
+                            console.log('ecopontos');
+                            setDesignSelected('ecopontos');
+                        }}
+                    >
+                        <IonIcon icon={recycleIcon} />
+                        <IonLabel>Ecopontos</IonLabel>
+                    </IonTabButton>
 
-                <IonTabButton tab="chatbot">
-                    <IonIcon icon={helpOutline} />
-                    <IonLabel>Chatbot</IonLabel>
-                </IonTabButton>
-            </IonTabBar>
-        </IonTabs>
-    </IonApp>
-);
+                    <IonTabButton
+                        tab="home"
+                        className={designSelected === 'residuos' ? 'designSelectedClass' : ''}
+                        onClick={() => {
+                            console.log('residuos');
+                            setDesignSelected('residuos');
+                        }}
+                    >
+                        <IonIcon icon={trashOutline} />
+                        <IonLabel>Residuos</IonLabel>
+                    </IonTabButton>
+
+                    <IonTabButton
+                        tab="home"
+                        className={designSelected === 'chatbot' ? 'designSelectedClass' : ''}
+                        onClick={() => {
+                            console.log('chatbot');
+                            setDesignSelected('chatbot');
+                        }}
+                    >
+                        <IonIcon icon={helpOutline} />
+                        <IonLabel>Chatbot</IonLabel>
+                    </IonTabButton>
+                </IonTabBar>
+            </IonTabs>
+        </IonApp>
+    );
+};
 
 export default App;
 
