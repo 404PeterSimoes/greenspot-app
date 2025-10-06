@@ -5,6 +5,17 @@ import { IonContent, IonPage } from '@ionic/react';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+const Markers = (mapa: mapboxgl.Map) => {
+    // marker
+    const el = document.createElement('div');
+    el.style.backgroundImage = 'url(../assets/marker_ecoponto.png)';
+    el.style.width = '32px';
+    el.style.height = '32px';
+    el.style.cursor = 'pointer';
+
+    const marker = new mapboxgl.Marker({ element: el }).setLngLat([-74.006, 40.7128]).addTo(mapa);
+};
+
 const Mapa = () => {
     const mapboxtoken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -27,6 +38,7 @@ const Mapa = () => {
         mapRef.current.on('load', () => {
             if (!mapRef.current) return;
             mapRef.current.resize();
+            Markers(mapRef.current);
         });
 
         return () => {

@@ -79,12 +79,9 @@ const App: React.FC = () => {
                 isOpen={showModalEcopontos}
                 onDidDismiss={() => setModalEcopontos(false)}
                 className="modal"
-                initialBreakpoint={0.25}
-                breakpoints={[0.25, 0.5, 0.75]}
-                handleBehavior="cycle"
-                canDismiss={false}
+                initialBreakpoint={0.8}
+                backdropDismiss={false}
             >
-                {/*<ModalPageEcopontos toggleModal={setModalEcopontos}/>*/}
                 <ModalPageEcopontos />
             </IonModal>
 
@@ -92,6 +89,8 @@ const App: React.FC = () => {
                 isOpen={showModalResiduos}
                 onDidDismiss={() => setModalResiduos(false)}
                 className="modal"
+                initialBreakpoint={0.33}
+                backdropDismiss={false}
             >
                 <ModalPageResiduos />
             </IonModal>
@@ -100,6 +99,8 @@ const App: React.FC = () => {
                 isOpen={showModalChatbot}
                 onDidDismiss={() => setModalChatbot(false)}
                 className="modal"
+                initialBreakpoint={0.85}
+                backdropDismiss={false}
             >
                 <ModalPageChatbot />
             </IonModal>

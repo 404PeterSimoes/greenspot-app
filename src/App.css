@@ -1,10 +1,18 @@
 :root {
     color-scheme: light;
-    --ion-color-primary: #000000;
+    --ion-color-primary: #164a00;
 }
-
+/*
 ion-tab-bar {
     --background: #3fd400;
+}
+*/
+ion-tab-bar {
+    --background: rgb(237, 237, 237);
+}
+
+ion-tab-button {
+    font-weight: bold;
 }
 
 ion-tab-button:not(.designSelectedClass) {
