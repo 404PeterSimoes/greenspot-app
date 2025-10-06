@@ -2,9 +2,10 @@ import { IonButton, IonContent, IonPage } from '@ionic/react';
 
 const ModalPageEcopontos: React.FC = () => {
     return (
-        <>
+        <IonContent>
             <h1>modalEcopontos</h1>
-        </>
+            <h2>texto</h2>
+        </IonContent>
     );
 };
 

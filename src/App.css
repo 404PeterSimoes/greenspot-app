@@ -12,7 +12,9 @@ ion-tab-button:not(.designSelectedClass) {
 }
 
 .modal {
+    /*
     left: 0;
     right: 0;
     bottom: 60px; /* deixar espaço para a tab bar */
+    height: calc(100vh - 56px);
 }

@@ -71,7 +71,7 @@ const App: React.FC = () => {
         setModalEcopontos(false);
         setModalResiduos(false);
         setModalChatbot(false);
-    }
+    };
 
     return (
         <IonApp>
@@ -79,16 +79,28 @@ const App: React.FC = () => {
                 isOpen={showModalEcopontos}
                 onDidDismiss={() => setModalEcopontos(false)}
                 className="modal"
+                initialBreakpoint={0.25}
+                breakpoints={[0.25, 0.5, 0.75]}
+                handleBehavior="cycle"
+                canDismiss={false}
             >
                 {/*<ModalPageEcopontos toggleModal={setModalEcopontos}/>*/}
                 <ModalPageEcopontos />
             </IonModal>
 
-            <IonModal>
+            <IonModal
+                isOpen={showModalResiduos}
+                onDidDismiss={() => setModalResiduos(false)}
+                className="modal"
+            >
                 <ModalPageResiduos />
             </IonModal>
 
-            <IonModal>
+            <IonModal
+                isOpen={showModalChatbot}
+                onDidDismiss={() => setModalChatbot(false)}
+                className="modal"
+            >
                 <ModalPageChatbot />
             </IonModal>
 
@@ -117,6 +129,7 @@ const App: React.FC = () => {
                         onClick={() => {
                             console.log('ecopontos');
                             setDesignSelected('ecopontos');
+                            closeModals();
                             setModalEcopontos(true);
                         }}
                     >
@@ -130,6 +143,8 @@ const App: React.FC = () => {
                         onClick={() => {
                             console.log('residuos');
                             setDesignSelected('residuos');
+                            closeModals();
+                            setModalResiduos(true);
                         }}
                     >
                         <IonIcon icon={trashOutline} />
@@ -142,6 +157,8 @@ const App: React.FC = () => {
                         onClick={() => {
                             console.log('chatbot');
                             setDesignSelected('chatbot');
+                            closeModals();
+                            setModalChatbot(true);
                         }}
                     >
                         <IonIcon icon={helpOutline} />
