@@ -47,7 +47,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import './App.css';
 
-import Mapa from './components/Mapa';
+import Mapa from './components/MapaReact';
 import ModalPageEcopontos from './components/Modal/modalEcopontos';
 import ModalPageResiduos from './components/Modal/modalResiduos';
 import ModalPageChatbot from './components/Modal/modalChatbot';
