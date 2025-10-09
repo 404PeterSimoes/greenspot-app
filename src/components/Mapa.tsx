@@ -38,8 +38,18 @@ const Mapa = () => {
         mapRef.current.on('load', () => {
             if (!mapRef.current) return;
             mapRef.current.resize();
-            Markers(mapRef.current);
+            //Markers(mapRef.current);
         });
+
+        const el = document.createElement('div');
+        el.style.backgroundImage = 'url(../assets/marker_ecoponto.png)';
+        el.style.width = '32px';
+        el.style.height = '32px';
+        el.style.cursor = 'pointer';
+
+        const marker = new mapboxgl.Marker()
+            .setLngLat([-8.526351467741904, 38.964119833056614])
+            .addTo(mapRef.current);
 
         return () => {
             mapRef.current?.remove();
