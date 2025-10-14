@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { createContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '../lib/supabaseClient';
 
 interface Ecoponto {
@@ -16,28 +16,37 @@ interface Ecoponto {
     tipologia: string;
 }
 
-const useEcopontos = () => {
+interface DataContextType {
+    arrayEcopontos: Ecoponto[];
+}
+
+export const EcopontosContext = createContext<DataContextType>({
+    arrayEcopontos: [],
+});
+
+export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [arrayEcopontos, setEcopontos] = useState<Ecoponto[]>([]);
     const [loadingState, setLoading] = useState<boolean>(true);
 
-    // Função corre dentro de useEffect para não fazer loop e carregar desnecessáriamente
     useEffect(() => {
         fetchEcopontos();
     }, []);
 
     async function fetchEcopontos() {
         setLoading(true);
-        const { data } = await supabase
+        const { data, error } = await supabase
             .from('table_ecopontos')
             .select('*')
             .order('codigo', { ascending: true });
 
-        setEcopontos(data || []);
-
+        if (!error && data) {
+            setEcopontos(data);
+            console.log('Ecopontos loaded!');
+        }
         setLoading(false);
     }
 
-    return { arrayEcopontos, loadingState };
+    return (
+        <EcopontosContext.Provider value={{ arrayEcopontos }}>{children}</EcopontosContext.Provider>
+    );
 };
-
-export default useEcopontos;

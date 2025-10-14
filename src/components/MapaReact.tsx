@@ -1,12 +1,13 @@
 import { IonPage, IonContent } from '@ionic/react';
+import { useContext } from 'react';
 import Map, { Marker } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import markerEcoponto from '../assets/marker_ecoponto.png';
 import './MapaReact.css';
-import useEcopontos from '../hooks/useEcopontos';
+import { EcopontosContext } from '../context/ecopontosContext';
 
 const Mapa: React.FC = () => {
-    const { arrayEcopontos } = useEcopontos();
+    const { arrayEcopontos } = useContext(EcopontosContext);
 
     return (
         <IonContent>
