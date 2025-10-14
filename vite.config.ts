@@ -14,5 +14,8 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
+  },
+  server: {
+    allowedHosts: ['fc51a229a3e8.ngrok-free.app']
   }
 })

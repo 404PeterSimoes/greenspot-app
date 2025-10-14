@@ -1,31 +1,63 @@
-import { IonButton, IonContent, IonPage } from '@ionic/react';
+import {
+    IonContent,
+    IonItem,
+    IonList,
+    IonLabel,
+    IonHeader,
+    IonToolbar,
+    IonSpinner,
+    IonPage,
+} from '@ionic/react';
+import useEcopontos from '../../hooks/useEcopontos';
+
 
 const ModalPageEcopontos: React.FC = () => {
+    const { arrayEcopontos, loadingState } = useEcopontos();
+
     return (
-        <IonContent>
-            <h1>modalEcopontos</h1>
-            <h2>texto</h2>
-        </IonContent>
+        <>
+            <IonHeader>
+                <IonToolbar>
+                    <h1>Ecopontos</h1>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent>
+                {loadingState ? (
+                    <div style={{ textAlign: 'center', marginTop: '50%' }}>
+                        <IonSpinner />
+                    </div>
+                ) : (
+                    <IonList lines="full">
+                        {arrayEcopontos.map((eco) => (
+                            <IonItem key={eco.codigo}>
+                                <IonLabel>
+                                    <h2>{eco.morada}</h2>
+                                </IonLabel>
+                            </IonItem>
+                        ))}
+                    </IonList>
+                )}
+            </IonContent>
+        </>
     );
 };
 
 export default ModalPageEcopontos;
 
 /*
-import { IonButton, IonContent, IonPage } from '@ionic/react';
-
-type Props = {
-    toggleModal: (value: boolean) => void;
-};
-
-const ModalPageEcopontos: React.FC<Props> = ({ toggleModal }) => {
-    return (
-        <>
-            <h1>modalEcopontos</h1>
-            <IonButton onClick={() => toggleModal(false)}>Clica</IonButton>
-        </>
-    );
-};
-
-export default ModalPageEcopontos;
-*/
+                {loadingState ? (
+                    <div style={{ textAlign: 'center', marginTop: '50%' }}>
+                        <IonSpinner />
+                    </div>
+                ) : (
+                    <IonList lines="full">
+                        {arrayEcopontos.map((eco) => (
+                            <IonItem key={eco.codigo}>
+                                <IonLabel>
+                                    <h2>{eco.morada}</h2>
+                                </IonLabel>
+                            </IonItem>
+                        ))}
+                    </IonList>
+                )}
+                    */

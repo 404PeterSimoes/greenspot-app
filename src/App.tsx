@@ -81,6 +81,7 @@ const App: React.FC = () => {
                 className="modal"
                 initialBreakpoint={0.8}
                 backdropDismiss={false}
+                expandToScroll={false}
             >
                 <ModalPageEcopontos />
             </IonModal>
