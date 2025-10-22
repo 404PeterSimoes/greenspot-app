@@ -17,9 +17,9 @@ const ModalPageEcopontos: React.FC = () => {
     const Lista: React.FC = () => (
         <IonList lines="full">
             {arrayEcopontos.map((eco) => (
-                <IonItem key={eco.codigo}>
+                <IonItem key={eco.Codigo}>
                     <IonLabel>
-                        <h2>{eco.morada}</h2>
+                        <h2>{eco.Morada}</h2>
                     </IonLabel>
                 </IonItem>
             ))}

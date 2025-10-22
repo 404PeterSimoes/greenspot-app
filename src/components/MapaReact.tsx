@@ -25,9 +25,9 @@ const Mapa: React.FC = () => {
             >
                 {arrayEcopontos.map((eco) => (
                     <Marker
-                        key={eco.codigo}
-                        latitude={eco.latitude}
-                        longitude={eco.longitude}
+                        key={eco.Codigo}
+                        latitude={eco.Latitude}
+                        longitude={eco.Longitude}
                         anchor="bottom"
                     >
                         <img className="imgEcoponto" src={markerEcoponto} />
