@@ -17,7 +17,7 @@ const ModalPageEcopontos: React.FC = () => {
 
     const Lista: React.FC = () => (
         <IonList lines="full">
-            {arrayEcopontos.map((eco) => (
+            {results.map((eco) => (
                 <IonItem
                     key={eco.Codigo}
                     button
@@ -33,12 +33,26 @@ const ModalPageEcopontos: React.FC = () => {
         </IonList>
     );
 
+    //"...arayEcopontos" vai copiar todos os valores sem modificar o array
+    let [results, setResults] = useState([...arrayEcopontos]);
+
+    const handleInput = (event: Event) => {
+        let query = '';
+        const target = event.target as HTMLIonSearchbarElement;
+        if (target) query = target.value!.toLowerCase();
+
+        setResults(arrayEcopontos.filter((eco) => eco.Morada.toLowerCase().indexOf(query) > -1));
+    };
+
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
                     {/*<h1 style={{textAlign: 'center'}}>Ecopontos</h1>*/}
-                    <IonSearchbar placeholder="Pesquisar Ecopontos" />
+                    <IonSearchbar
+                        placeholder="Pesquisar Ecopontos"
+                        onIonInput={(event) => handleInput(event)}
+                    />
                 </IonToolbar>
             </IonHeader>
             <IonContent>
