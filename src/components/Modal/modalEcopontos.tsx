@@ -6,8 +6,9 @@ import {
     IonHeader,
     IonToolbar,
     IonPage,
+    IonSearchbar,
 } from '@ionic/react';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import { EcopontosContext } from '../../context/ecopontosContext';
 
@@ -17,7 +18,13 @@ const ModalPageEcopontos: React.FC = () => {
     const Lista: React.FC = () => (
         <IonList lines="full">
             {arrayEcopontos.map((eco) => (
-                <IonItem key={eco.Codigo}>
+                <IonItem
+                    key={eco.Codigo}
+                    button
+                    onClick={() => {
+                        console.log('teste');
+                    }}
+                >
                     <IonLabel>
                         <h2>{eco.Morada}</h2>
                     </IonLabel>
@@ -30,7 +37,8 @@ const ModalPageEcopontos: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <h1 style={{textAlign: 'center'}}>Ecopontos</h1>
+                    {/*<h1 style={{textAlign: 'center'}}>Ecopontos</h1>*/}
+                    <IonSearchbar placeholder="Pesquisar Ecopontos" />
                 </IonToolbar>
             </IonHeader>
             <IonContent>

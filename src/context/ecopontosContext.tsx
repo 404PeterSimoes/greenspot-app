@@ -40,7 +40,6 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
         const { data, error } = await supabase
             .from('table_ecopontos')
             .select('*')
-            .ilike('Tipologia', '%isolado%')
             .order('Codigo', { ascending: true });
 
         if (!error && data) {

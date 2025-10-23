@@ -16,6 +16,6 @@ export default defineConfig({
     setupFiles: './src/setupTests.ts',
   },
   server: {
-    allowedHosts: ['278f1c7f72c8.ngrok-free.app']
+    allowedHosts: ['ba8a81f66c4c.ngrok-free.app']
   }
 })
