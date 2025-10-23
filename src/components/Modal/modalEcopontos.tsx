@@ -54,8 +54,6 @@ const ModalPageEcopontos: React.FC<Props> = ({ onClose }) => {
         </IonList>
     );
 
-    //"...arayEcopontos" vai copiar todos os valores sem modificar o array
-
     return (
         <IonPage>
             <IonHeader>

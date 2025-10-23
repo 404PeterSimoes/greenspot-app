@@ -7,11 +7,11 @@ import './MapaReact.css';
 import { EcopontosContext } from '../context/ecopontosContext';
 
 const Mapa: React.FC = () => {
-    const { arrayEcopontos, selectedEcoponto } = useContext(EcopontosContext);
+    const { arrayEcopontos, selectedEcoponto, setSelectedEcoponto } = useContext(EcopontosContext);
 
     const mapRef = useRef<MapRef>(null);
 
-    // Efeito: quando o selectedEcoponto muda, o mapa move-se para ele
+    // Quando o selectedEcoponto muda, o mapa move-se para ele
     useEffect(() => {
         if (selectedEcoponto && mapRef.current) {
             mapRef.current.flyTo({
@@ -44,8 +44,15 @@ const Mapa: React.FC = () => {
                         latitude={eco.Latitude}
                         longitude={eco.Longitude}
                         anchor="bottom"
+                        onClick={() => {
+                            const ecoSelecionado = eco;
+                            setSelectedEcoponto(ecoSelecionado);
+                        }}
                     >
-                        <img className="imgEcoponto" src={markerEcoponto} />
+                        <img
+                            className={`imgEcoponto ${selectedEcoponto === eco ? 'selected' : ''}`}
+                            src={markerEcoponto}
+                        />
                     </Marker>
                 ))}
             </Map>
