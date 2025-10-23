@@ -13,8 +13,18 @@ import { useContext, useState } from 'react';
 import { EcopontosContext } from '../../context/ecopontosContext';
 
 const ModalPageEcopontos: React.FC = () => {
-    const { arrayEcopontos } = useContext(EcopontosContext);
+    const { arrayEcopontos, setSelectedEcoponto } = useContext(EcopontosContext);
 
+    let [results, setResults] = useState([...arrayEcopontos]);
+
+    const handleInput = (event: Event) => {
+        let query = '';
+        const target = event.target as HTMLIonSearchbarElement;
+        if (target) query = target.value!.toLowerCase();
+
+        setResults(arrayEcopontos.filter((eco) => eco.Morada.toLowerCase().indexOf(query) > -1));
+    };
+    
     const Lista: React.FC = () => (
         <IonList lines="full">
             {results.map((eco) => (
@@ -23,6 +33,7 @@ const ModalPageEcopontos: React.FC = () => {
                     button
                     onClick={() => {
                         console.log('teste');
+                        setSelectedEcoponto(eco);
                     }}
                 >
                     <IonLabel>
@@ -34,15 +45,6 @@ const ModalPageEcopontos: React.FC = () => {
     );
 
     //"...arayEcopontos" vai copiar todos os valores sem modificar o array
-    let [results, setResults] = useState([...arrayEcopontos]);
-
-    const handleInput = (event: Event) => {
-        let query = '';
-        const target = event.target as HTMLIonSearchbarElement;
-        if (target) query = target.value!.toLowerCase();
-
-        setResults(arrayEcopontos.filter((eco) => eco.Morada.toLowerCase().indexOf(query) > -1));
-    };
 
     return (
         <IonPage>

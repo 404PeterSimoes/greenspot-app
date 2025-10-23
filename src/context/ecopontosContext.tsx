@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '../lib/supabaseClient';
 
-interface Ecoponto {
+export interface Ecoponto {
     Codigo: string;
     Morada: string;
     Tipologia: string;
@@ -23,14 +23,19 @@ interface Ecoponto {
 
 interface DataContextType {
     arrayEcopontos: Ecoponto[];
+    selectedEcoponto: Ecoponto | null;
+    setSelectedEcoponto: (eco: Ecoponto) => void;
 }
 
 export const EcopontosContext = createContext<DataContextType>({
     arrayEcopontos: [],
+    selectedEcoponto: null,
+    setSelectedEcoponto: () => {},
 });
 
 export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [arrayEcopontos, setEcopontos] = useState<Ecoponto[]>([]);
+    const [selectedEcoponto, setSelectedEcoponto] = useState<Ecoponto | null>(null);
 
     useEffect(() => {
         fetchEcopontos();
@@ -49,6 +54,10 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
     }
 
     return (
-        <EcopontosContext.Provider value={{ arrayEcopontos }}>{children}</EcopontosContext.Provider>
+        <EcopontosContext.Provider
+            value={{ arrayEcopontos, selectedEcoponto, setSelectedEcoponto }}
+        >
+            {children}
+        </EcopontosContext.Provider>
     );
 };

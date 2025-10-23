@@ -1,18 +1,33 @@
 import { IonPage, IonContent } from '@ionic/react';
-import { useContext } from 'react';
-import Map, { Marker } from 'react-map-gl/mapbox';
+import { useContext, useEffect, useRef } from 'react';
+import Map, { Marker, MapRef } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import markerEcoponto from '../assets/marker_ecoponto.png';
 import './MapaReact.css';
 import { EcopontosContext } from '../context/ecopontosContext';
 
 const Mapa: React.FC = () => {
-    const { arrayEcopontos } = useContext(EcopontosContext);
+    const { arrayEcopontos, selectedEcoponto } = useContext(EcopontosContext);
+
+    const mapRef = useRef<MapRef>(null);
+
+    // Efeito: quando o selectedEcoponto muda, o mapa move-se para ele
+    useEffect(() => {
+        if (selectedEcoponto && mapRef.current) {
+            mapRef.current.flyTo({
+                center: [selectedEcoponto.Longitude, selectedEcoponto.Latitude],
+                zoom: 15,
+                duration: 2000,
+                essential: true,
+            });
+        }
+    }, [selectedEcoponto]);
 
     return (
         <IonContent>
             <Map
                 mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}
+                ref={mapRef}
                 initialViewState={{
                     latitude: 38.96373575159655,
                     longitude: -8.525892398242028,

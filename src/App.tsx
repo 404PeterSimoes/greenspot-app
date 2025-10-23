@@ -52,7 +52,7 @@ import ModalPageEcopontos from './components/Modal/modalEcopontos';
 import ModalPageResiduos from './components/Modal/modalResiduos';
 import ModalPageChatbot from './components/Modal/modalChatbot';
 
-import { EcopontosProvider } from './context/ecopontosContext';
+import { EcopontosProvider, Ecoponto } from './context/ecopontosContext';
 
 setupIonicReact();
 
@@ -75,6 +75,9 @@ const App: React.FC = () => {
         setModalChatbot(false);
     };
 
+    // Passagem do Ecoponto selecionado entre componentes
+    //const [selectedEcoponto, setSelectedEcoponto] = useState<Ecoponto | null>(null);
+    
     return (
         <EcopontosProvider>
             <IonApp>
