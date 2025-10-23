@@ -1,0 +1,6 @@
+Colocar seleção filtrada dos marcadores a partir das colunas da base de dados
+
+Aparecer por ordem na lista de Ecopontos os ecopontos que estão mais próximos de mim e a sua distância
+(para depois colocar navigation)
+
+https://github.com/neeleshbisht99/react-map-gl-directions
