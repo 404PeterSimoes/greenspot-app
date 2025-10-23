@@ -16,8 +16,8 @@ const Mapa: React.FC = () => {
         if (selectedEcoponto && mapRef.current) {
             mapRef.current.flyTo({
                 center: [selectedEcoponto.Longitude, selectedEcoponto.Latitude],
-                zoom: 15,
-                duration: 2000,
+                zoom: 18,
+                duration: 3000,
                 essential: true,
             });
         }

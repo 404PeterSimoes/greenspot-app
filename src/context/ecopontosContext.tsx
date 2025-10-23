@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '../lib/supabaseClient';
 
-export interface Ecoponto {
+interface Ecoponto {
     Codigo: string;
     Morada: string;
     Tipologia: string;
@@ -24,7 +24,7 @@ export interface Ecoponto {
 interface DataContextType {
     arrayEcopontos: Ecoponto[];
     selectedEcoponto: Ecoponto | null;
-    setSelectedEcoponto: (eco: Ecoponto) => void;
+    setSelectedEcoponto: (eco: Ecoponto | null) => void;
 }
 
 export const EcopontosContext = createContext<DataContextType>({

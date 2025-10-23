@@ -12,7 +12,11 @@ import { useContext, useState } from 'react';
 
 import { EcopontosContext } from '../../context/ecopontosContext';
 
-const ModalPageEcopontos: React.FC = () => {
+interface Props {
+    onClose: () => void;
+}
+
+const ModalPageEcopontos: React.FC<Props> = ({ onClose }) => {
     const { arrayEcopontos, setSelectedEcoponto } = useContext(EcopontosContext);
 
     let [results, setResults] = useState([...arrayEcopontos]);
@@ -24,7 +28,7 @@ const ModalPageEcopontos: React.FC = () => {
 
         setResults(arrayEcopontos.filter((eco) => eco.Morada.toLowerCase().indexOf(query) > -1));
     };
-    
+
     const Lista: React.FC = () => (
         <IonList lines="full">
             {results.map((eco) => (
@@ -32,8 +36,14 @@ const ModalPageEcopontos: React.FC = () => {
                     key={eco.Codigo}
                     button
                     onClick={() => {
-                        console.log('teste');
-                        setSelectedEcoponto(eco);
+                        const ecoSelecionado = eco;
+
+                        setTimeout(() => {
+                            setSelectedEcoponto(null);
+                            onClose();
+
+                            setTimeout(() => setSelectedEcoponto(ecoSelecionado),10);
+                        }, 100);
                     }}
                 >
                     <IonLabel>

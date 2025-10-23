@@ -52,7 +52,7 @@ import ModalPageEcopontos from './components/Modal/modalEcopontos';
 import ModalPageResiduos from './components/Modal/modalResiduos';
 import ModalPageChatbot from './components/Modal/modalChatbot';
 
-import { EcopontosProvider, Ecoponto } from './context/ecopontosContext';
+import { EcopontosProvider } from './context/ecopontosContext';
 
 setupIonicReact();
 
@@ -75,15 +75,11 @@ const App: React.FC = () => {
         setModalChatbot(false);
     };
 
-    // Passagem do Ecoponto selecionado entre componentes
-    //const [selectedEcoponto, setSelectedEcoponto] = useState<Ecoponto | null>(null);
-    
     return (
         <EcopontosProvider>
             <IonApp>
                 <IonModal
                     isOpen={showModalEcopontos}
-                    onDidDismiss={() => setModalEcopontos(false)}
                     className="modal"
                     initialBreakpoint={0.8}
                     breakpoints={[0.8]}
@@ -91,12 +87,16 @@ const App: React.FC = () => {
                     expandToScroll={false}
                     handle={false}
                 >
-                    <ModalPageEcopontos />
+                    <ModalPageEcopontos
+                        onClose={() => {
+                            setModalEcopontos(false);
+                            setDesignSelected('mapa');
+                        }}
+                    />
                 </IonModal>
 
                 <IonModal
                     isOpen={showModalResiduos}
-                    onDidDismiss={() => setModalResiduos(false)}
                     className="modal"
                     initialBreakpoint={0.33}
                     breakpoints={[0.33]}
@@ -109,7 +109,6 @@ const App: React.FC = () => {
 
                 <IonModal
                     isOpen={showModalChatbot}
-                    onDidDismiss={() => setModalChatbot(false)}
                     className="modal"
                     initialBreakpoint={0.85}
                     breakpoints={[0.85]}
