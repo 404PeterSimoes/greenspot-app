@@ -37,6 +37,7 @@ const Mapa: React.FC = () => {
                 //mapStyle="mapbox://styles/mapbox/streets-v9"
                 mapStyle="mapbox://styles/mapbox/standard-satellite"
                 attributionControl={false}
+                onTouchMove={() => setSelectedEcoponto(null)}
             >
                 {arrayEcopontos.map((eco) => (
                     <Marker
