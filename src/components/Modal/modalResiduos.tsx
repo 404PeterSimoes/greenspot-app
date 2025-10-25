@@ -1,11 +1,15 @@
-import { IonContent } from "@ionic/react";
+import { IonContent, IonHeader, IonToolbar, IonPage } from '@ionic/react';
 
 const ModalPageResiduos: React.FC = () => {
     return (
-        <IonContent>
-            <h1>Residuos</h1>
-            <h2>texto</h2>
-        </IonContent>
+        <IonPage>
+            <IonHeader>
+                <IonToolbar>
+                    <h3 style={{ textAlign: 'center' }}>Resíduos</h3>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent></IonContent>
+        </IonPage>
     );
 };
 

@@ -1,0 +1,14 @@
+ion-searchbar {
+    --box-shadow: none !important;
+}
+
+ion-toolbar {
+    --min-height: 0;
+    --min-widht: 0;
+    --padding-top: 4px;
+}
+
+img {
+    width: 22px;
+	margin-right: 4%;
+}

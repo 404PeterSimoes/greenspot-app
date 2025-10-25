@@ -7,18 +7,23 @@ import {
     IonToolbar,
     IonPage,
     IonSearchbar,
+    IonNote,
 } from '@ionic/react';
 import { useContext, useState } from 'react';
 
 import { EcopontosContext } from '../../context/ecopontosContext';
+import './modalEcopontos.css';
+import markerEcoponto from '../../assets/marker_ecoponto.png';
 
 interface Props {
     onClose: () => void;
 }
 
 const ModalPageEcopontos: React.FC<Props> = ({ onClose }) => {
-    const { arrayEcopontos, setSelectedEcoponto } = useContext(EcopontosContext);
+    const { arrayEcopontos, setSelectedEcoponto, setModalEcoSelecionado } =
+        useContext(EcopontosContext);
 
+    // Código para fazer a Searchbar funcionar
     let [results, setResults] = useState([...arrayEcopontos]);
 
     const handleInput = (event: Event) => {
@@ -28,6 +33,7 @@ const ModalPageEcopontos: React.FC<Props> = ({ onClose }) => {
 
         setResults(arrayEcopontos.filter((eco) => eco.Morada.toLowerCase().indexOf(query) > -1));
     };
+    //
 
     const Lista: React.FC = () => (
         <IonList lines="full">
@@ -38,17 +44,20 @@ const ModalPageEcopontos: React.FC<Props> = ({ onClose }) => {
                     onClick={() => {
                         const ecoSelecionado = eco;
 
+                        //onClose(); ficaria dentro do setTimeout
+                        // Timer para dar tempo de fazer a animção toda de clique
                         setTimeout(() => {
-                            setSelectedEcoponto(null);
-                            onClose();
+                            setModalEcoSelecionado(true);
 
-                            setTimeout(() => setSelectedEcoponto(ecoSelecionado),10);
+                            setTimeout(() => setSelectedEcoponto(ecoSelecionado), 10);
                         }, 100);
                     }}
                 >
+                    <img src={markerEcoponto} />
                     <IonLabel>
                         <h2>{eco.Morada}</h2>
                     </IonLabel>
+                    <IonNote>Ola</IonNote>
                 </IonItem>
             ))}
         </IonList>

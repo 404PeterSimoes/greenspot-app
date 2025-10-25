@@ -7,7 +7,8 @@ import './MapaReact.css';
 import { EcopontosContext } from '../context/ecopontosContext';
 
 const Mapa: React.FC = () => {
-    const { arrayEcopontos, selectedEcoponto, setSelectedEcoponto } = useContext(EcopontosContext);
+    const { arrayEcopontos, selectedEcoponto, setSelectedEcoponto, setModalEcoSelecionado } =
+        useContext(EcopontosContext);
 
     const mapRef = useRef<MapRef>(null);
 
@@ -16,9 +17,10 @@ const Mapa: React.FC = () => {
         if (selectedEcoponto && mapRef.current) {
             mapRef.current.flyTo({
                 center: [selectedEcoponto.Longitude, selectedEcoponto.Latitude],
-                zoom: 18,
+                zoom: 16.5,
                 duration: 3000,
                 essential: true,
+                offset: [0, -200],
             });
         }
     }, [selectedEcoponto]);
@@ -48,6 +50,7 @@ const Mapa: React.FC = () => {
                         onClick={() => {
                             const ecoSelecionado = eco;
                             setSelectedEcoponto(ecoSelecionado);
+                            setModalEcoSelecionado(true);
                         }}
                     >
                         <img

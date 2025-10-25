@@ -25,17 +25,23 @@ interface DataContextType {
     arrayEcopontos: Ecoponto[];
     selectedEcoponto: Ecoponto | null;
     setSelectedEcoponto: (eco: Ecoponto | null) => void;
+    showModalEcoSelecionado: boolean;
+    setModalEcoSelecionado: (value: boolean) => void;
 }
 
 export const EcopontosContext = createContext<DataContextType>({
     arrayEcopontos: [],
     selectedEcoponto: null,
     setSelectedEcoponto: () => {},
+    showModalEcoSelecionado: false,
+    setModalEcoSelecionado: () => {},
 });
 
 export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [arrayEcopontos, setEcopontos] = useState<Ecoponto[]>([]);
     const [selectedEcoponto, setSelectedEcoponto] = useState<Ecoponto | null>(null);
+
+    const [showModalEcoSelecionado, setModalEcoSelecionado] = useState<boolean>(false);
 
     useEffect(() => {
         fetchEcopontos();
@@ -55,7 +61,13 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     return (
         <EcopontosContext.Provider
-            value={{ arrayEcopontos, selectedEcoponto, setSelectedEcoponto }}
+            value={{
+                arrayEcopontos,
+                selectedEcoponto,
+                setSelectedEcoponto,
+                showModalEcoSelecionado,
+                setModalEcoSelecionado,
+            }}
         >
             {children}
         </EcopontosContext.Provider>

@@ -26,3 +26,7 @@ ion-tab-button:not(.designSelectedClass) {
     bottom: 60px; /* deixar espaço para a tab bar */
     height: calc(100% - 56px);
 }
+
+.invisible-backdrop-modal {
+    --backdrop-opacity: 0   
+}

@@ -11,7 +11,7 @@ import {
     IonTab,
     IonModal,
 } from '@ionic/react';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import { locationOutline, trashOutline, helpOutline } from 'ionicons/icons';
 import recycleIcon from './icon/recycle.svg';
@@ -51,8 +51,9 @@ import Mapa from './components/MapaReact';
 import ModalPageEcopontos from './components/Modal/modalEcopontos';
 import ModalPageResiduos from './components/Modal/modalResiduos';
 import ModalPageChatbot from './components/Modal/modalChatbot';
+import ModalPageEcoSelecionado from './components/Modal/ecopontoSelecionado';
 
-import { EcopontosProvider } from './context/ecopontosContext';
+import { EcopontosContext, EcopontosProvider } from './context/ecopontosContext';
 
 setupIonicReact();
 
@@ -61,129 +62,165 @@ setupIonicReact();
 
 // https://ionicframework.com/docs/api/modal#controller-modals
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
     const [designSelected, setDesignSelected] = useState('mapa');
 
     const [showModalEcopontos, setModalEcopontos] = useState(false);
     const [showModalResiduos, setModalResiduos] = useState(false);
     const [showModalChatbot, setModalChatbot] = useState(false);
+    const { showModalEcoSelecionado, setModalEcoSelecionado, setSelectedEcoponto } =
+        useContext(EcopontosContext);
+    const [delayedShowModalEcoSelecionado, setDelayedShowModalEcoSelecionado] = useState(false);
 
-    // Utilizar isOpen
     const closeModals = () => {
         setModalEcopontos(false);
         setModalResiduos(false);
         setModalChatbot(false);
+        setModalEcoSelecionado(false);
+        setDelayedShowModalEcoSelecionado(false);
+        setSelectedEcoponto(null);
     };
 
+    // Fechar outras páginas automáticamente caso EcoSelecionado abra
+    // Abrir EcoSelecionadoModal com delay depois de selecionar ecoponto para dar tempo
+    // de modalEcopontos fechar
+    useEffect(() => {
+        if (showModalEcoSelecionado) {
+            setModalEcopontos(false);
+            setModalResiduos(false);
+            setModalChatbot(false);
+
+            setTimeout(() => {
+                setDelayedShowModalEcoSelecionado(true);
+            }, 100);
+        }
+    }, [showModalEcoSelecionado]);
+
     return (
-        <EcopontosProvider>
-            <IonApp>
-                <IonModal
-                    isOpen={showModalEcopontos}
-                    className="modal"
-                    initialBreakpoint={0.8}
-                    breakpoints={[0.8]}
-                    backdropDismiss={false}
-                    expandToScroll={false}
-                    handle={false}
-                >
-                    <ModalPageEcopontos
-                        onClose={() => {
-                            setModalEcopontos(false);
+        <IonApp>
+            <IonModal
+                isOpen={showModalEcopontos}
+                className="modal"
+                initialBreakpoint={0.8}
+                breakpoints={[0.8]}
+                backdropDismiss={false}
+                expandToScroll={false}
+                handle={false}
+            >
+                <ModalPageEcopontos
+                    onClose={() => {
+                        setModalEcopontos(false);
+                        setDesignSelected('mapa');
+                    }}
+                />
+            </IonModal>
+
+            <IonModal
+                isOpen={showModalResiduos}
+                className="modal"
+                initialBreakpoint={0.33}
+                breakpoints={[0.33]}
+                backdropDismiss={false}
+                expandToScroll={false}
+                handle={false}
+            >
+                <ModalPageResiduos />
+            </IonModal>
+
+            <IonModal
+                isOpen={showModalChatbot}
+                className="modal"
+                initialBreakpoint={0.85}
+                breakpoints={[0.85]}
+                backdropDismiss={false}
+                expandToScroll={false}
+                handle={false}
+            >
+                <ModalPageChatbot />
+            </IonModal>
+
+            <IonModal
+                isOpen={delayedShowModalEcoSelecionado}
+                className="modal invisible-backdrop-modal"
+                initialBreakpoint={0.65}
+                breakpoints={[0.65]}
+                backdropDismiss={false}
+                expandToScroll={false}
+                handle={false}
+            >
+                <ModalPageEcoSelecionado />
+            </IonModal>
+
+            <IonTabs>
+                <IonTab tab="home">
+                    <Mapa />
+                </IonTab>
+
+                <IonTabBar slot="bottom">
+                    <IonTabButton
+                        tab="home"
+                        className={designSelected === 'mapa' ? 'designSelectedClass' : ''}
+                        onClick={() => {
+                            console.log('home');
                             setDesignSelected('mapa');
+                            closeModals();
                         }}
-                    />
-                </IonModal>
+                    >
+                        <IonIcon icon={locationOutline} />
+                        <IonLabel>Mapa</IonLabel>
+                    </IonTabButton>
 
-                <IonModal
-                    isOpen={showModalResiduos}
-                    className="modal"
-                    initialBreakpoint={0.33}
-                    breakpoints={[0.33]}
-                    backdropDismiss={false}
-                    expandToScroll={false}
-                    handle={false}
-                >
-                    <ModalPageResiduos />
-                </IonModal>
+                    <IonTabButton
+                        tab="home"
+                        className={designSelected === 'ecopontos' ? 'designSelectedClass' : ''}
+                        onClick={() => {
+                            console.log('ecopontos');
+                            setDesignSelected('ecopontos');
+                            closeModals();
+                            setModalEcopontos(true);
+                        }}
+                    >
+                        <IonIcon icon={recycleIcon} />
+                        <IonLabel>Ecopontos</IonLabel>
+                    </IonTabButton>
 
-                <IonModal
-                    isOpen={showModalChatbot}
-                    className="modal"
-                    initialBreakpoint={0.85}
-                    breakpoints={[0.85]}
-                    backdropDismiss={false}
-                    expandToScroll={false}
-                    handle={false}
-                >
-                    <ModalPageChatbot />
-                </IonModal>
+                    <IonTabButton
+                        tab="home"
+                        className={designSelected === 'residuos' ? 'designSelectedClass' : ''}
+                        onClick={() => {
+                            console.log('residuos');
+                            setDesignSelected('residuos');
+                            closeModals();
+                            setModalResiduos(true);
+                        }}
+                    >
+                        <IonIcon icon={trashOutline} />
+                        <IonLabel>Residuos</IonLabel>
+                    </IonTabButton>
 
-                <IonTabs>
-                    <IonTab tab="home">
-                        <Mapa />
-                    </IonTab>
-
-                    <IonTabBar slot="bottom">
-                        <IonTabButton
-                            tab="home"
-                            className={designSelected === 'mapa' ? 'designSelectedClass' : ''}
-                            onClick={() => {
-                                console.log('home');
-                                setDesignSelected('mapa');
-                                closeModals();
-                            }}
-                        >
-                            <IonIcon icon={locationOutline} />
-                            <IonLabel>Mapa</IonLabel>
-                        </IonTabButton>
-
-                        <IonTabButton
-                            tab="home"
-                            className={designSelected === 'ecopontos' ? 'designSelectedClass' : ''}
-                            onClick={() => {
-                                console.log('ecopontos');
-                                setDesignSelected('ecopontos');
-                                closeModals();
-                                setModalEcopontos(true);
-                            }}
-                        >
-                            <IonIcon icon={recycleIcon} />
-                            <IonLabel>Ecopontos</IonLabel>
-                        </IonTabButton>
-
-                        <IonTabButton
-                            tab="home"
-                            className={designSelected === 'residuos' ? 'designSelectedClass' : ''}
-                            onClick={() => {
-                                console.log('residuos');
-                                setDesignSelected('residuos');
-                                closeModals();
-                                setModalResiduos(true);
-                            }}
-                        >
-                            <IonIcon icon={trashOutline} />
-                            <IonLabel>Residuos</IonLabel>
-                        </IonTabButton>
-
-                        <IonTabButton
-                            tab="home"
-                            className={designSelected === 'chatbot' ? 'designSelectedClass' : ''}
-                            onClick={() => {
-                                console.log('chatbot');
-                                setDesignSelected('chatbot');
-                                closeModals();
-                                setModalChatbot(true);
-                            }}
-                        >
-                            <IonIcon icon={helpOutline} />
-                            <IonLabel>Chatbot</IonLabel>
-                        </IonTabButton>
-                    </IonTabBar>
-                </IonTabs>
-            </IonApp>
-        </EcopontosProvider>
+                    <IonTabButton
+                        tab="home"
+                        className={designSelected === 'chatbot' ? 'designSelectedClass' : ''}
+                        onClick={() => {
+                            console.log('chatbot');
+                            setDesignSelected('chatbot');
+                            closeModals();
+                            setModalChatbot(true);
+                        }}
+                    >
+                        <IonIcon icon={helpOutline} />
+                        <IonLabel>Chatbot</IonLabel>
+                    </IonTabButton>
+                </IonTabBar>
+            </IonTabs>
+        </IonApp>
     );
 };
+
+const App: React.FC = () => (
+    <EcopontosProvider>
+        <AppContent />
+    </EcopontosProvider>
+);
 
 export default App;
