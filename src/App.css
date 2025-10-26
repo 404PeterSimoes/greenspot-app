@@ -9,6 +9,11 @@ ion-tab-bar {
 */
 ion-tab-bar {
     --background: rgb(237, 237, 237);
+    height: 68px;
+    width: 100%;
+    z-index: 1;
+    position: absolute;
+    bottom:0
 }
 
 ion-tab-button {
@@ -20,13 +25,16 @@ ion-tab-button:not(.designSelectedClass) {
 }
 
 .modal {
-    /*
-    left: 0;
-    right: 0;
-    bottom: 60px; /* deixar espaço para a tab bar */
-    height: calc(100% - 56px);
+    height: calc(100% - 68px - env(safe-area-inset-bottom));
 }
 
-.invisible-backdrop-modal {
-    --backdrop-opacity: 0   
+.map-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
 }

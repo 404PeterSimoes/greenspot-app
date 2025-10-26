@@ -3,12 +3,15 @@ ion-searchbar {
 }
 
 ion-toolbar {
-    --min-height: 0;
-    --min-widht: 0;
+    all: unset;
     --padding-top: 4px;
+}
+
+ion-header {
+    min-height: 50px;
 }
 
 img {
     width: 22px;
-	margin-right: 4%;
+    margin-right: 4%;
 }

@@ -67,7 +67,6 @@ const ModalPageEcopontos: React.FC<Props> = ({ onClose }) => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    {/*<h1 style={{textAlign: 'center'}}>Ecopontos</h1>*/}
                     <IonSearchbar
                         placeholder="Pesquisar Ecopontos"
                         onIonInput={(event) => handleInput(event)}

@@ -5,7 +5,7 @@ const ModalPageResiduos: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <h3 style={{ textAlign: 'center' }}>Resíduos</h3>
+                    <h3 style={{ textAlign: 'center', marginTop:'none' }}>Resíduos</h3>
                 </IonToolbar>
             </IonHeader>
             <IonContent></IonContent>

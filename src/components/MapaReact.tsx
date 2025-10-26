@@ -20,7 +20,7 @@ const Mapa: React.FC = () => {
                 zoom: 16.5,
                 duration: 3000,
                 essential: true,
-                offset: [0, -200],
+                offset: [0, -260],
             });
         }
     }, [selectedEcoponto]);
@@ -39,7 +39,12 @@ const Mapa: React.FC = () => {
                 //mapStyle="mapbox://styles/mapbox/streets-v9"
                 mapStyle="mapbox://styles/mapbox/standard-satellite"
                 attributionControl={false}
-                onTouchMove={() => setSelectedEcoponto(null)}
+                onTouchMove={() => {
+                    setModalEcoSelecionado(false);
+
+                    // Delay para apenas desselecionar o ecoponto quando o modal sair
+                    setTimeout(() => setSelectedEcoponto(null), 150);
+                }}
             >
                 {arrayEcopontos.map((eco) => (
                     <Marker
