@@ -72,8 +72,12 @@ const AppContent: React.FC = () => {
     const [showModalEcopontos, setModalEcopontos] = useState(false);
     const [showModalResiduos, setModalResiduos] = useState(false);
     const [showModalChatbot, setModalChatbot] = useState(false);
-    const { showModalEcoSelecionado, setModalEcoSelecionado, setSelectedEcoponto } =
-        useContext(EcopontosContext);
+    const {
+        showModalEcoSelecionado,
+        selectedEcoponto,
+        setModalEcoSelecionado,
+        setSelectedEcoponto,
+    } = useContext(EcopontosContext);
     const [delayedShowModalEcoSelecionado, setDelayedShowModalEcoSelecionado] = useState(false);
 
     const closeModals = () => {
@@ -82,7 +86,7 @@ const AppContent: React.FC = () => {
         setModalChatbot(false);
         setModalEcoSelecionado(false);
         setDelayedShowModalEcoSelecionado(false);
-        setSelectedEcoponto(null);
+        setTimeout(() => setSelectedEcoponto(null), 150);
     };
 
     // Fechar outras páginas automáticamente caso EcoSelecionado abra
@@ -115,12 +119,7 @@ const AppContent: React.FC = () => {
                     expandToScroll={false}
                     handle={false}
                 >
-                    <ModalPageEcopontos
-                        onClose={() => {
-                            setModalEcopontos(false);
-                            setDesignSelected('mapa');
-                        }}
-                    />
+                    <ModalPageEcopontos />
                 </IonModal>
                 <IonModal
                     isOpen={showModalResiduos}

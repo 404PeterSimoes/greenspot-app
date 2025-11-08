@@ -15,11 +15,7 @@ import { EcopontosContext } from '../../context/ecopontosContext';
 import './modalEcopontos.css';
 import markerEcoponto from '../../assets/marker_ecoponto.png';
 
-interface Props {
-    onClose: () => void;
-}
-
-const ModalPageEcopontos: React.FC<Props> = ({ onClose }) => {
+const ModalPageEcopontos: React.FC = () => {
     const { arrayEcopontos, setSelectedEcoponto, setModalEcoSelecionado } =
         useContext(EcopontosContext);
 
@@ -33,7 +29,6 @@ const ModalPageEcopontos: React.FC<Props> = ({ onClose }) => {
 
         setResults(arrayEcopontos.filter((eco) => eco.Morada.toLowerCase().indexOf(query) > -1));
     };
-    //
 
     const Lista: React.FC = () => (
         <IonList lines="full">
@@ -43,8 +38,7 @@ const ModalPageEcopontos: React.FC<Props> = ({ onClose }) => {
                     button
                     onClick={() => {
                         const ecoSelecionado = eco;
-
-                        //onClose(); ficaria dentro do setTimeout
+                        
                         // Timer para dar tempo de fazer a animção toda de clique
                         setTimeout(() => {
                             setModalEcoSelecionado(true);

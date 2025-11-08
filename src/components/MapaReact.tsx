@@ -1,5 +1,5 @@
 import { IonPage, IonContent } from '@ionic/react';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Map, { Marker, MapRef } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import markerEcoponto from '../assets/marker_ecoponto.png';
@@ -7,10 +7,16 @@ import './MapaReact.css';
 import { EcopontosContext } from '../context/ecopontosContext';
 
 const Mapa: React.FC = () => {
-    const { arrayEcopontos, selectedEcoponto, setSelectedEcoponto, setModalEcoSelecionado } =
-        useContext(EcopontosContext);
+    const {
+        arrayEcopontos,
+        selectedEcoponto,
+        showModalEcoSelecionado,
+        setSelectedEcoponto,
+        setModalEcoSelecionado,
+    } = useContext(EcopontosContext);
 
     const mapRef = useRef<MapRef>(null);
+    const [bloquear, setBloquear] = useState(false);
 
     // Quando o selectedEcoponto muda, o mapa move-se para ele
     useEffect(() => {
@@ -25,8 +31,18 @@ const Mapa: React.FC = () => {
         }
     }, [selectedEcoponto]);
 
+    // Bloquear por 2,5 segundo o mapa após selecionar ecoponto, para não parar o flyto por acidente
+    useEffect(() => {
+        if (showModalEcoSelecionado) {
+            setBloquear(true);
+            setTimeout(() => setBloquear(false), 2500);
+        } else {
+            setBloquear(false);
+        }
+    }, [showModalEcoSelecionado, selectedEcoponto]);
+
     return (
-        <IonContent>
+        <IonContent style={{ postition: 'relative' }}>
             <Map
                 mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}
                 ref={mapRef}
@@ -39,6 +55,7 @@ const Mapa: React.FC = () => {
                 //mapStyle="mapbox://styles/mapbox/streets-v9"
                 mapStyle="mapbox://styles/mapbox/standard-satellite"
                 attributionControl={false}
+                // Quando o mapa for movido, fecha o modal EcoSelecionado
                 onTouchMove={() => {
                     setModalEcoSelecionado(false);
 
@@ -53,9 +70,12 @@ const Mapa: React.FC = () => {
                         longitude={eco.Longitude}
                         anchor="bottom"
                         onClick={() => {
-                            const ecoSelecionado = eco;
-                            setSelectedEcoponto(ecoSelecionado);
-                            setModalEcoSelecionado(true);
+                            // SetTimeout para o flyto acontecer mesmo que o user tenha feito double click no marker
+                            setTimeout(() => {
+                                const ecoSelecionado = eco;
+                                setSelectedEcoponto(ecoSelecionado);
+                                setModalEcoSelecionado(true);
+                            }, 100);
                         }}
                     >
                         <img
@@ -65,6 +85,10 @@ const Mapa: React.FC = () => {
                     </Marker>
                 ))}
             </Map>
+            {
+                // Caso bloquear = true, mostra o bloqueioOverlay para o user não mexer no mapa durante o flyto (para não parar o flyto)
+                bloquear && <div className="bloqueioOverlay"></div>
+            }
         </IonContent>
     );
 };
