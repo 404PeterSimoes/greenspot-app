@@ -39,7 +39,7 @@ const ModalPageEcopontos: React.FC = () => {
                     onClick={() => {
                         const ecoSelecionado = eco;
                         
-                        // Timer para dar tempo de fazer a animção toda de clique
+                        // Timer para dar tempo de fazer a animação toda de clique
                         setTimeout(() => {
                             setModalEcoSelecionado(true);
 

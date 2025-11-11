@@ -75,19 +75,20 @@ const AppContent: React.FC = () => {
     const [showModalChatbot, setModalChatbot] = useState(false);
 
     const {
-        showModalEcoSelecionado,
         selectedEcoponto,
-        setModalEcoSelecionado,
         setSelectedEcoponto,
+        showModalEcoSelecionado,
+        setModalEcoSelecionado,
+        callShowModalEcoSelecionado,
+        setCallShowModalEcoSelecionado,
     } = useContext(EcopontosContext);
-    const [delayedShowModalEcoSelecionado, setDelayedShowModalEcoSelecionado] = useState(false);
 
     const closeModals = () => {
         setModalEcopontos(false);
         setModalResiduos(false);
         setModalChatbot(false);
         setModalEcoSelecionado(false);
-        setDelayedShowModalEcoSelecionado(false);
+        setCallShowModalEcoSelecionado(false);
         setTimeout(() => setSelectedEcoponto(null), 150);
     };
 
@@ -102,13 +103,14 @@ const AppContent: React.FC = () => {
             setDesignSelected('mapa');
 
             setTimeout(() => {
-                setDelayedShowModalEcoSelecionado(true);
+                setCallShowModalEcoSelecionado(true);
             }, 100);
         }
         if (!showModalEcoSelecionado) {
-            setDelayedShowModalEcoSelecionado(false);
+            setCallShowModalEcoSelecionado(false);
         }
-    }, [showModalEcoSelecionado]);
+
+    }, [showModalEcoSelecionado, callShowModalEcoSelecionado]);
 
     const printCurrentPosition = async () => {
         const coordinates = await Geolocation.getCurrentPosition();
@@ -149,7 +151,7 @@ const AppContent: React.FC = () => {
                     <ModalPageChatbot />
                 </IonModal>
                 <IonModal
-                    isOpen={delayedShowModalEcoSelecionado}
+                    isOpen={callShowModalEcoSelecionado}
                     className="ecoselecionado"
                     initialBreakpoint={0.65}
                     breakpoints={[0.65, 0]}

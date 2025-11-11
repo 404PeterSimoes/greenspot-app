@@ -27,6 +27,8 @@ interface DataContextType {
     setSelectedEcoponto: (eco: Ecoponto | null) => void;
     showModalEcoSelecionado: boolean;
     setModalEcoSelecionado: (value: boolean) => void;
+    callShowModalEcoSelecionado: boolean;
+    setCallShowModalEcoSelecionado: (value: boolean) => void;
 }
 
 export const EcopontosContext = createContext<DataContextType>({
@@ -35,6 +37,8 @@ export const EcopontosContext = createContext<DataContextType>({
     setSelectedEcoponto: () => {},
     showModalEcoSelecionado: false,
     setModalEcoSelecionado: () => {},
+    callShowModalEcoSelecionado: false,
+    setCallShowModalEcoSelecionado: () => {},
 });
 
 export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -42,6 +46,8 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
     const [selectedEcoponto, setSelectedEcoponto] = useState<Ecoponto | null>(null);
 
     const [showModalEcoSelecionado, setModalEcoSelecionado] = useState<boolean>(false);
+    const [callShowModalEcoSelecionado, setCallShowModalEcoSelecionado] =
+        useState<boolean>(false);
 
     useEffect(() => {
         fetchEcopontos();
@@ -67,6 +73,8 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
                 setSelectedEcoponto,
                 showModalEcoSelecionado,
                 setModalEcoSelecionado,
+                callShowModalEcoSelecionado,
+                setCallShowModalEcoSelecionado,
             }}
         >
             {children}

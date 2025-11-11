@@ -10,9 +10,9 @@ const Mapa: React.FC = () => {
     const {
         arrayEcopontos,
         selectedEcoponto,
-        showModalEcoSelecionado,
         setSelectedEcoponto,
         setModalEcoSelecionado,
+        setCallShowModalEcoSelecionado,
     } = useContext(EcopontosContext);
 
     const mapRef = useRef<MapRef>(null);
@@ -65,7 +65,8 @@ const Mapa: React.FC = () => {
                                 const ecoSelecionado = eco;
                                 setSelectedEcoponto(ecoSelecionado);
                                 setModalEcoSelecionado(true);
-                            }, 300);
+                                setCallShowModalEcoSelecionado(true);
+                            }, 150);
                         }}
                     >
                         <img
