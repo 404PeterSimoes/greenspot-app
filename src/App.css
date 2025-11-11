@@ -1,6 +1,6 @@
 :root {
     color-scheme: light;
-    --ion-color-primary: #164a00;
+    --ion-color-primary: #2e7e00;
 }
 /*
 ion-tab-bar {
@@ -30,7 +30,6 @@ ion-modal {
 
 .ecoselecionado {
     --backdrop-opacity: 0;
-    --backdrop-background: transparent;
     --transition: none !important;
 }
 

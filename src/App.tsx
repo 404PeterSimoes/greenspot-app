@@ -98,6 +98,7 @@ const AppContent: React.FC = () => {
             setModalEcopontos(false);
             setModalResiduos(false);
             setModalChatbot(false);
+            setDesignSelected('mapa');
 
             setTimeout(() => {
                 setDelayedShowModalEcoSelecionado(true);
@@ -150,7 +151,7 @@ const AppContent: React.FC = () => {
                         const { role } = e.detail;
 
                         if (role === 'gesture') {
-                            console.log("ola")
+                            console.log('ola');
                             setSelectedEcoponto(null);
                             setModalEcoSelecionado(false);
                         }

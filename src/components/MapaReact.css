@@ -11,7 +11,7 @@
     transform: scale(1.7);
 }
 
-/* Move copyright para cima */
+/* Mover copyright para cima */
 .mapboxgl-ctrl-logo {
     position: absolute;
 	top: calc(100% - 87px - env(safe-area-inset-bottom))
