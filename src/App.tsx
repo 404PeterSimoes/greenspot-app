@@ -56,9 +56,7 @@ import ModalPageChatbot from './components/Modal/modalChatbot';
 import ModalPageEcoSelecionado from './components/Modal/ecopontoSelecionado';
 
 import { EcopontosContext, EcopontosProvider } from './context/ecopontosContext';
-import { Geolocation } from '@capacitor/geolocation';
-
-import { Keyboard } from '@capacitor/keyboard';
+import { GeolocationContext, GeolocationProvider } from './context/geolocationContext';
 
 setupIonicReact();
 
@@ -82,6 +80,9 @@ const AppContent: React.FC = () => {
         callShowModalEcoSelecionado,
         setCallShowModalEcoSelecionado,
     } = useContext(EcopontosContext);
+
+    const { getCurrentLocation } = useContext(GeolocationContext)!;
+    // https://chatgpt.com/c/69130575-9e3c-8326-81e9-9256b87478c3
 
     const closeModals = () => {
         setModalEcopontos(false);
@@ -109,13 +110,7 @@ const AppContent: React.FC = () => {
         if (!showModalEcoSelecionado) {
             setCallShowModalEcoSelecionado(false);
         }
-
     }, [showModalEcoSelecionado, callShowModalEcoSelecionado]);
-
-    const printCurrentPosition = async () => {
-        const coordinates = await Geolocation.getCurrentPosition();
-        alert(`Current position: ${coordinates.coords.latitude} ${coordinates.coords.longitude}`);
-    };
 
     return (
         <IonApp>
@@ -185,7 +180,7 @@ const AppContent: React.FC = () => {
                                 console.log('home');
                                 setDesignSelected('mapa');
                                 closeModals();
-                                printCurrentPosition();
+                                let posicao = getCurrentLocation();
                             }}
                         >
                             <IonIcon icon={locationOutline} />
@@ -242,7 +237,9 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => (
     <EcopontosProvider>
-        <AppContent />
+        <GeolocationProvider>
+            <AppContent />
+        </GeolocationProvider>
     </EcopontosProvider>
 );
 
