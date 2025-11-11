@@ -56,6 +56,7 @@ import ModalPageChatbot from './components/Modal/modalChatbot';
 import ModalPageEcoSelecionado from './components/Modal/ecopontoSelecionado';
 
 import { EcopontosContext, EcopontosProvider } from './context/ecopontosContext';
+import { Geolocation } from '@capacitor/geolocation';
 
 import { Keyboard } from '@capacitor/keyboard';
 
@@ -108,6 +109,11 @@ const AppContent: React.FC = () => {
             setDelayedShowModalEcoSelecionado(false);
         }
     }, [showModalEcoSelecionado]);
+
+    const printCurrentPosition = async () => {
+        const coordinates = await Geolocation.getCurrentPosition();
+        alert(`Current position: ${coordinates.coords.latitude} ${coordinates.coords.longitude}`);
+    };
 
     return (
         <IonApp>
@@ -177,6 +183,7 @@ const AppContent: React.FC = () => {
                                 console.log('home');
                                 setDesignSelected('mapa');
                                 closeModals();
+                                printCurrentPosition();
                             }}
                         >
                             <IonIcon icon={locationOutline} />

@@ -65,7 +65,7 @@ const Mapa: React.FC = () => {
                                 const ecoSelecionado = eco;
                                 setSelectedEcoponto(ecoSelecionado);
                                 setModalEcoSelecionado(true);
-                            }, 100);
+                            }, 300);
                         }}
                     >
                         <img
