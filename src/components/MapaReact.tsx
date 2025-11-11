@@ -16,7 +16,6 @@ const Mapa: React.FC = () => {
     } = useContext(EcopontosContext);
 
     const mapRef = useRef<MapRef>(null);
-    const [bloquear, setBloquear] = useState(false);
 
     // Quando o selectedEcoponto muda, o mapa move-se para ele
     useEffect(() => {
@@ -30,16 +29,6 @@ const Mapa: React.FC = () => {
             });
         }
     }, [selectedEcoponto]);
-
-    // Bloquear por 2,5 segundo o mapa após selecionar ecoponto, para não parar o flyto por acidente
-    useEffect(() => {
-        if (showModalEcoSelecionado) {
-            setBloquear(true);
-            setTimeout(() => setBloquear(false), 2500);
-        } else {
-            setBloquear(false);
-        }
-    }, [showModalEcoSelecionado, selectedEcoponto]);
 
     return (
         <IonContent style={{ postition: 'relative' }}>
@@ -55,13 +44,14 @@ const Mapa: React.FC = () => {
                 //mapStyle="mapbox://styles/mapbox/streets-v9"
                 mapStyle="mapbox://styles/mapbox/standard-satellite"
                 attributionControl={false}
+                /*
                 // Quando o mapa for movido, fecha o modal EcoSelecionado
                 onTouchMove={() => {
                     setModalEcoSelecionado(false);
 
                     // Delay para apenas desselecionar o ecoponto quando o modal sair
                     setTimeout(() => setSelectedEcoponto(null), 150);
-                }}
+                }}*/
             >
                 {arrayEcopontos.map((eco) => (
                     <Marker
@@ -85,10 +75,6 @@ const Mapa: React.FC = () => {
                     </Marker>
                 ))}
             </Map>
-            {
-                // Caso bloquear = true, mostra o bloqueioOverlay para o user não mexer no mapa durante o flyto (para não parar o flyto)
-                bloquear && <div className="bloqueioOverlay"></div>
-            }
         </IonContent>
     );
 };

@@ -13,7 +13,7 @@ ion-tab-bar {
     width: 100%;
     z-index: 1;
     position: absolute;
-    bottom:0
+    bottom: 0;
 }
 
 ion-tab-button {
@@ -24,8 +24,14 @@ ion-tab-button:not(.designSelectedClass) {
     --color-selected: rgba(0, 0, 0, 0.475);
 }
 
-.modal {
+ion-modal {
     height: calc(100% - 68px - env(safe-area-inset-bottom));
+}
+
+.ecoselecionado {
+    --backdrop-opacity: 0;
+    --backdrop-background: transparent;
+    --transition: none !important;
 }
 
 .map-container {

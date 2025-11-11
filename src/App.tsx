@@ -72,6 +72,7 @@ const AppContent: React.FC = () => {
     const [showModalEcopontos, setModalEcopontos] = useState(false);
     const [showModalResiduos, setModalResiduos] = useState(false);
     const [showModalChatbot, setModalChatbot] = useState(false);
+
     const {
         showModalEcoSelecionado,
         selectedEcoponto,
@@ -112,7 +113,6 @@ const AppContent: React.FC = () => {
             <IonContent>
                 <IonModal
                     isOpen={showModalEcopontos}
-                    className="modal"
                     initialBreakpoint={0.8}
                     breakpoints={[0.8]}
                     backdropDismiss={false}
@@ -123,7 +123,6 @@ const AppContent: React.FC = () => {
                 </IonModal>
                 <IonModal
                     isOpen={showModalResiduos}
-                    className="modal"
                     initialBreakpoint={0.33}
                     breakpoints={[0.33]}
                     backdropDismiss={false}
@@ -134,7 +133,6 @@ const AppContent: React.FC = () => {
                 </IonModal>
                 <IonModal
                     isOpen={showModalChatbot}
-                    className="modal"
                     initialBreakpoint={0.85}
                     breakpoints={[0.85]}
                     backdropDismiss={false}
@@ -145,13 +143,22 @@ const AppContent: React.FC = () => {
                 </IonModal>
                 <IonModal
                     isOpen={delayedShowModalEcoSelecionado}
-                    className="modal invisible-backdrop-modal"
+                    className="ecoselecionado"
                     initialBreakpoint={0.65}
-                    breakpoints={[0.65]}
+                    breakpoints={[0.65, 0]}
+                    onIonModalWillDismiss={(e) => {
+                        const { role } = e.detail;
+
+                        if (role === 'gesture') {
+                            console.log("ola")
+                            setSelectedEcoponto(null);
+                            setModalEcoSelecionado(false);
+                        }
+                    }}
                     backdropDismiss={false}
                     expandToScroll={false}
-                    handle={false}
-                    backdropBreakpoint={1} // nunca ativa o backdrop
+                    handle={true}
+                    //backdropBreakpoint={1} // nunca ativa o backdrop
                 >
                     <ModalPageEcoSelecionado />
                 </IonModal>
