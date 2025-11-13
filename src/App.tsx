@@ -56,7 +56,7 @@ import ModalPageChatbot from './components/Modal/modalChatbot';
 import ModalPageEcoSelecionado from './components/Modal/ecopontoSelecionado';
 
 import { EcopontosContext, EcopontosProvider } from './context/ecopontosContext';
-import { GeolocationContext, GeolocationProvider } from './context/geolocationContext';
+import { GeolocationProvider, useGeolocation } from './context/geolocationContext';
 
 setupIonicReact();
 
@@ -81,8 +81,7 @@ const AppContent: React.FC = () => {
         setCallShowModalEcoSelecionado,
     } = useContext(EcopontosContext);
 
-    const { getCurrentLocation } = useContext(GeolocationContext)!;
-    // https://chatgpt.com/c/69130575-9e3c-8326-81e9-9256b87478c3
+    const { getCurrentLocation, position } = useGeolocation()!;
 
     const closeModals = () => {
         setModalEcopontos(false);
@@ -176,11 +175,13 @@ const AppContent: React.FC = () => {
                         <IonTabButton
                             tab="home"
                             className={designSelected === 'mapa' ? 'designSelectedClass' : ''}
-                            onClick={() => {
+                            onClick={async () => {
                                 console.log('home');
                                 setDesignSelected('mapa');
                                 closeModals();
-                                let posicao = getCurrentLocation();
+
+                                getCurrentLocation();
+                                alert(position?.lng);
                             }}
                         >
                             <IonIcon icon={locationOutline} />
