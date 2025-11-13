@@ -81,7 +81,7 @@ const AppContent: React.FC = () => {
         setCallShowModalEcoSelecionado,
     } = useContext(EcopontosContext);
 
-    const {position} = useContext(GeolocationContext)!;
+    const { position } = useContext(GeolocationContext)!;
 
     const closeModals = () => {
         setModalEcopontos(false);
@@ -110,6 +110,21 @@ const AppContent: React.FC = () => {
             setCallShowModalEcoSelecionado(false);
         }
     }, [showModalEcoSelecionado, callShowModalEcoSelecionado]);
+
+    // Função para verificar se todos os modals estão fechados (executado quando tab 'Mapa' clicado)
+    const verificarTudoFechado = () => {
+        if (
+            !showModalEcopontos &&
+            !showModalResiduos &&
+            !showModalChatbot &&
+            !showModalEcoSelecionado &&
+            !callShowModalEcoSelecionado
+        )
+            return true;
+        else return false;
+    };
+
+    const [flyUserLocationBool, setFlyUserLocationBool] = useState(false);
 
     return (
         <IonApp>
@@ -168,19 +183,26 @@ const AppContent: React.FC = () => {
                 <IonTabs>
                     <IonTab tab="home">
                         <div className="map-container">
-                            <Mapa />
+                            <Mapa
+                                flyToUserLocation={flyUserLocationBool}
+                                reset={() => setFlyUserLocationBool(false)}
+                            />
                         </div>
                     </IonTab>
                     <IonTabBar slot="bottom">
                         <IonTabButton
                             tab="home"
                             className={designSelected === 'mapa' ? 'designSelectedClass' : ''}
-                            onClick={async () => {
+                            onClick={() => {
                                 console.log('home');
                                 setDesignSelected('mapa');
-                                closeModals();
 
-                                alert(position?.lat)
+                                // Voar para a localização atual caso nenhum modal estiver aberto, quando tab "Mapa" for clicado
+                                if (verificarTudoFechado() /* && position*/) {
+                                    setFlyUserLocationBool(true);
+                                }
+
+                                closeModals();
                             }}
                         >
                             <IonIcon icon={locationOutline} />

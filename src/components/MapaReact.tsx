@@ -7,7 +7,12 @@ import './MapaReact.css';
 import { EcopontosContext } from '../context/ecopontosContext';
 import { GeolocationContext } from '../context/geolocationContext';
 
-const Mapa: React.FC = () => {
+interface Props {
+    flyToUserLocation: boolean;
+    reset: () => void;
+}
+
+const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
     const {
         arrayEcopontos,
         selectedEcoponto,
@@ -33,6 +38,22 @@ const Mapa: React.FC = () => {
             });
         }
     }, [selectedEcoponto]);
+
+    // Voar para a localização do user
+    useEffect(() => {
+        if (flyToUserLocation) {
+            if (mapRef.current && position) {
+                mapRef.current.flyTo({
+                    center: [position.lng, position.lat],
+                    zoom: 13,
+                    duration: 3000,
+                    essential: true,
+                    offset: [0, -10],
+                });
+            }
+            reset();
+        }
+    }, [flyToUserLocation]);
 
     return (
         <IonContent style={{ postition: 'relative' }}>
