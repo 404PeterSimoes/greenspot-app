@@ -5,6 +5,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import markerEcoponto from '../assets/marker_ecoponto.png';
 import './MapaReact.css';
 import { EcopontosContext } from '../context/ecopontosContext';
+import { GeolocationContext } from '../context/geolocationContext';
 
 const Mapa: React.FC = () => {
     const {
@@ -14,6 +15,9 @@ const Mapa: React.FC = () => {
         setModalEcoSelecionado,
         setCallShowModalEcoSelecionado,
     } = useContext(EcopontosContext);
+
+    // Coordenadas da posição atual do user
+    const { position } = useContext(GeolocationContext)!;
 
     const mapRef = useRef<MapRef>(null);
 
@@ -75,10 +79,21 @@ const Mapa: React.FC = () => {
                         />
                     </Marker>
                 ))}
+                {position && (
+                    <Marker latitude={position.lat} longitude={position.lng} anchor="bottom">
+                        <div
+                            style={{
+                                backgroundColor: 'blue',
+                                borderRadius: '50%',
+                                width: 20,
+                                height: 20,
+                            }}
+                        />
+                    </Marker>
+                )}
             </Map>
         </IonContent>
     );
 };
 
 export default Mapa;
- 
