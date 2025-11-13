@@ -60,6 +60,10 @@ import { GeolocationProvider, GeolocationContext } from './context/geolocationCo
 
 setupIonicReact();
 
+import { NavigationBar } from '@capgo/capacitor-navigation-bar';
+
+NavigationBar.setNavigationBarColor({color:'TRANSPARENT',darkButtons: true})
+
 // Colocar mapa no principal, não usar outras paginas, pagina principal (Mapa) sempre em load
 // Ion-Modals irão estão integrados noutras pastas mas trazidas para o App.tsx
 
