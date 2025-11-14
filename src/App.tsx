@@ -61,8 +61,7 @@ import { GeolocationProvider, GeolocationContext } from './context/geolocationCo
 setupIonicReact();
 
 import { NavigationBar } from '@capgo/capacitor-navigation-bar';
-
-NavigationBar.setNavigationBarColor({color:'TRANSPARENT',darkButtons: true})
+NavigationBar.setNavigationBarColor({ color: 'TRANSPARENT', darkButtons: true });
 
 // Colocar mapa no principal, não usar outras paginas, pagina principal (Mapa) sempre em load
 // Ion-Modals irão estão integrados noutras pastas mas trazidas para o App.tsx
@@ -75,6 +74,8 @@ const AppContent: React.FC = () => {
     const [showModalEcopontos, setModalEcopontos] = useState(false);
     const [showModalResiduos, setModalResiduos] = useState(false);
     const [showModalChatbot, setModalChatbot] = useState(false);
+
+    const [canClickMapa, setCanClickMapa] = useState(true);
 
     const {
         selectedEcoponto,
@@ -201,11 +202,18 @@ const AppContent: React.FC = () => {
                                 console.log('home');
                                 setDesignSelected('mapa');
 
-                                // Voar para a localização atual caso nenhum modal estiver aberto, quando tab "Mapa" for clicado
-                                if (verificarTudoFechado() /* && position*/) {
-                                    setFlyUserLocationBool(true);
-                                }
+                                if (canClickMapa) {
+                                    // Voar para a localização atual caso nenhum modal estiver aberto, quando tab "Mapa" for clicado
+                                    if (verificarTudoFechado() /* && position*/) {
+                                        setFlyUserLocationBool(true);
 
+                                        // Não ser possível clicar muito rápido
+                                        setCanClickMapa(false);
+                                        setTimeout(() => {
+                                            setCanClickMapa(true);
+                                        }, 1000);
+                                    }
+                                }
                                 closeModals();
                             }}
                         >

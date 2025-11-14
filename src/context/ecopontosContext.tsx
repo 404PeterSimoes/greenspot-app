@@ -46,8 +46,7 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
     const [selectedEcoponto, setSelectedEcoponto] = useState<Ecoponto | null>(null);
 
     const [showModalEcoSelecionado, setModalEcoSelecionado] = useState<boolean>(false);
-    const [callShowModalEcoSelecionado, setCallShowModalEcoSelecionado] =
-        useState<boolean>(false);
+    const [callShowModalEcoSelecionado, setCallShowModalEcoSelecionado] = useState<boolean>(false);
 
     useEffect(() => {
         fetchEcopontos();
