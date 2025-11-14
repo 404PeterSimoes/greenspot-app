@@ -55,6 +55,63 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
         }
     }, [flyToUserLocation]);
 
+// Código para animar o Marker quando a posição GPS do user atualizar
+const [markerPos, setMarkerPos] = useState<{ lat: number; lng: number } | null>(null);
+const animationRef = useRef<number | null>(null);
+const isAnimatingRef = useRef(false);
+
+useEffect(() => {
+    if (!position?.lat || !position?.lng) return;
+    
+    // Primeira posição - sem animação
+    if (!markerPos) {
+        setMarkerPos({ lat: position.lat, lng: position.lng });
+        return;
+    }
+
+    // Se já está a animar, ignorar
+    if (isAnimatingRef.current) return;
+
+    // Cancelar animação anterior
+    if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+    }
+
+    // Iniciar nova animação
+    isAnimatingRef.current = true;
+    const startPos = { ...markerPos };
+    const endPos = { lat: position.lat, lng: position.lng };
+    
+    let frame = 0;
+    const totalFrames = 20;
+
+    const animate = () => {
+        frame++;
+        const progress = Math.min(frame / totalFrames, 1);
+
+        setMarkerPos({
+            lat: startPos.lat + (endPos.lat - startPos.lat) * progress,
+            lng: startPos.lng + (endPos.lng - startPos.lng) * progress
+        });
+
+        if (frame < totalFrames) {
+            animationRef.current = requestAnimationFrame(animate);
+        } else {
+            isAnimatingRef.current = false;
+            animationRef.current = null;
+        }
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+        if (animationRef.current) {
+            cancelAnimationFrame(animationRef.current);
+        }
+        isAnimatingRef.current = false;
+    };
+}, [position]);
+
     return (
         <IonContent style={{ postition: 'relative' }}>
             <Map
@@ -100,8 +157,8 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                         />
                     </Marker>
                 ))}
-                {position && (
-                    <Marker latitude={position.lat} longitude={position.lng} anchor="bottom">
+                {markerPos && (
+                    <Marker latitude={markerPos.lat} longitude={markerPos.lng} anchor="bottom">
                         <div
                             style={{
                                 backgroundColor: 'blue',
