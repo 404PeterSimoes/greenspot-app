@@ -8,6 +8,8 @@ import imgVidro from '../../assets/vidro.png';
 import imgOleao from '../../assets/oleao.png';
 import imgPilhao from '../../assets/pilhao.png';
 
+import './ecopontoSelecionado.css'
+
 const ModalPageEcoSelecionado: React.FC = () => {
     const { selectedEcoponto } = useContext(EcopontosContext);
 
@@ -20,13 +22,13 @@ const ModalPageEcoSelecionado: React.FC = () => {
                     </h4>
                 </IonToolbar>
             </IonHeader>
-            <IonContent>
-                <div style={{ backgroundColor: 'red' }}>
+            <IonContent className='contentEcoSelecionado'>
+                <div className='containerPodeDepositar'>
                     {selectedEcoponto?.Tem_papel && <img src={imgPapel} />}
-                    {selectedEcoponto?.Tem_plastico && <img src={imgPlastico} />}
+                    {selectedEcoponto?.Tem_plastico && <img style={{marginLeft: '5px'}} src={imgPlastico} />}
                     {selectedEcoponto?.Tem_vidro && <img src={imgVidro} />}
-                    {selectedEcoponto?.Tem_oleao && <img src={imgOleao} />}
-                    {selectedEcoponto?.Tem_pilhao && <img src={imgPilhao} />}
+                    {selectedEcoponto?.Tem_oleao && <img style={{marginRight: '-2px'}} src={imgOleao} />}
+                    {selectedEcoponto?.Tem_pilhao && <img style={{marginRight: '-7px'}} src={imgPilhao} />}
                 </div>
             </IonContent>
         </IonPage>

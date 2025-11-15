@@ -1,0 +1,13 @@
+.containerPodeDepositar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.containerPodeDepositar img {
+    width: 65px;
+}
+
+ion-content.contentEcoSelecionado {
+    --background: red;
+}

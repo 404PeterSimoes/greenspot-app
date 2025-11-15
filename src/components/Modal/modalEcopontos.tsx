@@ -47,7 +47,7 @@ const ModalPageEcopontos: React.FC = () => {
                         }, 100);
                     }}
                 >
-                    <img src={markerEcoponto} />
+                    <img src={markerEcoponto} className='markerEcoponto'/>
                     <IonLabel>
                         <h2>{eco.Morada}</h2>
                     </IonLabel>
