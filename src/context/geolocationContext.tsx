@@ -1,4 +1,4 @@
-import { Geolocation, Position } from '@capacitor/geolocation';
+import { Geolocation } from '@capacitor/geolocation';
 import { createContext, useEffect, useState } from 'react';
 
 type Pos = { lat: number; lng: number } | null;
