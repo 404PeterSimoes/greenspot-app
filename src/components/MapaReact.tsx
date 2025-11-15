@@ -2,7 +2,7 @@ import { IonPage, IonContent } from '@ionic/react';
 import { useContext, useEffect, useRef, useState } from 'react';
 import Map, { Marker, MapRef } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import markerEcoponto from '../assets/marker_ecoponto.png';
+import imgMarkerEcoponto from '../assets/marker_ecoponto.png';
 import './MapaReact.css';
 import { EcopontosContext } from '../context/ecopontosContext';
 import { GeolocationContext } from '../context/geolocationContext';
@@ -153,7 +153,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                     >
                         <img
                             className={`imgEcoponto ${selectedEcoponto === eco ? 'selected' : ''}`}
-                            src={markerEcoponto}
+                            src={imgMarkerEcoponto}
                         />
                     </Marker>
                 ))}
