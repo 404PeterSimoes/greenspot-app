@@ -1,11 +1,12 @@
 import { IonPage, IonContent } from '@ionic/react';
 import { useContext, useEffect, useRef, useState } from 'react';
-import Map, { Marker, MapRef } from 'react-map-gl/mapbox';
+import Map, { Marker, MapRef, Source, Layer, useMap } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import imgMarkerEcoponto from '../assets/marker_ecoponto.png';
 import './MapaReact.css';
 import { EcopontosContext } from '../context/ecopontosContext';
 import { GeolocationContext } from '../context/geolocationContext';
+import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 
 interface Props {
     flyToUserLocation: boolean;
@@ -112,6 +113,56 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
         };
     }, [position]);
 
+    // Função para conseguir a rota e fazer display no mapa
+    async function getRoute(start: number[], end: number[]) {
+        const query = await fetch(
+            `https://api.mapbox.com/directions/v5/mapbox/cycling/${start[0]},${start[1]};${
+                end[0]
+            },${end[1]}?steps=true&geometries=geojson&access_token=${
+                import.meta.env.VITE_MAPBOX_ACCESS_TOKEN
+            }`
+        );
+
+        const json = await query.json();
+        const data = json.routes[0];
+        const geojson: Feature<Geometry, GeoJsonProperties> = {
+            type: 'Feature',
+            properties: {},
+            geometry: data.geometry,
+        };
+
+        const map = mapRef.current?.getMap();
+        if (!map) return;
+
+        const source = map.getSource('route');
+
+        if (source && source.type === 'geojson') {
+            (source as mapboxgl.GeoJSONSource).setData(geojson);
+        } else {
+            map.addSource('route', {
+                type: 'geojson',
+                data: geojson,
+            });
+
+            map.addLayer({
+                id: 'route',
+                type: 'line',
+                source: 'route',
+                layout: {
+                    'line-join': 'round',
+                    'line-cap': 'round',
+                },
+                paint: {
+                    'line-color': '#0062ff',
+                    'line-width': 5,
+                    'line-opacity': 0.75,
+                },
+            });
+        }
+
+        console.log(data.distance)
+    }
+
     return (
         <IonContent style={{ postition: 'relative' }}>
             <Map
@@ -126,14 +177,6 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                 //mapStyle="mapbox://styles/mapbox/streets-v9"
                 mapStyle="mapbox://styles/mapbox/standard-satellite"
                 attributionControl={false}
-                /*
-                // Quando o mapa for movido, fecha o modal EcoSelecionado
-                onTouchMove={() => {
-                    setModalEcoSelecionado(false);
-
-                    // Delay para apenas desselecionar o ecoponto quando o modal sair
-                    setTimeout(() => setSelectedEcoponto(null), 150);
-                }}*/
             >
                 {arrayEcopontos.map((eco) => (
                     <Marker
@@ -143,12 +186,18 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                         anchor="bottom"
                         onClick={() => {
                             // SetTimeout para o flyto acontecer mesmo que o user tenha feito double click no marker
+
+                            getRoute(
+                                [-8.517099769640195, 38.984597035870635],
+                                [eco.Longitude, eco.Latitude]
+                            );
+                            /* Off temporariamente
                             setTimeout(() => {
                                 const ecoSelecionado = eco;
                                 setSelectedEcoponto(ecoSelecionado);
                                 setModalEcoSelecionado(true);
                                 setCallShowModalEcoSelecionado(true);
-                            }, 150);
+                            }, 150);*/
                         }}
                     >
                         <img
