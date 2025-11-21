@@ -1,7 +1,7 @@
 .containerPodeDepositar {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 5px;
 }
 
 .containerPodeDepositar img {
@@ -10,4 +10,5 @@
 
 ion-content.contentEcoSelecionado {
     /* --background: red; */
+    --padding-top: 30px;
 }

@@ -186,12 +186,12 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                         anchor="bottom"
                         onClick={() => {
                             // SetTimeout para o flyto acontecer mesmo que o user tenha feito double click no marker
-
+                            
                             getRoute(
                                 [-8.517099769640195, 38.984597035870635],
                                 [eco.Longitude, eco.Latitude]
                             );
-                            /* Off temporariamente
+                            /* Off temporariamente 
                             setTimeout(() => {
                                 const ecoSelecionado = eco;
                                 setSelectedEcoponto(ecoSelecionado);
