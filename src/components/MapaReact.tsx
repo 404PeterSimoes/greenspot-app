@@ -118,7 +118,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
         const query = await fetch(
             `https://api.mapbox.com/directions/v5/mapbox/cycling/${start[0]},${start[1]};${
                 end[0]
-            },${end[1]}?steps=true&geometries=geojson&access_token=${
+            },${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${
                 import.meta.env.VITE_MAPBOX_ACCESS_TOKEN
             }`
         );
