@@ -3,6 +3,4 @@ Colocar seleção filtrada dos marcadores a partir das colunas da base de dados
 Aparecer por ordem na lista de Ecopontos os ecopontos que estão mais próximos de mim e a sua distância
 (para depois colocar navigation)
 
-Quando se clicar num ecoponto no modal irá aparecer o mesmo menu que aparece quando se clica no mapa no marker
-
 https://github.com/neeleshbisht99/react-map-gl-directions

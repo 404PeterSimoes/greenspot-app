@@ -1,5 +1,6 @@
-import { createContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '../lib/supabaseClient';
+import { GeolocationContext } from './geolocationContext';
 
 interface Ecoponto {
     Codigo: string;
@@ -42,6 +43,8 @@ export const EcopontosContext = createContext<DataContextType>({
 });
 
 export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+    const { position } = useContext(GeolocationContext)!;
+
     const [arrayEcopontos, setEcopontos] = useState<Ecoponto[]>([]);
     const [selectedEcoponto, setSelectedEcoponto] = useState<Ecoponto | null>(null);
 
@@ -52,6 +55,24 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
         fetchEcopontos();
     }, []);
 
+    useEffect(() => {
+        updateEcopontosPosition();
+    }, [position]);
+
+    function formulaHaversine(lat1: number, lon1: number, lat2: number, lon2: number) {
+        const R = 6371; // raio da Terra em km
+        const toRad = (x: number) => (x * Math.PI) / 180;
+
+        const dLat = toRad(lat2 - lat1);
+        const dLon = toRad(lon2 - lon1);
+
+        const a =
+            Math.sin(dLat / 2) ** 2 +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
     async function fetchEcopontos() {
         const { data, error } = await supabase
             .from('table_ecopontos')
@@ -61,6 +82,23 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
         if (!error && data) {
             setEcopontos(data);
             console.log('Ecopontos loaded!');
+        }
+    }
+
+    function updateEcopontosPosition() {
+        if (position) {
+            const arrayEcopontosOrdenados = arrayEcopontos.map((eco) => ({
+                ...eco,
+                distancia: formulaHaversine(
+                    position.lat,
+                    position.lng,
+                    eco.Latitude,
+                    eco.Longitude
+                ),
+            })); // .sort((a, b) => a.distancia - b.distancia);
+
+            setEcopontos(arrayEcopontosOrdenados)
+            console.log('Ecopontos updated!');
         }
     }
 
