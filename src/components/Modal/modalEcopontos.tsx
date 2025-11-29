@@ -30,6 +30,15 @@ const ModalPageEcopontos: React.FC = () => {
         setResults(arrayEcopontos.filter((eco) => eco.Morada.toLowerCase().indexOf(query) > -1));
     };
 
+    // Função para transformar corretamente a distância entre o user e o ecoponto
+    const stringDistancia = (distancia: number) => {
+        if (distancia < 1) {
+            return `${(distancia * 1000).toFixed(0)} m`;
+        } else {
+            return `${distancia.toFixed(2)} km`;
+        }
+    };
+
     const Lista: React.FC = () => (
         <IonList lines="full">
             {results.map((eco) => (
@@ -38,7 +47,7 @@ const ModalPageEcopontos: React.FC = () => {
                     button
                     onClick={() => {
                         const ecoSelecionado = eco;
-                        
+
                         // Timer para dar tempo de fazer a animação toda de clique
                         setTimeout(() => {
                             setModalEcoSelecionado(true);
@@ -47,11 +56,11 @@ const ModalPageEcopontos: React.FC = () => {
                         }, 100);
                     }}
                 >
-                    <img src={markerEcoponto} className='markerEcoponto'/>
+                    <img src={markerEcoponto} className="markerEcoponto" />
                     <IonLabel>
                         <h2>{eco.Morada}</h2>
                     </IonLabel>
-                    <IonNote>{`${eco.Distancia} km`}</IonNote>
+                    {eco.Distancia && <IonNote>{stringDistancia(eco.Distancia)}</IonNote>}
                 </IonItem>
             ))}
         </IonList>

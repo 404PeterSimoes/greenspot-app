@@ -173,7 +173,7 @@ const AppContent: React.FC = () => {
                         const { role } = e.detail;
 
                         if (role === 'gesture') {
-                            console.log('ola');
+                            console.log('modalEcoSelecionado fechado!');
                             setSelectedEcoponto(null);
                             setModalEcoSelecionado(false);
                         }
