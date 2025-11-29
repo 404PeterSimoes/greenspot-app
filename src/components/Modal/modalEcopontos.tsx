@@ -51,7 +51,7 @@ const ModalPageEcopontos: React.FC = () => {
                     <IonLabel>
                         <h2>{eco.Morada}</h2>
                     </IonLabel>
-                    <IonNote>Ola</IonNote>
+                    <IonNote>{`${eco.Distancia} km`}</IonNote>
                 </IonItem>
             ))}
         </IonList>

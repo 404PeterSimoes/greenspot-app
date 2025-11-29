@@ -71,7 +71,7 @@ NavigationBar.setNavigationBarColor({ color: 'TRANSPARENT', darkButtons: true })
 const AppContent: React.FC = () => {
     const [designSelected, setDesignSelected] = useState('mapa');
 
-    const [showModalEcopontos, setModalEcopontos] = useState(false);
+    const { showModalEcopontos, setModalEcopontos } = useContext(EcopontosContext);
     const [showModalResiduos, setModalResiduos] = useState(false);
     const [showModalChatbot, setModalChatbot] = useState(false);
 

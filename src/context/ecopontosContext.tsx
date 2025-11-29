@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { GeolocationContext } from './geolocationContext';
 
 interface Ecoponto {
     Codigo: string;
@@ -20,12 +19,16 @@ interface Ecoponto {
     Tem_vidro: boolean;
     Tem_oleao: boolean;
     Tem_pilhao: boolean;
+    Distancia: number;
 }
 
 interface DataContextType {
     arrayEcopontos: Ecoponto[];
+    setEcopontos: (value: Ecoponto[]) => void;
     selectedEcoponto: Ecoponto | null;
-    setSelectedEcoponto: (eco: Ecoponto | null) => void;
+    setSelectedEcoponto: (value: Ecoponto | null) => void;
+    showModalEcopontos: boolean;
+    setModalEcopontos: (value: boolean) => void;
     showModalEcoSelecionado: boolean;
     setModalEcoSelecionado: (value: boolean) => void;
     callShowModalEcoSelecionado: boolean;
@@ -34,8 +37,11 @@ interface DataContextType {
 
 export const EcopontosContext = createContext<DataContextType>({
     arrayEcopontos: [],
+    setEcopontos: () => {},
     selectedEcoponto: null,
     setSelectedEcoponto: () => {},
+    showModalEcopontos: false,
+    setModalEcopontos: () => {},
     showModalEcoSelecionado: false,
     setModalEcoSelecionado: () => {},
     callShowModalEcoSelecionado: false,
@@ -43,35 +49,18 @@ export const EcopontosContext = createContext<DataContextType>({
 });
 
 export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const { position } = useContext(GeolocationContext)!;
+    
 
     const [arrayEcopontos, setEcopontos] = useState<Ecoponto[]>([]);
     const [selectedEcoponto, setSelectedEcoponto] = useState<Ecoponto | null>(null);
 
+    const [showModalEcopontos, setModalEcopontos] = useState<boolean>(false);
     const [showModalEcoSelecionado, setModalEcoSelecionado] = useState<boolean>(false);
     const [callShowModalEcoSelecionado, setCallShowModalEcoSelecionado] = useState<boolean>(false);
 
     useEffect(() => {
         fetchEcopontos();
     }, []);
-
-    useEffect(() => {
-        updateEcopontosPosition();
-    }, [position]);
-
-    function formulaHaversine(lat1: number, lon1: number, lat2: number, lon2: number) {
-        const R = 6371; // raio da Terra em km
-        const toRad = (x: number) => (x * Math.PI) / 180;
-
-        const dLat = toRad(lat2 - lat1);
-        const dLon = toRad(lon2 - lon1);
-
-        const a =
-            Math.sin(dLat / 2) ** 2 +
-            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
-
-        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    }
 
     async function fetchEcopontos() {
         const { data, error } = await supabase
@@ -85,29 +74,15 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
         }
     }
 
-    function updateEcopontosPosition() {
-        if (position) {
-            const arrayEcopontosOrdenados = arrayEcopontos.map((eco) => ({
-                ...eco,
-                distancia: formulaHaversine(
-                    position.lat,
-                    position.lng,
-                    eco.Latitude,
-                    eco.Longitude
-                ),
-            })); // .sort((a, b) => a.distancia - b.distancia);
-
-            setEcopontos(arrayEcopontosOrdenados)
-            console.log('Ecopontos updated!');
-        }
-    }
-
     return (
         <EcopontosContext.Provider
             value={{
                 arrayEcopontos,
+                setEcopontos,
                 selectedEcoponto,
                 setSelectedEcoponto,
+                showModalEcopontos,
+                setModalEcopontos,
                 showModalEcoSelecionado,
                 setModalEcoSelecionado,
                 callShowModalEcoSelecionado,
