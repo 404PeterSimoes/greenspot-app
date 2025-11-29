@@ -1,0 +1,30 @@
+div.papel,
+div.plastico,
+div.vidro,
+div.oleao,
+div.pilhao {
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.307);
+    color:white;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgba(0, 0, 0, 0.156);
+    border-radius: 30px;
+}
+
+div.papel {
+    background-color: rgb(68, 95, 213);
+}
+div.plastico {
+    background-color: rgb(233, 208, 45);
+}
+div.vidro {
+    background-color: rgb(68, 213, 70);
+}
+div.oleao {
+    background-color: rgb(213, 119, 68);
+}
+div.pilhao {
+    background-color: rgb(191, 56, 56);
+}
