@@ -1,30 +1,54 @@
-div.papel,
-div.plastico,
-div.vidro,
-div.oleao,
-div.pilhao {
-    text-shadow: 2px 2px rgba(0, 0, 0, 0.307);
-    color:white;
+div.formatacao {
+    color: white;
     height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 2px solid rgba(0, 0, 0, 0.156);
     border-radius: 30px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.199);
 }
 
 div.papel {
-    background-color: rgb(68, 95, 213);
+    background-color: rgb(183, 183, 183); /*rgb(68, 95, 213)*/
 }
 div.plastico {
     background-color: rgb(233, 208, 45);
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.192);
 }
 div.vidro {
     background-color: rgb(68, 213, 70);
 }
 div.oleao {
     background-color: rgb(213, 119, 68);
+    width: 225px;
 }
 div.pilhao {
     background-color: rgb(191, 56, 56);
+}
+
+div.containerCima {
+    display: flex;
+    gap: 10px;
+    justify-content: right;
+    margin-top: 10px;
+    padding-right: 4%;
+    padding-top: 5.3%;
+    color: rgb(107, 107, 107);
+}
+
+div.formatacaoCima {
+    width: 70px;
+    height: 30px;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgba(0, 0, 0, 0.156);
+    border-radius: 30px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.113);
+}
+
+.icone {
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.197));
 }

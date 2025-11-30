@@ -10,8 +10,10 @@ import {
     IonGrid,
     IonRow,
     IonCol,
+    IonIcon,
 } from '@ionic/react';
-import './modalResiduos.css'
+import './modalResiduos.css';
+import { checkmarkOutline, closeOutline, colorFill } from 'ionicons/icons';
 
 const ModalPageResiduos: React.FC = () => {
     return (
@@ -22,30 +24,43 @@ const ModalPageResiduos: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
+                <div className="containerCima">
+                    <div className="formatacaoCima">Tudo</div>
+                    <div className="formatacaoCima">Limpar</div>
+                </div>
                 <IonGrid>
                     <IonRow>
-                        <IonCol><div>Tudo</div></IonCol>
-                        <IonCol><div>Limpar</div></IonCol>
+                        <IonCol>
+                            <div onClick={() => console.log('a')} className="formatacao papel">
+                                <IonIcon size="large" icon={closeOutline} />
+                                <IonLabel>Papel</IonLabel>
+                            </div>
+                        </IonCol>
+                        <IonCol>
+                            <div className="formatacao plastico">
+                                <IonIcon className='icone' size="large" icon={checkmarkOutline} />
+                                Plástico
+                            </div>
+                        </IonCol>
+                        <IonCol>
+                            <div className="formatacao vidro">
+                                <IonIcon size="large" icon={checkmarkOutline} />
+                                Vidro
+                            </div>
+                        </IonCol>
                     </IonRow>
-                </IonGrid>
-                <IonGrid>
                     <IonRow>
                         <IonCol>
-                            <div className='papel'>Papel</div>
+                            <div className="formatacao oleao">
+                                <IonIcon size="large" icon={checkmarkOutline} />
+                                Óleos Alimentares
+                            </div>
                         </IonCol>
                         <IonCol>
-                            <div className='plastico'>Plástico</div>
-                        </IonCol>
-                    </IonRow>
-                    <IonRow>
-                        <IonCol>
-                            <div className='vidro'>Vidro</div>
-                        </IonCol>
-                        <IonCol>
-                            <div className='oleao'>Oleão</div>
-                        </IonCol>
-                        <IonCol>
-                            <div className='pilhao'>Pilhão</div>
+                            <div className="formatacao pilhao">
+                                <IonIcon size="large" icon={checkmarkOutline} />
+                                Pilhas
+                            </div>
                         </IonCol>
                     </IonRow>
                 </IonGrid>
