@@ -17,11 +17,11 @@ import './modalResiduos.css';
 import { checkmarkOutline, closeOutline } from 'ionicons/icons';
 
 const ModalPageResiduos: React.FC = () => {
-    const [residuosPapel, setResiduosPapel] = useState(true);
-    const [residuosPlastico, setResiduosPlastico] = useState(true);
-    const [residuosVidro, setResiduosVidro] = useState(true);
-    const [residuosOleao, setResiduosOleao] = useState(true);
-    const [residuosPilhao, setResiduosPilhao] = useState(true);
+    const [residuosPapel, setResiduosPapel] = useState(false);
+    const [residuosPlastico, setResiduosPlastico] = useState(false);
+    const [residuosVidro, setResiduosVidro] = useState(false);
+    const [residuosOleao, setResiduosOleao] = useState(false);
+    const [residuosPilhao, setResiduosPilhao] = useState(false);
 
     const setTudo = () => {
         setResiduosPapel(true);
@@ -47,6 +47,7 @@ const ModalPageResiduos: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
+                <IonLabel>O que pretende depositar?</IonLabel>
                 <div className="containerCima">
                     <div onClick={setTudo} className="formatacaoCima">
                         Tudo
@@ -64,10 +65,10 @@ const ModalPageResiduos: React.FC = () => {
                                     residuosPapel ? 'formatacao papel' : 'formatacao desativado'
                                 }
                             >
-                                <IonIcon
+                                {residuosPapel && <IonIcon
                                     size="large"
                                     icon={residuosPapel ? checkmarkOutline : closeOutline}
-                                />
+                                />}
                                 <IonLabel>Papel</IonLabel>
                             </div>
                         </IonCol>
@@ -80,11 +81,11 @@ const ModalPageResiduos: React.FC = () => {
                                         : 'formatacao desativado'
                                 }
                             >
-                                <IonIcon
+                                {residuosPlastico && <IonIcon
                                     size="large"
                                     icon={residuosPlastico ? checkmarkOutline : closeOutline}
                                     className={residuosPlastico ? 'icone' : ''}
-                                />
+                                />}
                                 Plástico
                             </div>
                         </IonCol>
@@ -95,10 +96,10 @@ const ModalPageResiduos: React.FC = () => {
                                     residuosVidro ? 'formatacao vidro' : 'formatacao desativado'
                                 }
                             >
-                                <IonIcon
+                                {residuosVidro && <IonIcon
                                     size="large"
                                     icon={residuosVidro ? checkmarkOutline : closeOutline}
-                                />
+                                />}
                                 Vidro
                             </div>
                         </IonCol>
@@ -113,10 +114,10 @@ const ModalPageResiduos: React.FC = () => {
                                         : 'formatacao oleao desativado'
                                 }
                             >
-                                <IonIcon
+                               {residuosOleao && <IonIcon
                                     size="large"
                                     icon={residuosOleao ? checkmarkOutline : closeOutline}
-                                />
+                                />}
                                 Óleos Alimentares
                             </div>
                         </IonCol>
@@ -127,10 +128,10 @@ const ModalPageResiduos: React.FC = () => {
                                     residuosPilhao ? 'formatacao pilhao' : 'formatacao desativado'
                                 }
                             >
-                                <IonIcon
+                                {residuosPilhao && <IonIcon
                                     size="large"
                                     icon={residuosPilhao ? checkmarkOutline : closeOutline}
-                                />
+                                />}
                                 Pilhas
                             </div>
                         </IonCol>
