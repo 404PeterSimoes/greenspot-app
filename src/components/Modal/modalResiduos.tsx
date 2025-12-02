@@ -67,7 +67,7 @@ const ModalPageResiduos: React.FC = () => {
                             >
                                 {residuosPapel && <IonIcon
                                     size="large"
-                                    icon={residuosPapel ? checkmarkOutline : closeOutline}
+                                    icon={residuosPapel ? checkmarkOutline : undefined}
                                 />}
                                 <IonLabel>Papel</IonLabel>
                             </div>
@@ -83,7 +83,7 @@ const ModalPageResiduos: React.FC = () => {
                             >
                                 {residuosPlastico && <IonIcon
                                     size="large"
-                                    icon={residuosPlastico ? checkmarkOutline : closeOutline}
+                                    icon={residuosPlastico ? checkmarkOutline : undefined}
                                     className={residuosPlastico ? 'icone' : ''}
                                 />}
                                 Plástico
@@ -98,7 +98,7 @@ const ModalPageResiduos: React.FC = () => {
                             >
                                 {residuosVidro && <IonIcon
                                     size="large"
-                                    icon={residuosVidro ? checkmarkOutline : closeOutline}
+                                    icon={residuosVidro ? checkmarkOutline : undefined}
                                 />}
                                 Vidro
                             </div>
@@ -116,7 +116,7 @@ const ModalPageResiduos: React.FC = () => {
                             >
                                {residuosOleao && <IonIcon
                                     size="large"
-                                    icon={residuosOleao ? checkmarkOutline : closeOutline}
+                                    icon={residuosOleao ? checkmarkOutline : undefined}
                                 />}
                                 Óleos Alimentares
                             </div>
@@ -130,7 +130,7 @@ const ModalPageResiduos: React.FC = () => {
                             >
                                 {residuosPilhao && <IonIcon
                                     size="large"
-                                    icon={residuosPilhao ? checkmarkOutline : closeOutline}
+                                    icon={residuosPilhao ? checkmarkOutline : undefined}
                                 />}
                                 Pilhas
                             </div>

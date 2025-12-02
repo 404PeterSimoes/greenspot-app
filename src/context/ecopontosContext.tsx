@@ -48,9 +48,7 @@ export const EcopontosContext = createContext<DataContextType>({
     setCallShowModalEcoSelecionado: () => {},
 });
 
-export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    
-
+export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children }) => { 
     const [arrayEcopontos, setEcopontos] = useState<Ecoponto[]>([]);
     const [selectedEcoponto, setSelectedEcoponto] = useState<Ecoponto | null>(null);
 
