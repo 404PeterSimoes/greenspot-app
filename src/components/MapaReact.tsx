@@ -46,7 +46,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
             if (mapRef.current && position) {
                 mapRef.current.flyTo({
                     center: [position.lng, position.lat],
-                    zoom: 13,
+                    zoom: 16.5,
                     duration: 3000,
                     essential: true,
                     offset: [0, -10],
@@ -186,18 +186,18 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                         anchor="bottom"
                         onClick={() => {
                             // SetTimeout para o flyto acontecer mesmo que o user tenha feito double click no marker
-                            
+                            /*
                             getRoute(
                                 [-8.517099769640195, 38.984597035870635],
                                 [eco.Longitude, eco.Latitude]
-                            );
-                            /* Off temporariamente 
+                            );*/
+                            /* Off temporariamente */
                             setTimeout(() => {
                                 const ecoSelecionado = eco;
                                 setSelectedEcoponto(ecoSelecionado);
                                 setModalEcoSelecionado(true);
                                 setCallShowModalEcoSelecionado(true);
-                            }, 150);*/
+                            }, 150);
                         }}
                     >
                         <img
@@ -214,6 +214,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                                 borderRadius: '50%',
                                 width: 20,
                                 height: 20,
+                                border: '3px solid white'
                             }}
                         />
                     </Marker>

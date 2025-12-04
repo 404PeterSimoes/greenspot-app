@@ -238,11 +238,11 @@ const AppContent: React.FC = () => {
                         <IonTabButton
                             tab="home"
                             className={designSelected === 'residuos' ? 'designSelectedClass' : ''}
-                            onClick={() => {
+                            onClick={() => {/*
                                 console.log('residuos');
                                 setDesignSelected('residuos');
                                 closeModals();
-                                setModalResiduos(true);
+                                setModalResiduos(true);*/
                             }}
                         >
                             <IonIcon icon={trashOutline} />
@@ -252,11 +252,11 @@ const AppContent: React.FC = () => {
                         <IonTabButton
                             tab="home"
                             className={designSelected === 'chatbot' ? 'designSelectedClass' : ''}
-                            onClick={() => {
+                            onClick={() => {/*
                                 console.log('chatbot');
                                 setDesignSelected('chatbot');
                                 closeModals();
-                                setModalChatbot(true);
+                                setModalChatbot(true);*/
                             }}
                         >
                             <IonIcon icon={helpOutline} />
