@@ -214,6 +214,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                                 borderRadius: '50%',
                                 width: 20,
                                 height: 20,
+                                border: '3px solid white'
                             }}
                         />
                     </Marker>

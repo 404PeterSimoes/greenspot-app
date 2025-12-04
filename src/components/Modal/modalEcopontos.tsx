@@ -58,7 +58,7 @@ const ModalPageEcopontos: React.FC = () => {
                 >
                     <img src={markerEcoponto} className="markerEcoponto" />
                     <IonLabel>
-                        <h2>{eco.Morada}</h2>
+                        <h2 className='morada'>{eco.Morada}</h2>
                     </IonLabel>
                     {eco.Distancia && <IonNote>{stringDistancia(eco.Distancia)}</IonNote>}
                 </IonItem>
