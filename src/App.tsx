@@ -58,6 +58,9 @@ import ModalPageEcoSelecionado from './components/Modal/ecopontoSelecionado';
 import { EcopontosContext, EcopontosProvider } from './context/ecopontosContext';
 import { GeolocationProvider, GeolocationContext } from './context/geolocationContext';
 
+import { StatusBar } from '@capacitor/status-bar';
+import { Capacitor } from '@capacitor/core';
+
 setupIonicReact();
 
 import { NavigationBar } from '@capgo/capacitor-navigation-bar';
@@ -130,6 +133,20 @@ const AppContent: React.FC = () => {
     };
 
     const [flyUserLocationBool, setFlyUserLocationBool] = useState(false);
+
+    useEffect(() => {
+        const adjustStatusBar = async () => {
+            await StatusBar.setOverlaysWebView({ overlay: false });
+        };
+
+        if (Capacitor.getPlatform() === 'android') {
+            window.addEventListener('load', adjustStatusBar);
+        }
+
+        return () => {
+            window.removeEventListener('load', adjustStatusBar);
+        };
+    }, []);
 
     return (
         <IonApp>
