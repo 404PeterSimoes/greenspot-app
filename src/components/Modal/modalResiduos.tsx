@@ -12,31 +12,45 @@ import {
     IonCol,
     IonIcon,
 } from '@ionic/react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './modalResiduos.css';
 import { checkmarkOutline, closeOutline } from 'ionicons/icons';
+import { EcopontosContext } from '../../context/ecopontosContext';
 
 const ModalPageResiduos: React.FC = () => {
-    const [residuosPapel, setResiduosPapel] = useState(false);
-    const [residuosPlastico, setResiduosPlastico] = useState(false);
-    const [residuosVidro, setResiduosVidro] = useState(false);
-    const [residuosOleao, setResiduosOleao] = useState(false);
-    const [residuosPilhao, setResiduosPilhao] = useState(false);
+    const { residuosPretendidos, setResiduosPretendidos } = useContext(EcopontosContext);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setResiduosPretendidos({
+                Papel: false,
+                Plastico: false,
+                Vidro: false,
+                Oleao: false,
+                Pilhao: false,
+            });
+            console.log('funcao executada');
+        }, 1000);
+    });
 
     const setTudo = () => {
-        setResiduosPapel(true);
-        setResiduosPlastico(true);
-        setResiduosVidro(true);
-        setResiduosOleao(true);
-        setResiduosPilhao(true);
+        setResiduosPretendidos({
+            Papel: true,
+            Plastico: true,
+            Vidro: true,
+            Oleao: true,
+            Pilhao: true,
+        });
     };
 
     const setLimpar = () => {
-        setResiduosPapel(false);
-        setResiduosPlastico(false);
-        setResiduosVidro(false);
-        setResiduosOleao(false);
-        setResiduosPilhao(false);
+        setResiduosPretendidos({
+            Papel: false,
+            Plastico: false,
+            Vidro: false,
+            Oleao: false,
+            Pilhao: false,
+        });
     };
 
     return (
@@ -47,7 +61,7 @@ const ModalPageResiduos: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <IonLabel className='firstText'>O que pretende depositar?</IonLabel>
+                <IonLabel className="firstText">O que pretende depositar?</IonLabel>
                 <div className="containerCima">
                     <div onClick={setTudo} className="formatacaoCima">
                         Tudo
@@ -56,50 +70,69 @@ const ModalPageResiduos: React.FC = () => {
                         Limpar
                     </div>
                 </div>
+
                 <IonGrid>
                     <IonRow>
                         <IonCol>
                             <div
-                                onClick={() => setResiduosPapel(!residuosPapel)}
+                                onClick={() => {} /*() => setResiduosPapel(!residuosPapel)*/}
                                 className={
-                                    residuosPapel ? 'formatacao papel' : 'formatacao desativado'
+                                    residuosPretendidos.Papel
+                                        ? 'formatacao papel'
+                                        : 'formatacao desativado'
                                 }
                             >
-                                {residuosPapel && <IonIcon
-                                    size="large"
-                                    icon={residuosPapel ? checkmarkOutline : undefined}
-                                />}
+                                {residuosPretendidos.Papel && (
+                                    <IonIcon
+                                        size="large"
+                                        icon={
+                                            residuosPretendidos.Papel ? checkmarkOutline : undefined
+                                        }
+                                    />
+                                )}
                                 <IonLabel>Papel</IonLabel>
                             </div>
                         </IonCol>
                         <IonCol>
                             <div
-                                onClick={() => setResiduosPlastico(!residuosPlastico)}
+                                onClick={() => {} /*setResiduosPlastico(!residuosPlastico)*/}
                                 className={
-                                    residuosPlastico
+                                    residuosPretendidos.Plastico
                                         ? 'formatacao plastico'
                                         : 'formatacao desativado'
                                 }
                             >
-                                {residuosPlastico && <IonIcon
-                                    size="large"
-                                    icon={residuosPlastico ? checkmarkOutline : undefined}
-                                    className={residuosPlastico ? 'icone' : ''}
-                                />}
+                                {residuosPretendidos.Plastico && (
+                                    <IonIcon
+                                        size="large"
+                                        icon={
+                                            residuosPretendidos.Plastico
+                                                ? checkmarkOutline
+                                                : undefined
+                                        }
+                                        className={residuosPretendidos.Plastico ? 'icone' : ''}
+                                    />
+                                )}
                                 Plástico
                             </div>
                         </IonCol>
                         <IonCol>
                             <div
-                                onClick={() => setResiduosVidro(!residuosVidro)}
+                                onClick={() => {} /*setResiduosVidro(!residuosVidro)*/}
                                 className={
-                                    residuosVidro ? 'formatacao vidro' : 'formatacao desativado'
+                                    residuosPretendidos.Vidro
+                                        ? 'formatacao vidro'
+                                        : 'formatacao desativado'
                                 }
                             >
-                                {residuosVidro && <IonIcon
-                                    size="large"
-                                    icon={residuosVidro ? checkmarkOutline : undefined}
-                                />}
+                                {residuosPretendidos.Vidro && (
+                                    <IonIcon
+                                        size="large"
+                                        icon={
+                                            residuosPretendidos.Vidro ? checkmarkOutline : undefined
+                                        }
+                                    />
+                                )}
                                 Vidro
                             </div>
                         </IonCol>
@@ -107,31 +140,43 @@ const ModalPageResiduos: React.FC = () => {
                     <IonRow>
                         <IonCol>
                             <div
-                                onClick={() => setResiduosOleao(!residuosOleao)}
+                                onClick={() => {} /*setResiduosOleao(!residuosOleao)*/}
                                 className={
-                                    residuosOleao
+                                    residuosPretendidos.Oleao
                                         ? 'formatacao oleao'
                                         : 'formatacao oleao desativado'
                                 }
                             >
-                               {residuosOleao && <IonIcon
-                                    size="large"
-                                    icon={residuosOleao ? checkmarkOutline : undefined}
-                                />}
+                                {residuosPretendidos.Oleao && (
+                                    <IonIcon
+                                        size="large"
+                                        icon={
+                                            residuosPretendidos.Oleao ? checkmarkOutline : undefined
+                                        }
+                                    />
+                                )}
                                 Óleos Alimentares
                             </div>
                         </IonCol>
                         <IonCol>
                             <div
-                                onClick={() => setResiduosPilhao(!residuosPilhao)}
+                                onClick={() => {} /*setResiduosPilhao(!residuosPilhao)*/}
                                 className={
-                                    residuosPilhao ? 'formatacao pilhao' : 'formatacao desativado'
+                                    residuosPretendidos.Pilhao
+                                        ? 'formatacao pilhao'
+                                        : 'formatacao desativado'
                                 }
                             >
-                                {residuosPilhao && <IonIcon
-                                    size="large"
-                                    icon={residuosPilhao ? checkmarkOutline : undefined}
-                                />}
+                                {residuosPretendidos.Pilhao && (
+                                    <IonIcon
+                                        size="large"
+                                        icon={
+                                            residuosPretendidos.Pilhao
+                                                ? checkmarkOutline
+                                                : undefined
+                                        }
+                                    />
+                                )}
                                 Pilhas
                             </div>
                         </IonCol>
