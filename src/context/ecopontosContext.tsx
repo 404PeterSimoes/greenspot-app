@@ -22,6 +22,14 @@ interface Ecoponto {
     Distancia: number;
 }
 
+interface ResiduosPretendidos {
+    Papel: boolean;
+    Plastico: boolean;
+    Vidro: boolean;
+    Oleao: boolean;
+    Pilhao: boolean;
+}
+
 interface DataContextType {
     arrayEcopontos: Ecoponto[];
     setEcopontos: (value: Ecoponto[]) => void;
@@ -33,8 +41,8 @@ interface DataContextType {
     setModalEcoSelecionado: (value: boolean) => void;
     callShowModalEcoSelecionado: boolean;
     setCallShowModalEcoSelecionado: (value: boolean) => void;
-    residuosPretendidos: [];
-    setResiduosPretendidos: (value: []) => void;
+    residuosPretendidos: ResiduosPretendidos;
+    setResiduosPretendidos: (value: ResiduosPretendidos) => void;
 }
 
 export const EcopontosContext = createContext<DataContextType>({
@@ -48,7 +56,7 @@ export const EcopontosContext = createContext<DataContextType>({
     setModalEcoSelecionado: () => {},
     callShowModalEcoSelecionado: false,
     setCallShowModalEcoSelecionado: () => {},
-    residuosPretendidos: [],
+    residuosPretendidos: { Papel: true, Plastico: true, Vidro: true, Oleao: true, Pilhao: true },
     setResiduosPretendidos: () => {},
 });
 
@@ -60,7 +68,13 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
     const [showModalEcoSelecionado, setModalEcoSelecionado] = useState<boolean>(false);
     const [callShowModalEcoSelecionado, setCallShowModalEcoSelecionado] = useState<boolean>(false);
 
-    const [residuosPretendidos, setResiduosPretendidos] = useState<[]>([]);
+    const [residuosPretendidos, setResiduosPretendidos] = useState<ResiduosPretendidos>({
+        Papel: true,
+        Plastico: true,
+        Vidro: true,
+        Oleao: true,
+        Pilhao: true,
+    }); // um objeto
 
     useEffect(() => {
         fetchEcopontos();
