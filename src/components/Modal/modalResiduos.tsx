@@ -47,7 +47,7 @@ const ModalPageResiduos: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <IonLabel>O que pretende depositar?</IonLabel>
+                <IonLabel className='firstText'>O que pretende depositar?</IonLabel>
                 <div className="containerCima">
                     <div onClick={setTudo} className="formatacaoCima">
                         Tudo

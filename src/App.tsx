@@ -163,8 +163,8 @@ const AppContent: React.FC = () => {
                 </IonModal>
                 <IonModal
                     isOpen={showModalResiduos}
-                    initialBreakpoint={0.35}
-                    breakpoints={[0.35]}
+                    initialBreakpoint={0.36}
+                    breakpoints={[0.36]}
                     backdropDismiss={false}
                     expandToScroll={false}
                     handle={false}
