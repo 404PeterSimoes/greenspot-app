@@ -65,3 +65,11 @@ ion-label.firstText {
     color: rgba(0, 0, 0, 0.753);
     font-weight: bold;
 }
+
+ion-spinner.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+}
