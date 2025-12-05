@@ -12,3 +12,8 @@ ion-content.contentEcoSelecionado {
     /* --background: red; */
     --padding-top: 30px;
 }
+
+h4.selecionadoMorada {
+    color: black;
+    text-align: center;
+}

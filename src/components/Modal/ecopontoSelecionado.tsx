@@ -17,7 +17,7 @@ const ModalPageEcoSelecionado: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <h4 style={{ color: 'black', textAlign: 'center' }}>
+                    <h4 className='selecionadoMorada'>
                         {selectedEcoponto?.Morada}
                     </h4>
                 </IonToolbar>

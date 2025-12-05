@@ -134,6 +134,7 @@ const AppContent: React.FC = () => {
 
     const [flyUserLocationBool, setFlyUserLocationBool] = useState(false);
 
+    // Ajustar StatusBar para dispositivos que não ajustem automaticamente (Samsung)
     useEffect(() => {
         const adjustStatusBar = async () => {
             await StatusBar.setOverlaysWebView({ overlay: false });
