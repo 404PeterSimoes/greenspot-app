@@ -20,6 +20,7 @@ interface Ecoponto {
     Tem_oleao: boolean;
     Tem_pilhao: boolean;
     Distancia: number;
+    Mostrar: boolean;
 }
 
 export interface ResiduosPretendidos {
@@ -33,16 +34,25 @@ export interface ResiduosPretendidos {
 interface DataContextType {
     arrayEcopontos: Ecoponto[];
     setEcopontos: (value: Ecoponto[]) => void;
+
     selectedEcoponto: Ecoponto | null;
     setSelectedEcoponto: (value: Ecoponto | null) => void;
+
     showModalEcopontos: boolean;
     setModalEcopontos: (value: boolean) => void;
+
+    showModalResiduos: boolean;
+    setModalResiduos: (value: boolean) => void;
+
     showModalEcoSelecionado: boolean;
     setModalEcoSelecionado: (value: boolean) => void;
+
     callShowModalEcoSelecionado: boolean;
     setCallShowModalEcoSelecionado: (value: boolean) => void;
+
     residuosPretendidos: ResiduosPretendidos;
     setResiduosPretendidos: React.Dispatch<React.SetStateAction<ResiduosPretendidos>>;
+
     modalResiduosFirstTime: boolean;
     setModalResiduosFirstTime: (value: boolean) => void;
 }
@@ -50,16 +60,25 @@ interface DataContextType {
 export const EcopontosContext = createContext<DataContextType>({
     arrayEcopontos: [],
     setEcopontos: () => {},
+
     selectedEcoponto: null,
     setSelectedEcoponto: () => {},
+
     showModalEcopontos: false,
     setModalEcopontos: () => {},
+
+    showModalResiduos: false,
+    setModalResiduos: () => {},
+
     showModalEcoSelecionado: false,
     setModalEcoSelecionado: () => {},
+
     callShowModalEcoSelecionado: false,
     setCallShowModalEcoSelecionado: () => {},
+
     residuosPretendidos: { Papel: true, Plastico: true, Vidro: true, Oleao: true, Pilhao: true },
     setResiduosPretendidos: () => {},
+
     modalResiduosFirstTime: true,
     setModalResiduosFirstTime: () => {},
 });
@@ -68,9 +87,11 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
     const [arrayEcopontos, setEcopontos] = useState<Ecoponto[]>([]);
     const [selectedEcoponto, setSelectedEcoponto] = useState<Ecoponto | null>(null);
 
-    const [showModalEcopontos, setModalEcopontos] = useState<boolean>(false);
-    const [showModalEcoSelecionado, setModalEcoSelecionado] = useState<boolean>(false);
-    const [callShowModalEcoSelecionado, setCallShowModalEcoSelecionado] = useState<boolean>(false);
+    const [showModalEcopontos, setModalEcopontos] = useState(false);
+    const [showModalResiduos, setModalResiduos] = useState(false);
+    const [showModalEcoSelecionado, setModalEcoSelecionado] = useState(false);
+
+    const [callShowModalEcoSelecionado, setCallShowModalEcoSelecionado] = useState(false);
 
     const [residuosPretendidos, setResiduosPretendidos] = useState<ResiduosPretendidos>({
         Papel: true,
@@ -93,26 +114,64 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
             .order('Codigo', { ascending: true });
 
         if (!error && data) {
-            setEcopontos(data);
+            const data1 = data.map((eco) => ({
+                ...eco,
+                Mostrar: true,
+            }));
+
+            setEcopontos(data1);
             console.log('Ecopontos loaded!');
         }
     }
+
+    function updateEcopontosResiduos() {
+        const novoArrayEcopontos = arrayEcopontos.map((eco) => ({
+            ...eco,
+            Mostrar: true,
+        }));
+
+        setEcopontos(novoArrayEcopontos);
+    }
+
+    useEffect(() => {
+        // updateEcopontosResiduos()
+        /*const newEcopontos = arrayEcopontos.filter((eco) => {
+            return (
+                (residuosPretendidos.Papel && eco.Tem_papel) ||
+                (residuosPretendidos.Plastico && eco.Tem_plastico) ||
+                (residuosPretendidos.Vidro && eco.Tem_vidro) ||
+                (residuosPretendidos.Oleao && eco.Tem_oleao) ||
+                (residuosPretendidos.Pilhao && eco.Tem_pilhao)
+            );
+        });
+        
+        setEcopontos(newEcopontos);*/
+    }, [showModalResiduos]);
 
     return (
         <EcopontosContext.Provider
             value={{
                 arrayEcopontos,
                 setEcopontos,
+
                 selectedEcoponto,
                 setSelectedEcoponto,
+
                 showModalEcopontos,
                 setModalEcopontos,
+
+                showModalResiduos,
+                setModalResiduos,
+
                 showModalEcoSelecionado,
                 setModalEcoSelecionado,
+
                 callShowModalEcoSelecionado,
                 setCallShowModalEcoSelecionado,
+
                 residuosPretendidos,
                 setResiduosPretendidos,
+
                 modalResiduosFirstTime,
                 setModalResiduosFirstTime,
             }}
