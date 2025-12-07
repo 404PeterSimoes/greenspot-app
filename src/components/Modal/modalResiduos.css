@@ -37,8 +37,7 @@ div.containerCima {
     justify-content: right;
     margin-top: 21px;
     padding-right: 4%;
-    padding-top: 5.3%;
-    color: rgb(107, 107, 107);
+    /*padding-top: 5.3%;*/
 }
 
 div.formatacaoCima {
@@ -51,6 +50,7 @@ div.formatacaoCima {
     border: 2px solid rgba(0, 0, 0, 0.156);
     border-radius: 30px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.113);
+    color: rgb(107, 107, 107);
 }
 
 .icone {
@@ -58,21 +58,32 @@ div.formatacaoCima {
 }
 
 ion-label.firstText {
+    /*
     position: absolute;
-    margin-top: 12px;
-    margin-left: 5px;
+    margin-top: -10px;
+    margin-left: 13px;*/
     /*color:rgb(26, 92, 0);*/
     color: rgba(0, 0, 0, 0.753);
     font-weight: bold;
 }
 
-ion-spinner.spinner {
+.wrapper {
+    display: flex;
+    align-items: center; /* eixo vertical */
+    height: 100%;
+    flex-direction: row;
+}
+
+.overlay {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10000;
-    color: green;
-    width: 50px;
-    height: 50px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255); /* semitransparente */
+    z-index: 10; /* garante que fica por cima */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }

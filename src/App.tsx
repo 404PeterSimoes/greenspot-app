@@ -165,12 +165,12 @@ const AppContent: React.FC = () => {
                 <IonModal
                     isOpen={showModalResiduos}
                     initialBreakpoint={0.36}
-                    //breakpoints={[0.36]}
+                    breakpoints={[0.36]}
                     backdropDismiss={false}
                     expandToScroll={false}
                     handle={false}
                 >
-                    <ModalPageResiduos /*stateSpinner={spinner}*/ />
+                    <ModalPageResiduos />
                 </IonModal>
                 <IonModal
                     isOpen={showModalChatbot}
