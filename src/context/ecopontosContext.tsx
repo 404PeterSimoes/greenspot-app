@@ -103,10 +103,6 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     const [modalResiduosFirstTime, setModalResiduosFirstTime] = useState(true);
 
-    useEffect(() => {
-        fetchEcopontos();
-    }, []);
-
     async function fetchEcopontos() {
         const { data, error } = await supabase
             .from('table_ecopontos')
@@ -124,28 +120,32 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
         }
     }
 
+    useEffect(() => {
+        fetchEcopontos();
+    }, []);
+
     function updateEcopontosResiduos() {
-        const novoArrayEcopontos = arrayEcopontos.map((eco) => ({
-            ...eco,
-            Mostrar: true,
-        }));
+        const filters = residuosPretendidos;
+
+        const novoArrayEcopontos = arrayEcopontos.map((eco) => {
+            const matches =
+                (!filters.Papel || eco.Tem_papel) &&
+                (!filters.Plastico || eco.Tem_plastico) &&
+                (!filters.Vidro || eco.Tem_vidro) &&
+                (!filters.Oleao || eco.Tem_oleao) &&
+                (!filters.Pilhao || eco.Tem_pilhao);
+
+            return {
+                ...eco,
+                Mostrar: matches,
+            };
+        });
 
         setEcopontos(novoArrayEcopontos);
     }
 
     useEffect(() => {
-        // updateEcopontosResiduos()
-        /*const newEcopontos = arrayEcopontos.filter((eco) => {
-            return (
-                (residuosPretendidos.Papel && eco.Tem_papel) ||
-                (residuosPretendidos.Plastico && eco.Tem_plastico) ||
-                (residuosPretendidos.Vidro && eco.Tem_vidro) ||
-                (residuosPretendidos.Oleao && eco.Tem_oleao) ||
-                (residuosPretendidos.Pilhao && eco.Tem_pilhao)
-            );
-        });
-        
-        setEcopontos(newEcopontos);*/
+        updateEcopontosResiduos();
     }, [showModalResiduos]);
 
     return (
