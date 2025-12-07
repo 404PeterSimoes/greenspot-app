@@ -43,6 +43,8 @@ interface DataContextType {
     setCallShowModalEcoSelecionado: (value: boolean) => void;
     residuosPretendidos: ResiduosPretendidos;
     setResiduosPretendidos: (value: ResiduosPretendidos) => void;
+    modalResiduosFirstTime: boolean;
+    setModalResiduosFirstTime: (value: boolean) => void;
 }
 
 export const EcopontosContext = createContext<DataContextType>({
@@ -58,6 +60,8 @@ export const EcopontosContext = createContext<DataContextType>({
     setCallShowModalEcoSelecionado: () => {},
     residuosPretendidos: { Papel: true, Plastico: true, Vidro: true, Oleao: true, Pilhao: true },
     setResiduosPretendidos: () => {},
+    modalResiduosFirstTime: true,
+    setModalResiduosFirstTime: () => {},
 });
 
 export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -75,6 +79,8 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
         Oleao: true,
         Pilhao: true,
     }); // um objeto
+
+    const [modalResiduosFirstTime, setModalResiduosFirstTime] = useState(true);
 
     useEffect(() => {
         fetchEcopontos();
@@ -107,6 +113,8 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
                 setCallShowModalEcoSelecionado,
                 residuosPretendidos,
                 setResiduosPretendidos,
+                modalResiduosFirstTime,
+                setModalResiduosFirstTime,
             }}
         >
             {children}

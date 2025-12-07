@@ -20,10 +20,10 @@ import { EcopontosContext } from '../../context/ecopontosContext';
 
 const ModalPageResiduos: React.FC = () => {
     const { residuosPretendidos, setResiduosPretendidos } = useContext(EcopontosContext);
-    const [spinner, setSpinner] = useState(false)
+    const [spinner, setSpinner] = useState(false);
 
     useEffect(() => {
-        setSpinner(true)
+        setSpinner(true);
 
         setTimeout(() => {
             setResiduosPretendidos({
@@ -34,9 +34,9 @@ const ModalPageResiduos: React.FC = () => {
                 Pilhao: false,
             });
             console.log('funcao executada');
-            setSpinner(false)
+            setSpinner(false);
         }, 700);
-    },[]);
+    }, []);
 
     const setTudo = () => {
         setResiduosPretendidos({
@@ -66,7 +66,7 @@ const ModalPageResiduos: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                {spinner && (<IonSpinner className='spinner' />)}
+                {spinner && <IonSpinner className="spinner" />}
                 <IonLabel className="firstText">O que pretende depositar?</IonLabel>
                 <div className="containerCima">
                     <div onClick={setTudo} className="formatacaoCima">
