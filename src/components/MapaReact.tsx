@@ -179,7 +179,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                 attributionControl={false}
             >
                 {arrayEcopontos.map((eco) => (
-                    <Marker
+                    eco.Mostrar && <Marker
                         key={eco.Codigo}
                         latitude={eco.Latitude}
                         longitude={eco.Longitude}

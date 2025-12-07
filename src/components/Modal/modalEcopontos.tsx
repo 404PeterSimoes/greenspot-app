@@ -42,7 +42,7 @@ const ModalPageEcopontos: React.FC = () => {
     const Lista: React.FC = () => (
         <IonList lines="full">
             {results.map((eco) => (
-                <IonItem
+                 eco.Mostrar && <IonItem
                     key={eco.Codigo}
                     button
                     onClick={() => {

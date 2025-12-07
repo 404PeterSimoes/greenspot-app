@@ -52,9 +52,6 @@ interface DataContextType {
 
     residuosPretendidos: ResiduosPretendidos;
     setResiduosPretendidos: React.Dispatch<React.SetStateAction<ResiduosPretendidos>>;
-
-    modalResiduosFirstTime: boolean;
-    setModalResiduosFirstTime: (value: boolean) => void;
 }
 
 export const EcopontosContext = createContext<DataContextType>({
@@ -78,9 +75,6 @@ export const EcopontosContext = createContext<DataContextType>({
 
     residuosPretendidos: { Papel: true, Plastico: true, Vidro: true, Oleao: true, Pilhao: true },
     setResiduosPretendidos: () => {},
-
-    modalResiduosFirstTime: true,
-    setModalResiduosFirstTime: () => {},
 });
 
 export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -94,14 +88,12 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
     const [callShowModalEcoSelecionado, setCallShowModalEcoSelecionado] = useState(false);
 
     const [residuosPretendidos, setResiduosPretendidos] = useState<ResiduosPretendidos>({
-        Papel: true,
-        Plastico: true,
-        Vidro: true,
-        Oleao: true,
-        Pilhao: true,
+        Papel: false,
+        Plastico: false,
+        Vidro: false,
+        Oleao: false,
+        Pilhao: false,
     }); // um objeto
-
-    const [modalResiduosFirstTime, setModalResiduosFirstTime] = useState(true);
 
     async function fetchEcopontos() {
         const { data, error } = await supabase
@@ -171,9 +163,6 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
 
                 residuosPretendidos,
                 setResiduosPretendidos,
-
-                modalResiduosFirstTime,
-                setModalResiduosFirstTime,
             }}
         >
             {children}

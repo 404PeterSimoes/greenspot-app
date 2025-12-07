@@ -11,7 +11,6 @@ import {
     IonRow,
     IonCol,
     IonIcon,
-    IonSpinner,
 } from '@ionic/react';
 import { useContext, useEffect, useState } from 'react';
 import './modalResiduos.css';
@@ -19,36 +18,7 @@ import { checkmarkOutline, closeOutline } from 'ionicons/icons';
 import { EcopontosContext } from '../../context/ecopontosContext';
 
 const ModalPageResiduos: React.FC = () => {
-    const {
-        residuosPretendidos,
-        setResiduosPretendidos,
-        modalResiduosFirstTime,
-        setModalResiduosFirstTime,
-    } = useContext(EcopontosContext);
-
-    const [spinner, setSpinner] = useState(false);
-
-    // Código corre sempre que o modal for aberto
-    // Dentro do if, o código apenas corre se for a primeira vez que modalResiduos estiver a ser aberto
-    useEffect(() => {
-        if (modalResiduosFirstTime) {
-            setSpinner(true);
-
-            setTimeout(() => {
-                setResiduosPretendidos({
-                    Papel: false,
-                    Plastico: false,
-                    Vidro: false,
-                    Oleao: false,
-                    Pilhao: false,
-                });
-                console.log('funcao executada');
-                setSpinner(false);
-            }, 700);
-
-            setModalResiduosFirstTime(false);
-        }
-    }, []);
+    const { residuosPretendidos, setResiduosPretendidos } = useContext(EcopontosContext);
 
     const setTudo = () => {
         setResiduosPretendidos({
@@ -78,7 +48,6 @@ const ModalPageResiduos: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                {spinner && <IonSpinner className="spinner" />}
                 <IonLabel className="firstText">O que pretende depositar?</IonLabel>
                 <div className="containerCima">
                     <div onClick={setTudo} className="formatacaoCima">
