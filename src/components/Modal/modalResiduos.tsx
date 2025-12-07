@@ -93,7 +93,13 @@ const ModalPageResiduos: React.FC = () => {
                     <IonRow>
                         <IonCol>
                             <div
-                                onClick={() => {} /*() => setResiduosPapel(!residuosPapel)*/}
+                                onClick={() => {
+                                    // Função faz com que os estados dos outros botões permaneçam os mesmos
+                                    setResiduosPretendidos((prev) => ({
+                                        ...prev,
+                                        Papel: !prev.Papel,
+                                    }));
+                                }}
                                 className={
                                     residuosPretendidos.Papel
                                         ? 'formatacao papel'
@@ -113,7 +119,12 @@ const ModalPageResiduos: React.FC = () => {
                         </IonCol>
                         <IonCol>
                             <div
-                                onClick={() => {} /*setResiduosPlastico(!residuosPlastico)*/}
+                                onClick={() => {
+                                    setResiduosPretendidos((prev) => ({
+                                        ...prev,
+                                        Plastico: !prev.Plastico,
+                                    }));
+                                }}
                                 className={
                                     residuosPretendidos.Plastico
                                         ? 'formatacao plastico'
@@ -136,7 +147,12 @@ const ModalPageResiduos: React.FC = () => {
                         </IonCol>
                         <IonCol>
                             <div
-                                onClick={() => {} /*setResiduosVidro(!residuosVidro)*/}
+                                onClick={() => {
+                                    setResiduosPretendidos((prev) => ({
+                                        ...prev,
+                                        Vidro: !prev.Vidro,
+                                    }));
+                                }}
                                 className={
                                     residuosPretendidos.Vidro
                                         ? 'formatacao vidro'
@@ -158,7 +174,12 @@ const ModalPageResiduos: React.FC = () => {
                     <IonRow>
                         <IonCol>
                             <div
-                                onClick={() => {} /*setResiduosOleao(!residuosOleao)*/}
+                                onClick={() => {
+                                    setResiduosPretendidos((prev) => ({
+                                        ...prev,
+                                        Oleao: !prev.Oleao,
+                                    }));
+                                }}
                                 className={
                                     residuosPretendidos.Oleao
                                         ? 'formatacao oleao'
@@ -178,7 +199,12 @@ const ModalPageResiduos: React.FC = () => {
                         </IonCol>
                         <IonCol>
                             <div
-                                onClick={() => {} /*setResiduosPilhao(!residuosPilhao)*/}
+                                onClick={() => {
+                                    setResiduosPretendidos((prev) => ({
+                                        ...prev,
+                                        Pilhao: !prev.Pilhao,
+                                    }));
+                                }}
                                 className={
                                     residuosPretendidos.Pilhao
                                         ? 'formatacao pilhao'

@@ -22,7 +22,7 @@ interface Ecoponto {
     Distancia: number;
 }
 
-interface ResiduosPretendidos {
+export interface ResiduosPretendidos {
     Papel: boolean;
     Plastico: boolean;
     Vidro: boolean;
@@ -42,7 +42,7 @@ interface DataContextType {
     callShowModalEcoSelecionado: boolean;
     setCallShowModalEcoSelecionado: (value: boolean) => void;
     residuosPretendidos: ResiduosPretendidos;
-    setResiduosPretendidos: (value: ResiduosPretendidos) => void;
+    setResiduosPretendidos: React.Dispatch<React.SetStateAction<ResiduosPretendidos>>;
     modalResiduosFirstTime: boolean;
     setModalResiduosFirstTime: (value: boolean) => void;
 }
