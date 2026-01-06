@@ -44,3 +44,12 @@ ion-modal {
     width: 100%;
     z-index: 0;
 }
+
+.containerResiduosAtivos {
+    display: flex;
+    gap: 5px;
+}
+
+.containerResiduosAtivos img {
+    width: 65px;
+}

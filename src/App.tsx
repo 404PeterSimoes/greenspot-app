@@ -15,7 +15,7 @@ import {
 } from '@ionic/react';
 import { useState, useContext, useEffect } from 'react';
 
-import { locationOutline, trashOutline, helpOutline } from 'ionicons/icons';
+import { locationOutline, trashOutline, helpOutline, resizeOutline } from 'ionicons/icons';
 import recycleIcon from './icon/recycle.svg';
 
 /* Core CSS required for Ionic components to work properly */
@@ -61,6 +61,12 @@ import { GeolocationProvider, GeolocationContext } from './context/geolocationCo
 import { StatusBar } from '@capacitor/status-bar';
 import { Capacitor } from '@capacitor/core';
 
+import imgPapel from './assets/papel.png';
+import imgPlastico from './assets/plastico.png';
+import imgVidro from './assets/vidro.png';
+import imgOleao from './assets/oleao.png';
+import imgPilhao from './assets/pilhao.png';
+
 setupIonicReact();
 
 import { NavigationBar } from '@capgo/capacitor-navigation-bar';
@@ -74,8 +80,6 @@ NavigationBar.setNavigationBarColor({ color: 'TRANSPARENT', darkButtons: true })
 const AppContent: React.FC = () => {
     const [designSelected, setDesignSelected] = useState('mapa');
 
-    const { showModalEcopontos, setModalEcopontos, showModalResiduos, setModalResiduos } =
-        useContext(EcopontosContext);
     const [showModalChatbot, setModalChatbot] = useState(false);
 
     const [canClickMapa, setCanClickMapa] = useState(true);
@@ -87,6 +91,11 @@ const AppContent: React.FC = () => {
         setModalEcoSelecionado,
         callShowModalEcoSelecionado,
         setCallShowModalEcoSelecionado,
+        showModalEcopontos,
+        setModalEcopontos,
+        showModalResiduos,
+        setModalResiduos,
+        residuosPretendidos,
     } = useContext(EcopontosContext);
 
     const { position } = useContext(GeolocationContext)!;
@@ -100,7 +109,7 @@ const AppContent: React.FC = () => {
         setTimeout(() => setSelectedEcoponto(null), 150);
     };
 
-    // Fechar outras páginas automáticamente caso EcoSelecionado abra
+    // Fechar outras páginas automaticamente caso EcoSelecionado abra
     // Abrir EcoSelecionadoModal com delay depois de selecionar ecoponto para dar tempo
     // de modalEcopontos fechar
     useEffect(() => {
@@ -152,6 +161,23 @@ const AppContent: React.FC = () => {
     return (
         <IonApp>
             <IonContent>
+                <div style={{ position: 'absolute', zIndex: '100' }}>
+                    <div className="containerResiduosAtivos">
+                        {residuosPretendidos.Papel && (
+                            <img src={imgPapel} />
+                        )}
+                        {residuosPretendidos.Plastico && (
+                            <img style={{ marginLeft: '5px' }} src={imgPlastico} />
+                        )}
+                        {residuosPretendidos.Vidro && <img src={imgVidro} />}
+                        {residuosPretendidos.Oleao && (
+                            <img style={{ marginRight: '-2px' }} src={imgOleao} />
+                        )}
+                        {residuosPretendidos.Pilhao && (
+                            <img style={{ marginRight: '-7px' }} src={imgPilhao} />
+                        )}
+                    </div>
+                </div>
                 <IonModal
                     isOpen={showModalEcopontos}
                     initialBreakpoint={0.8}

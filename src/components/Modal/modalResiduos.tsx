@@ -44,7 +44,7 @@ const ModalPageResiduos: React.FC = () => {
 
     useEffect(() => {
         setSpinner(true);
-        setTimeout(() => setSpinner(false), 650)
+        setTimeout(() => setSpinner(false), 650);
     }, []);
 
     return (
@@ -56,7 +56,7 @@ const ModalPageResiduos: React.FC = () => {
             </IonHeader>
             <IonContent>
                 {spinner && (
-                    <div className='overlay'>
+                    <div className="overlay">
                         <IonSpinner />
                     </div>
                 )}
