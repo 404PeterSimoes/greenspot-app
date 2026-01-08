@@ -1,21 +1,21 @@
 ion-searchbar {
-    --box-shadow: none !important;
+  --box-shadow: none !important;
 }
 
 ion-toolbar {
-    all: unset;
-    --padding-top: 4px;
+  all: unset;
+  --padding-top: 4px;
 }
 
 ion-header {
-    min-height: 50px;
+  min-height: 50px;
 }
 
 img.markerEcoponto {
-    width: 22px;
-    margin-right: 4%;
+  width: 22px;
+  margin-right: 4%;
 }
 
 .morada {
-    font-size: 17px !important;
+  font-size: 17px !important;
 }

@@ -1,89 +1,89 @@
 div.formatacao {
-    color: white;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid rgba(0, 0, 0, 0.156);
-    border-radius: 30px;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.199);
+  color: white;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgba(0, 0, 0, 0.156);
+  border-radius: 30px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.199);
 }
 
 .papel {
-    background-color: rgb(68, 95, 213);
+  background-color: rgb(68, 95, 213);
 }
 .plastico {
-    background-color: rgb(233, 208, 45);
-    text-shadow: 2px 2px rgba(0, 0, 0, 0.192);
+  background-color: rgb(233, 208, 45);
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.192);
 }
 .vidro {
-    background-color: rgb(68, 213, 70);
+  background-color: rgb(68, 213, 70);
 }
 .oleao {
-    background-color: rgb(213, 119, 68);
-    width: 225px;
+  background-color: rgb(213, 119, 68);
+  width: 225px;
 }
 .pilhao {
-    background-color: rgb(191, 56, 56);
+  background-color: rgb(191, 56, 56);
 }
 
 .desativado {
-    background-color: rgb(183, 183, 183);
+  background-color: rgb(183, 183, 183);
 }
 
 div.containerCima {
-    display: flex;
-    gap: 10px;
-    justify-content: right;
-    margin-top: 21px;
-    padding-right: 4%;
-    /*padding-top: 5.3%;*/
+  display: flex;
+  gap: 10px;
+  justify-content: right;
+  margin-top: 21px;
+  padding-right: 4%;
+  /*padding-top: 5.3%;*/
 }
 
 div.formatacaoCima {
-    width: 70px;
-    height: 30px;
-    font-size: 13px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid rgba(0, 0, 0, 0.156);
-    border-radius: 30px;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.113);
-    color: rgb(107, 107, 107);
+  width: 70px;
+  height: 30px;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgba(0, 0, 0, 0.156);
+  border-radius: 30px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.113);
+  color: rgb(107, 107, 107);
 }
 
 .icone {
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.197));
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.197));
 }
 
 ion-label.firstText {
-    /*
+  /*
     position: absolute;
     margin-top: -10px;
     margin-left: 13px;*/
-    /*color:rgb(26, 92, 0);*/
-    color: rgba(0, 0, 0, 0.753);
-    font-weight: bold;
+  /*color:rgb(26, 92, 0);*/
+  color: rgba(0, 0, 0, 0.753);
+  font-weight: bold;
 }
 
 .wrapper {
-    display: flex;
-    align-items: center; /* eixo vertical */
-    height: 100%;
-    flex-direction: row;
+  display: flex;
+  align-items: center; /* eixo vertical */
+  height: 100%;
+  flex-direction: row;
 }
 
 .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(255, 255, 255); /* semitransparente */
-    z-index: 10; /* garante que fica por cima */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(255, 255, 255); /* semitransparente */
+  z-index: 10; /* garante que fica por cima */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
