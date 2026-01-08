@@ -1,7 +1,7 @@
 :root {
-    color-scheme: light;
-    /*--ion-color-primary: #2e7e00; É ESTE*/
-    --ion-color-primary: #164a00;
+  color-scheme: light;
+  /*--ion-color-primary: #2e7e00; É ESTE*/
+  --ion-color-primary: #164a00;
 }
 /*
 ion-tab-bar {
@@ -9,47 +9,47 @@ ion-tab-bar {
 }
 */
 ion-tab-bar {
-    --background: rgb(237, 237, 237);
-    height: 68px;
-    width: 100%;
-    z-index: 1;
-    position: absolute;
-    bottom: 0;
+  --background: rgb(237, 237, 237);
+  height: 68px;
+  width: 100%;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
 }
 
 ion-tab-button {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 ion-tab-button:not(.designSelectedClass) {
-    --color-selected: rgba(0, 0, 0, 0.475);
+  --color-selected: rgba(0, 0, 0, 0.475);
 }
 
 ion-modal {
-    height: calc(100% - 68px - env(safe-area-inset-bottom));
+  height: calc(100% - 68px - env(safe-area-inset-bottom));
 }
 
 .ecoselecionado {
-    --backdrop-opacity: 0;
-    --transition: none !important;
+  --backdrop-opacity: 0;
+  --transition: none !important;
 }
 
 .map-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
 }
 
 .containerResiduosAtivos {
-    display: flex;
-    gap: 5px;
+  display: flex;
+  gap: 5px;
 }
 
 .containerResiduosAtivos img {
-    width: 65px;
+  width: 65px;
 }
