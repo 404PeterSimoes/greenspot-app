@@ -9,6 +9,7 @@
 
 .imgEcoponto.selected {
   transform: scale(1.7);
+  z-index: 2000;
 }
 
 /* Mover copyright para cima */
