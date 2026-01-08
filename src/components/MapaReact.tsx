@@ -178,34 +178,39 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                 mapStyle="mapbox://styles/mapbox/standard-satellite"
                 attributionControl={false}
             >
-                {arrayEcopontos.map((eco) => (
-                    eco.Mostrar && <Marker
-                        key={eco.Codigo}
-                        latitude={eco.Latitude}
-                        longitude={eco.Longitude}
-                        anchor="bottom"
-                        onClick={() => {
-                            // SetTimeout para o flyto acontecer mesmo que o user tenha feito double click no marker
-                            /*
+                {arrayEcopontos.map(
+                    (eco) =>
+                        eco.Mostrar && (
+                            <Marker
+                                key={eco.Codigo}
+                                latitude={eco.Latitude}
+                                longitude={eco.Longitude}
+                                anchor="bottom"
+                                onClick={() => {
+                                    // SetTimeout para o flyto acontecer mesmo que o user tenha feito double click no marker
+                                    /*
                             getRoute(
                                 [-8.517099769640195, 38.984597035870635],
                                 [eco.Longitude, eco.Latitude]
                                 );*/
-                            /* Off temporariamente */
-                            setTimeout(() => {
-                                const ecoSelecionado = eco;
-                                setSelectedEcoponto(ecoSelecionado);
-                                setModalEcoSelecionado(true);
-                                setCallShowModalEcoSelecionado(true);
-                            }, 150);
-                        }}
-                    >
-                        <img
-                            className={`imgEcoponto ${selectedEcoponto === eco ? 'selected' : ''}`}
-                            src={imgMarkerEcoponto}
-                        />
-                    </Marker>
-                ))}
+                                    /* Off temporariamente */
+                                    setTimeout(() => {
+                                        const ecoSelecionado = eco;
+                                        setSelectedEcoponto(ecoSelecionado);
+                                        setModalEcoSelecionado(true);
+                                        setCallShowModalEcoSelecionado(true);
+                                    }, 150);
+                                }}
+                            >
+                                <img
+                                    className={`imgEcoponto ${
+                                        selectedEcoponto?.Codigo === eco.Codigo ? 'selected' : ''
+                                    }`}
+                                    src={imgMarkerEcoponto}
+                                />
+                            </Marker>
+                        )
+                )}
                 {markerPos && (
                     <Marker latitude={markerPos.lat} longitude={markerPos.lng} anchor="bottom">
                         <div
@@ -214,7 +219,8 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                                 borderRadius: '50%',
                                 width: 20,
                                 height: 20,
-                                border: '3px solid white'
+                                border: '3px solid white',
+                                zIndex: 10001,
                             }}
                         />
                     </Marker>
