@@ -188,7 +188,6 @@ const AppContent: React.FC = () => {
           backdropDismiss={false}
           expandToScroll={false}
           handle={false}
-          handleBehavior='cycle'
         >
           <ModalPageResiduos />
         </IonModal>
