@@ -46,10 +46,23 @@ ion-modal {
 }
 
 .containerResiduosAtivos {
+  position: absolute;
+  z-index: 100;
+  top: calc(5px + env(safe-area-inset-top));
+  transform: translateY(0);
+  transition: transform 0.4s ease;
+}
+
+.containerResiduosAtivos.active {
+  transform: translateY(-130px);
+}
+
+.containerResiduosAtivos .residuosAtivos {
   display: flex;
   gap: 5px;
 }
 
-.containerResiduosAtivos img {
+.containerResiduosAtivos .residuosAtivos img {
   width: 50px;
+  filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.51));
 }

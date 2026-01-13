@@ -20,7 +20,6 @@ import { EcopontosContext } from '../../context/ecopontosContext';
 
 const ModalPageResiduos: React.FC = () => {
   const { residuosPretendidos, setResiduosPretendidos } = useContext(EcopontosContext);
-  const [spinner, setSpinner] = useState(false);
 
   const setTudo = () => {
     setResiduosPretendidos({
@@ -42,31 +41,16 @@ const ModalPageResiduos: React.FC = () => {
     });
   };
 
-  useEffect(() => {
-    setSpinner(false);
-    setTimeout(() => setSpinner(false), 650);
-  }, []);
-
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <h3 style={{ textAlign: 'center', marginTop: 'none' }}>Resíduos</h3>
+        <IonToolbar style={{ textAlign: 'center' }}>
+          <IonLabel className="firstText">O que pretende depositar?</IonLabel>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {spinner && (
-          <div className="overlay">
-            <IonSpinner />
-          </div>
-        )}
         <div className="wrapper">
           <IonGrid>
-            <IonRow>
-              <IonCol>
-                <IonLabel className="firstText">O que pretende depositar?</IonLabel>
-              </IonCol>
-            </IonRow>
             <IonRow>
               <IonCol></IonCol>
               <IonCol size="auto">
