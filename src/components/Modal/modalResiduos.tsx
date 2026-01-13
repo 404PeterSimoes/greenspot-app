@@ -43,7 +43,7 @@ const ModalPageResiduos: React.FC = () => {
   };
 
   useEffect(() => {
-    setSpinner(true);
+    setSpinner(false);
     setTimeout(() => setSpinner(false), 650);
   }, []);
 

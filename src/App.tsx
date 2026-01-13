@@ -158,16 +158,35 @@ const AppContent: React.FC = () => {
     };
   }, []);
 
+  const [residuosAtivosState, setResiduosAtivosState] = useState({
+    Papel: false,
+    Plastico: false,
+    Vidro: false,
+    Oleao: false,
+    Pilhao: false,
+  });
+
+  // Apenas atualizar imagens de resíduos ativos quando o modal for fechado
+  useEffect(() => {
+    setResiduosAtivosState({
+      Papel: residuosPretendidos.Papel,
+      Plastico: residuosPretendidos.Plastico,
+      Vidro: residuosPretendidos.Vidro,
+      Oleao: residuosPretendidos.Oleao,
+      Pilhao: residuosPretendidos.Pilhao,
+    });
+  }, [showModalResiduos]);
+
   return (
     <IonApp>
       <IonContent>
         <div style={{ position: 'absolute', zIndex: '100' }}>
           <div className="containerResiduosAtivos">
-            {residuosPretendidos.Papel && <img src={imgPapel} />}
-            {residuosPretendidos.Plastico && <img style={{ marginLeft: '5px' }} src={imgPlastico} />}
-            {residuosPretendidos.Vidro && <img src={imgVidro} />}
-            {residuosPretendidos.Oleao && <img style={{ marginRight: '-2px' }} src={imgOleao} />}
-            {residuosPretendidos.Pilhao && <img style={{ marginRight: '-7px' }} src={imgPilhao} />}
+            {residuosAtivosState.Papel && <img src={imgPapel} />}
+            {residuosAtivosState.Plastico && <img style={{ marginLeft: '5px' }} src={imgPlastico} />}
+            {residuosAtivosState.Vidro && <img src={imgVidro} />}
+            {residuosAtivosState.Oleao && <img style={{ marginRight: '-2px' }} src={imgOleao} />}
+            {residuosAtivosState.Pilhao && <img style={{ marginRight: '-7px' }} src={imgPilhao} />}
           </div>
         </div>
         <IonModal
