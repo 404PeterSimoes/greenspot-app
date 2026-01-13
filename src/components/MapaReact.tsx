@@ -184,7 +184,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                 latitude={eco.Latitude}
                 longitude={eco.Longitude}
                 anchor="bottom"
-                onClick={() => {	
+                onClick={() => {
                   // SetTimeout para o flyto acontecer mesmo que o user tenha feito double click no marker
                   /*
 									getRoute(
@@ -208,7 +208,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
             )
         )}
         {markerPos && (
-          <Marker latitude={markerPos.lat} longitude={markerPos.lng} anchor="bottom">
+         <Marker latitude={markerPos.lat} longitude={markerPos.lng} style={{zIndex:1000}}> 
             <div
               style={{
                 backgroundColor: 'blue',
@@ -216,7 +216,6 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                 width: 20,
                 height: 20,
                 border: '3px solid white',
-                /*zIndex: 100,*/
               }}
             />
           </Marker>
