@@ -29,7 +29,6 @@ const ModalPageEcoSelecionado: React.FC = () => {
           {selectedEcoponto?.Tem_pilhao && <img style={{ marginRight: '-7px' }} src={imgPilhao} />}
         </div>
 
-        {String(selectedEcoponto?.Mostrar)}
       </IonContent>
     </IonPage>
   );

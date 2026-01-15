@@ -163,7 +163,7 @@ const AppContent: React.FC = () => {
       <IonContent>
         <div className={`containerResiduosAtivos ${showModalEcoSelecionado ? 'active' : ''}`}>
           <div className="residuosAtivos">
-            {residuosPretendidos.Papel && <img src={imgPapel} className=''/>}
+            {residuosPretendidos.Papel && <img src={imgPapel} className="" />}
             {residuosPretendidos.Plastico && <img style={{ marginLeft: '5px' }} src={imgPlastico} />}
             {residuosPretendidos.Vidro && <img src={imgVidro} />}
             {residuosPretendidos.Oleao && <img style={{ marginRight: '-2px' }} src={imgOleao} />}
@@ -174,20 +174,36 @@ const AppContent: React.FC = () => {
         <IonModal
           isOpen={showModalEcopontos}
           initialBreakpoint={0.8}
-          breakpoints={[0.8]}
-          backdropDismiss={false}
+          breakpoints={[0.8,0]}
+          backdropDismiss={true}
           expandToScroll={false}
           handle={false}
+          onDidDismiss={(e) => {
+            const { role } = e.detail;
+
+            if (role === 'backdrop' || role === 'gesture') {
+              setDesignSelected('mapa');
+              setModalEcopontos(false);
+            }
+          }}
         >
           <ModalPageEcopontos />
         </IonModal>
         <IonModal
           isOpen={showModalResiduos}
           initialBreakpoint={0.33}
-          breakpoints={[0.33]}
-          backdropDismiss={false}
+          breakpoints={[0.33,0]}
+          backdropDismiss={true}
           expandToScroll={false}
           handle={false}
+          onDidDismiss={(e) => {
+            const { role } = e.detail;
+
+            if (role === 'backdrop' || role === 'gesture') {
+              setDesignSelected('mapa');
+              setModalResiduos(false);
+            }
+          }}
         >
           <ModalPageResiduos />
         </IonModal>
@@ -282,7 +298,7 @@ const AppContent: React.FC = () => {
               <IonIcon icon={trashOutline} />
               <IonLabel>Residuos</IonLabel>
             </IonTabButton>
-
+            {/*
             <IonTabButton
               tab="home"
               className={designSelected === 'chatbot' ? 'designSelectedClass' : ''}
@@ -295,7 +311,7 @@ const AppContent: React.FC = () => {
             >
               <IonIcon icon={helpOutline} />
               <IonLabel>Chatbot</IonLabel>
-            </IonTabButton>
+            </IonTabButton>*/}
           </IonTabBar>
         </IonTabs>
       </IonContent>
