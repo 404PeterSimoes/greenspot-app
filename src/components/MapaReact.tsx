@@ -17,6 +17,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
   const {
     arrayEcopontos,
     selectedEcoponto,
+    showModalEcoSelecionado,
     setSelectedEcoponto,
     setModalEcoSelecionado,
     setCallShowModalEcoSelecionado,
@@ -27,12 +28,21 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
 
   const mapRef = useRef<MapRef>(null);
 
+  // Função para calcular um inteiro dentro de dois fornecidos
+  const randomInt = (min: number, max: number) => {
+    const random = Math.floor(Math.random() * (max - min + 1) + min);
+    console.log(random);
+    return random;
+  };
+
   // Quando o selectedEcoponto muda, o mapa move-se para ele
   useEffect(() => {
     if (selectedEcoponto && mapRef.current) {
       mapRef.current.flyTo({
         center: [selectedEcoponto.Longitude, selectedEcoponto.Latitude],
         zoom: 16.5,
+        pitch: randomInt(10, 60),
+        bearing: randomInt(10, 360),
         duration: 3000,
         essential: true,
         offset: [0, -260],
@@ -46,6 +56,8 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
       if (mapRef.current && position) {
         mapRef.current.flyTo({
           center: [position.lng, position.lat],
+          pitch: 0,
+          bearing: 0,
           zoom: 13,
           duration: 3000,
           essential: true,
@@ -55,6 +67,19 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
       reset();
     }
   }, [flyToUserLocation]);
+
+  // Remover custom 3D camera tilt quando modalEcoSelecionado fechar
+  useEffect(() => {
+    if (!showModalEcoSelecionado && mapRef.current && selectedEcoponto) {
+      mapRef.current.flyTo({
+        pitch: 0,
+        bearing: 0,
+        offset: [0, -10],
+        center: [selectedEcoponto.Longitude, selectedEcoponto.Latitude],
+        duration: 1500,
+      });
+    }
+  }, [showModalEcoSelecionado]);
 
   // Código para animar o Marker quando a posição GPS do user atualizar
   const [markerPos, setMarkerPos] = useState<{ lat: number; lng: number } | null>(null);
@@ -118,7 +143,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
     const query = await fetch(
       `https://api.mapbox.com/directions/v5/mapbox/walking/${start[0]},${start[1]};${end[0]},${
         end[1]
-      }?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`
+      }?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`,
     );
 
     const json = await query.json();
@@ -205,10 +230,10 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                   src={imgMarkerEcoponto}
                 />
               </Marker>
-            )
+            ),
         )}
         {markerPos && (
-         <Marker latitude={markerPos.lat} longitude={markerPos.lng} style={{zIndex:1000}}> 
+          <Marker latitude={markerPos.lat} longitude={markerPos.lng} style={{ zIndex: 1000 }}>
             <div
               style={{
                 backgroundColor: 'blue',
