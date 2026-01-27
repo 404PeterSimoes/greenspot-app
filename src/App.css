@@ -66,3 +66,12 @@ ion-modal {
   width: 50px;
   filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.51));
 }
+
+ion-avatar {
+  z-index: 101;
+  position: absolute;
+  right: 10px;
+  top: calc(5px + env(safe-area-inset-top));
+  width: 45px;
+  height: 45px;
+}

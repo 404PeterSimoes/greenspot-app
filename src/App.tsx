@@ -12,6 +12,7 @@ import {
   IonModal,
   IonSearchbar,
   IonHeader,
+  IonAvatar,
 } from '@ionic/react';
 import { useState, useContext, useEffect } from 'react';
 
@@ -163,7 +164,7 @@ const AppContent: React.FC = () => {
       <IonContent>
         <div className={`containerResiduosAtivos ${showModalEcoSelecionado ? 'active' : ''}`}>
           <div className="residuosAtivos">
-            {residuosPretendidos.Papel && <img src={imgPapel} className="" />}
+            {residuosPretendidos.Papel && <img style={{ marginLeft: '6px' }} src={imgPapel} className="" />}
             {residuosPretendidos.Plastico && <img style={{ marginLeft: '5px' }} src={imgPlastico} />}
             {residuosPretendidos.Vidro && <img src={imgVidro} />}
             {residuosPretendidos.Oleao && <img style={{ marginRight: '-2px' }} src={imgOleao} />}
@@ -171,10 +172,14 @@ const AppContent: React.FC = () => {
           </div>
         </div>
 
+        <IonAvatar>
+          <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </IonAvatar>
+
         <IonModal
           isOpen={showModalEcopontos}
           initialBreakpoint={0.8}
-          breakpoints={[0.8,0]}
+          breakpoints={[0.8, 0]}
           backdropDismiss={true}
           expandToScroll={false}
           handle={false}
@@ -192,7 +197,7 @@ const AppContent: React.FC = () => {
         <IonModal
           isOpen={showModalResiduos}
           initialBreakpoint={0.33}
-          breakpoints={[0.33,0]}
+          breakpoints={[0.33, 0]}
           backdropDismiss={true}
           expandToScroll={false}
           handle={false}
