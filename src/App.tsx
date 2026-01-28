@@ -71,7 +71,11 @@ import imgPilhao from './assets/pilhao.png';
 setupIonicReact();
 
 import { NavigationBar } from '@capgo/capacitor-navigation-bar';
+
+import { SocialLogin } from '@capgo/capacitor-social-login';
+import { authService } from './services/auth';
 import ModalPageAccountInterface from './components/Modal/accountInterface';
+
 NavigationBar.setNavigationBarColor({ color: 'TRANSPARENT', darkButtons: true });
 
 // Colocar mapa no principal, não usar outras paginas, pagina principal (Mapa) sempre em load
@@ -80,6 +84,20 @@ NavigationBar.setNavigationBarColor({ color: 'TRANSPARENT', darkButtons: true })
 // https://ionicframework.com/docs/api/modal#controller-modals
 
 const AppContent: React.FC = () => {
+  const initializeApp = async () => {
+    await authService.initializeSocialLogin();
+  };
+
+  authService.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN') {
+      console.log('User signed in:', session.user);
+    } else if (event === 'SIGNED_OUT') {
+      console.log('User signed out');
+    }
+  });
+
+  initializeApp();
+
   const [designSelected, setDesignSelected] = useState('mapa');
 
   const [showModalChatbot, setModalChatbot] = useState(false);
@@ -140,7 +158,8 @@ const AppContent: React.FC = () => {
       !showModalResiduos &&
       !showModalChatbot &&
       !showModalEcoSelecionado &&
-      !callShowModalEcoSelecionado
+      !callShowModalEcoSelecionado &&
+      !showModalAccountInterface
     )
       return true;
     else return false;
@@ -176,7 +195,12 @@ const AppContent: React.FC = () => {
           </div>
         </div>
 
-        <IonAvatar onClick={() => setModalAccountInterface(true)}>
+        <IonAvatar
+          onClick={() => {
+            setModalAccountInterface(true);
+            setDesignSelected('');
+          }}
+        >
           <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
         </IonAvatar>
 

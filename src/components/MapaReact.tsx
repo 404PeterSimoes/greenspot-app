@@ -28,7 +28,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
 
   const mapRef = useRef<MapRef>(null);
 
-  // Função para calcular um inteiro dentro de dois fornecidos
+  // Função para escolher aleatóriamente um inteiro dentro de dois fornecidos
   const randomInt = (min: number, max: number) => {
     const random = Math.floor(Math.random() * (max - min + 1) + min);
     console.log(random);
@@ -41,7 +41,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
       mapRef.current.flyTo({
         center: [selectedEcoponto.Longitude, selectedEcoponto.Latitude],
         zoom: 16.5,
-        pitch: randomInt(10, 60),
+        pitch: randomInt(20, 60),
         bearing: randomInt(10, 360),
         duration: 3000,
         essential: true,
@@ -74,11 +74,14 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
       mapRef.current.flyTo({
         pitch: 0,
         bearing: 0,
-        offset: [0, -10],
         center: [selectedEcoponto.Longitude, selectedEcoponto.Latitude],
         duration: 1500,
       });
+
+      
+      console.log('ola');
     }
+
   }, [showModalEcoSelecionado]);
 
   // Código para animar o Marker quando a posição GPS do user atualizar
