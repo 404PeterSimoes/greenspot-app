@@ -7,13 +7,14 @@ import './MapaReact.css';
 import { EcopontosContext } from '../context/ecopontosContext';
 import { GeolocationContext } from '../context/geolocationContext';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
+//import { forwardRef, useImperativeHandle } from 'react';
 
 interface Props {
-  flyToUserLocation: boolean;
-  reset: () => void;
+  flyToUserLocation: number;
+  removeCameraTilt: number;
 }
 
-const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
+const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt }) => {
   const {
     arrayEcopontos,
     selectedEcoponto,
@@ -25,6 +26,8 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
 
   // Coordenadas da posição atual do user
   const { position } = useContext(GeolocationContext)!;
+
+  const [recentSelectedEcoponto, setRecentSelecEco] = useState({ Latitude: 0, Longitude: 0 });
 
   const mapRef = useRef<MapRef>(null);
 
@@ -52,23 +55,20 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
 
   // Voar para a localização do user
   useEffect(() => {
-    if (flyToUserLocation) {
       if (mapRef.current && position) {
         mapRef.current.flyTo({
           center: [position.lng, position.lat],
           pitch: 0,
           bearing: 0,
-          zoom: 13,
+          zoom: 15.5,
           duration: 3000,
           essential: true,
           offset: [0, -10],
         });
       }
-      reset();
-    }
   }, [flyToUserLocation]);
 
-  // Remover custom 3D camera tilt quando modalEcoSelecionado fechar
+  // Remover custom 3D camera tilt quando modalEcoSelecionado fechar (por botões de IonTab)
   useEffect(() => {
     if (!showModalEcoSelecionado && mapRef.current && selectedEcoponto) {
       mapRef.current.flyTo({
@@ -77,12 +77,27 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
         center: [selectedEcoponto.Longitude, selectedEcoponto.Latitude],
         duration: 1500,
       });
-
-      
-      console.log('ola');
     }
-
   }, [showModalEcoSelecionado]);
+  
+  // Definir as coordenadas do ecoponto mais recente na variável
+  useEffect(() => {
+    if (selectedEcoponto) {
+      setRecentSelecEco(selectedEcoponto);
+    }
+  }, [selectedEcoponto]);
+
+  // // Remover custom 3D camera tilt quando modalEcoSelecionado fechar (por gesture)
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.flyTo({
+        pitch: 0,
+        bearing: 0,
+        center: [recentSelectedEcoponto.Longitude, recentSelectedEcoponto.Latitude],
+        duration: 1500,
+      });
+    }
+  }, [removeCameraTilt]);
 
   // Código para animar o Marker quando a posição GPS do user atualizar
   const [markerPos, setMarkerPos] = useState<{ lat: number; lng: number } | null>(null);
@@ -215,10 +230,10 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
                 onClick={() => {
                   // SetTimeout para o flyto acontecer mesmo que o user tenha feito double click no marker
                   /*
-									getRoute(
-											[-8.517099769640195, 38.984597035870635],
-											[eco.Longitude, eco.Latitude]
-											);*/
+                getRoute(
+                  [-8.517099769640195, 38.984597035870635],
+                  [eco.Longitude, eco.Latitude]
+                  );*/
                   /* Off temporariamente */
                   setTimeout(() => {
                     const ecoSelecionado = eco;
@@ -254,3 +269,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, reset }) => {
 };
 
 export default Mapa;
+
+export type MapHandle = {
+  remove3DCameraTilt: () => void;
+};

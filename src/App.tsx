@@ -165,7 +165,11 @@ const AppContent: React.FC = () => {
     else return false;
   };
 
-  const [flyUserLocationBool, setFlyUserLocationBool] = useState(false);
+  // Trigger para o mapa voar para a localização do utilizador
+  const [flyUserLocationTrigger, setFlyUserLocTrigger] = useState(0);
+
+  // Trigger para remover o tilt do mapa quando modalEcoSelecionado fecha por gesture
+  const [removeCameraTiltTrigger, setRemoveCameraTiltTrigger] = useState(0);
 
   // Ajustar StatusBar para dispositivos que não ajustem automaticamente (Samsung)
   useEffect(() => {
@@ -188,7 +192,7 @@ const AppContent: React.FC = () => {
         <div className={`containerResiduosAtivos ${showModalEcoSelecionado ? 'active' : ''}`}>
           <div className="residuosAtivos">
             {residuosPretendidos.Papel && <img style={{ marginLeft: '6px' }} src={imgPapel} className="" />}
-            {residuosPretendidos.Plastico && <img style={{ marginLeft: '5px' }} src={imgPlastico} />}
+            {residuosPretendidos.Plastico && <img style={{ marginLeft: '4px' }} src={imgPlastico} />}
             {residuosPretendidos.Vidro && <img src={imgVidro} />}
             {residuosPretendidos.Oleao && <img style={{ marginRight: '-2px' }} src={imgOleao} />}
             {residuosPretendidos.Pilhao && <img style={{ marginRight: '-7px' }} src={imgPilhao} />}
@@ -266,6 +270,7 @@ const AppContent: React.FC = () => {
               console.log('modalEcoSelecionado fechado!');
               setSelectedEcoponto(null);
               setModalEcoSelecionado(false);
+              setRemoveCameraTiltTrigger((t) => t + 1);
             }
           }}
           backdropDismiss={false}
@@ -278,7 +283,7 @@ const AppContent: React.FC = () => {
         <IonTabs>
           <IonTab tab="home">
             <div className="map-container">
-              <Mapa flyToUserLocation={flyUserLocationBool} reset={() => setFlyUserLocationBool(false)} />
+              <Mapa flyToUserLocation={flyUserLocationTrigger} removeCameraTilt={removeCameraTiltTrigger} />
             </div>
           </IonTab>
           <IonTabBar slot="bottom">
@@ -292,7 +297,7 @@ const AppContent: React.FC = () => {
                 if (canClickMapa) {
                   // Voar para a localização atual caso nenhum modal estiver aberto, quando tab "Mapa" for clicado
                   if (verificarTudoFechado() /* && position*/) {
-                    setFlyUserLocationBool(true);
+                    setFlyUserLocTrigger((t) => t + 1);
 
                     // Não ser possível clicar muito rápido
                     setCanClickMapa(false);
