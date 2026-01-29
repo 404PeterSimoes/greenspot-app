@@ -79,7 +79,7 @@ const ModalPageResiduos: React.FC = () => {
                   {residuosPretendidos.Papel && (
                     <IonIcon size="large" icon={residuosPretendidos.Papel ? checkmarkOutline : undefined} />
                   )}
-                  <IonLabel>Papel</IonLabel>
+                  Papel
                 </div>
               </IonCol>
               <IonCol>

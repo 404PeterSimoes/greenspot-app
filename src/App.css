@@ -53,8 +53,19 @@ ion-modal {
   transition: transform 0.4s ease;
 }
 
-.containerResiduosAtivos.active {
-  transform: translateY(-130px);
+ion-avatar {
+  z-index: 101;
+  position: absolute;
+  right: 10px;
+  top: calc(5px + env(safe-area-inset-top));
+  width: 45px;
+  height: 45px;
+  transform: translateY(0);
+  transition: transform 0.4s ease;
+}
+
+.active {
+  transform: translateY(-200px);
 }
 
 .containerResiduosAtivos .residuosAtivos {
@@ -67,11 +78,3 @@ ion-modal {
   filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.51));
 }
 
-ion-avatar {
-  z-index: 101;
-  position: absolute;
-  right: 10px;
-  top: calc(5px + env(safe-area-inset-top));
-  width: 45px;
-  height: 45px;
-}

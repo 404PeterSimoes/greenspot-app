@@ -97,6 +97,11 @@ const AppContent: React.FC = () => {
 
   initializeApp();
 
+  document.addEventListener('ionBackButton', (event: any) => {
+    event.detail.register(10, setModalEcoSelecionado(false));
+  });
+
+
   const [designSelected, setDesignSelected] = useState('mapa');
 
   const [showModalChatbot, setModalChatbot] = useState(false);
@@ -203,11 +208,18 @@ const AppContent: React.FC = () => {
             setModalAccountInterface(true);
             setDesignSelected('');
           }}
+          className={`containerAvatar ${showModalEcoSelecionado ? 'active' : ''}`}
         >
           <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
         </IonAvatar>
 
-        <IonModal isOpen={showModalAccountInterface}>
+        <IonModal
+          isOpen={showModalAccountInterface}
+          onDidDismiss={() => {
+            setModalAccountInterface(false);
+            setDesignSelected('mapa');
+          }}
+        >
           <ModalPageAccountInterface />
         </IonModal>
 

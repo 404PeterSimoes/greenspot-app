@@ -1,4 +1,15 @@
-import { IonContent, IonHeader, IonLabel, IonPage, IonToolbar, IonSegment, IonSegmentButton, IonIcon } from '@ionic/react';
+import {
+  IonContent,
+  IonHeader,
+  IonLabel,
+  IonPage,
+  IonToolbar,
+  IonSegment,
+  IonSegmentButton,
+  IonIcon,
+  IonSegmentView,
+  IonSegmentContent,
+} from '@ionic/react';
 import { EcopontosContext } from '../../context/ecopontosContext';
 
 import { useContext } from 'react';
@@ -22,30 +33,39 @@ const ModalPageEcoSelecionado: React.FC = () => {
           <h4 className="selecionadoMorada">{selectedEcoponto?.Morada}</h4>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="contentEcoSelecionado">
-        <div className="containerPodedepositar">Pode depositar</div>
+      <IonContent>
+        <div className="sectionPodeDepositar">
+          <div style={{ color: 'rgba(0, 0, 0, 0.655)' }}>Pode depositar:</div>
 
-        <div className="containerPodeDepositar">
-          {selectedEcoponto?.Tem_papel && <img src={imgPapel} />}
-          {selectedEcoponto?.Tem_plastico && <img style={{ marginLeft: '5px' }} src={imgPlastico} />}
-          {selectedEcoponto?.Tem_vidro && <img src={imgVidro} />}
-          {selectedEcoponto?.Tem_oleao && <img style={{ marginRight: '-2px' }} src={imgOleao} />}
-          {selectedEcoponto?.Tem_pilhao && <img style={{ marginRight: '-7px' }} src={imgPilhao} />}
+          <div className="containerPodeDepositar">
+            {selectedEcoponto?.Tem_papel && <img src={imgPapel} />}
+            {selectedEcoponto?.Tem_plastico && <img style={{ marginLeft: '5px' }} src={imgPlastico} />}
+            {selectedEcoponto?.Tem_vidro && <img src={imgVidro} />}
+            {selectedEcoponto?.Tem_oleao && <img style={{ marginRight: '-2px' }} src={imgOleao} />}
+            {selectedEcoponto?.Tem_pilhao && <img style={{ marginRight: '-7px' }} src={imgPilhao} />}
+          </div>
         </div>
 
-        <div className="containerDirecoes">Direções</div>
+        <div className="sectionDirecoes">
+          <div style={{ color: 'rgba(0, 0, 0, 0.655)' }}>Direções</div>
 
-        <IonSegment value="directions">
-          <IonSegmentButton value="car">
-            <IonIcon src={car}/>
-          </IonSegmentButton>
-          <IonSegmentButton value="walk">
-            <IonIcon src={walk}/>
-          </IonSegmentButton>
-          <IonSegmentButton value="cycle">
-            <IonIcon src={bicycle}/>
-          </IonSegmentButton>
-        </IonSegment>
+          <IonSegment value="car">
+            <IonSegmentButton value="car" contentId="car">
+              <IonIcon src={car} />
+            </IonSegmentButton>
+            <IonSegmentButton value="walk" contentId="walk">
+              <IonIcon src={walk} />
+            </IonSegmentButton>
+            <IonSegmentButton value="cycle" contentId="cycle">
+              <IonIcon src={bicycle} />
+            </IonSegmentButton>
+          </IonSegment>
+        </div>
+        <IonSegmentView>
+          <IonSegmentContent id="car">Carro</IonSegmentContent>
+          <IonSegmentContent id="walk">Andar</IonSegmentContent>
+          <IonSegmentContent id="cycle">Bicicleta</IonSegmentContent>
+        </IonSegmentView>
       </IonContent>
     </IonPage>
   );

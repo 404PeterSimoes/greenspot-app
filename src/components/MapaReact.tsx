@@ -44,7 +44,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt }) => {
       mapRef.current.flyTo({
         center: [selectedEcoponto.Longitude, selectedEcoponto.Latitude],
         zoom: 16.5,
-        pitch: randomInt(20, 60),
+        pitch: randomInt(25, 45),
         bearing: randomInt(10, 360),
         duration: 3000,
         essential: true,
