@@ -55,17 +55,17 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt }) => {
 
   // Voar para a localização do user
   useEffect(() => {
-      if (mapRef.current && position) {
-        mapRef.current.flyTo({
-          center: [position.lng, position.lat],
-          pitch: 0,
-          bearing: 0,
-          zoom: 15.5,
-          duration: 3000,
-          essential: true,
-          offset: [0, -10],
-        });
-      }
+    if (mapRef.current && position) {
+      mapRef.current.flyTo({
+        center: [position.lng, position.lat],
+        pitch: 0,
+        bearing: 0,
+        zoom: 15.5,
+        duration: 3000,
+        essential: true,
+        offset: [0, -10],
+      });
+    }
   }, [flyToUserLocation]);
 
   // Remover custom 3D camera tilt quando modalEcoSelecionado fechar (por botões de IonTab)
@@ -79,7 +79,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt }) => {
       });
     }
   }, [showModalEcoSelecionado]);
-  
+
   // Definir as coordenadas do ecoponto mais recente na variável
   useEffect(() => {
     if (selectedEcoponto) {
@@ -158,11 +158,11 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt }) => {
 
   // Função para conseguir a rota e fazer display no mapa
   async function getRoute(start: number[], end: number[]) {
-    const query = await fetch(
-      `https://api.mapbox.com/directions/v5/mapbox/walking/${start[0]},${start[1]};${end[0]},${
-        end[1]
-      }?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`,
-    );
+    const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${start[0]},${start[1]};${end[0]},${
+      end[1]
+    }?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
+
+    const query = await fetch(url);
 
     const json = await query.json();
     const data = json.routes[0];

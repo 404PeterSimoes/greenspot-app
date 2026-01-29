@@ -16,7 +16,7 @@ import {
 } from '@ionic/react';
 import { useState, useContext, useEffect } from 'react';
 
-import { locationOutline, trashOutline, helpOutline, resizeOutline } from 'ionicons/icons';
+import { locationOutline, filter } from 'ionicons/icons';
 import recycleIcon from './icon/recycle.svg';
 
 /* Core CSS required for Ionic components to work properly */
@@ -72,7 +72,6 @@ setupIonicReact();
 
 import { NavigationBar } from '@capgo/capacitor-navigation-bar';
 
-import { SocialLogin } from '@capgo/capacitor-social-login';
 import { authService } from './services/auth';
 import ModalPageAccountInterface from './components/Modal/accountInterface';
 
@@ -337,8 +336,8 @@ const AppContent: React.FC = () => {
                 setModalResiduos(true);
               }}
             >
-              <IonIcon icon={trashOutline} />
-              <IonLabel>Residuos</IonLabel>
+              <IonIcon icon={filter} />
+              <IonLabel>Filtro</IonLabel>
             </IonTabButton>
             {/*
             <IonTabButton

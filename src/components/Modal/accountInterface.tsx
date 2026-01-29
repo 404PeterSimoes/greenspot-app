@@ -54,6 +54,7 @@ const ModalPageAccountInterface: React.FC = () => {
     <IonPage>
       <h1>conta</h1>
       <IonButton onClick={handleGoogleLogin}>handleGoogleLogin</IonButton>
+      <IonButton onClick={handleLogout}>handleLogout</IonButton>
 
       {/* Ainda não está a funcionar */}
       <IonButton onClick={getUserProfile}>getUserProfile</IonButton>
