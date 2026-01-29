@@ -12,22 +12,6 @@ h4.selecionadoMorada {
   color: black;
   text-align: center;
 }
-/*
-.containerPodedepositar {
-  margin-left: 4%;
-  margin-bottom: 3%;
-  margin-top: -1%;
-  width: 100%;
-  color: rgba(0, 0, 0, 0.655);
-}
-
-.containerDirecoes {
-  margin-left: 4%;
-  margin-top: 10%;
-  margin-bottom: 1%;
-  color: rgba(0, 0, 0, 0.655);
-  width: 100%;
-}*/
 
 .sectionPodeDepositar {
   padding: 16px;
@@ -36,6 +20,7 @@ h4.selecionadoMorada {
   gap: 12px;
 }
 
+/*
 .sectionDirecoes {
   padding: 16px;
   margin-top: 10px;
@@ -71,3 +56,5 @@ ion-segment-content:nth-of-type(3) {
 ion-segment-button::part(indicator-background) {
   background: #083ca3;
 }
+  */
+  

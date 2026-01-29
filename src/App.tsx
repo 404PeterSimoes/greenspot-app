@@ -97,10 +97,10 @@ const AppContent: React.FC = () => {
 
   initializeApp();
 
+  // Código a executar quando botão back do Hardware é clicado
   document.addEventListener('ionBackButton', (event: any) => {
     event.detail.register(10, setModalEcoSelecionado(false));
   });
-
 
   const [designSelected, setDesignSelected] = useState('mapa');
 
@@ -175,6 +175,15 @@ const AppContent: React.FC = () => {
   // Trigger para remover o tilt do mapa quando modalEcoSelecionado fecha por gesture
   const [removeCameraTiltTrigger, setRemoveCameraTiltTrigger] = useState(0);
 
+  // Função para transformar corretamente a distância entre o user e o ecoponto
+  const stringDistanciaFuncao = (distancia: number) => {
+    if (distancia < 1) {
+      return `${(distancia * 1000).toFixed(0)} m`;
+    } else {
+      return `${distancia.toFixed(2)} km`;
+    }
+  };
+
   // Ajustar StatusBar para dispositivos que não ajustem automaticamente (Samsung)
   useEffect(() => {
     const adjustStatusBar = async () => {
@@ -239,7 +248,7 @@ const AppContent: React.FC = () => {
             }
           }}
         >
-          <ModalPageEcopontos />
+          <ModalPageEcopontos stringDistancia={stringDistanciaFuncao} />
         </IonModal>
         <IonModal
           isOpen={showModalResiduos}
@@ -289,7 +298,7 @@ const AppContent: React.FC = () => {
           handle={true}
           //backdropBreakpoint={1} // nunca ativa o backdrop
         >
-          <ModalPageEcoSelecionado />
+          <ModalPageEcoSelecionado stringDistancia={stringDistanciaFuncao} />
         </IonModal>
         <IonTabs>
           <IonTab tab="home">

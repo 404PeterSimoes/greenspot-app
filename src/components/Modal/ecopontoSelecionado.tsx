@@ -23,7 +23,11 @@ import { carOutline, walk, bicycle, bicycleOutline, walkOutline, car } from 'ion
 
 import './ecopontoSelecionado.css';
 
-const ModalPageEcoSelecionado: React.FC = () => {
+interface Props {
+  stringDistancia: (distancia: number) => string;
+}
+
+const ModalPageEcoSelecionado: React.FC<Props> = ({stringDistancia}) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
 
   return (
@@ -46,7 +50,9 @@ const ModalPageEcoSelecionado: React.FC = () => {
           </div>
         </div>
 
-        <div className="sectionDirecoes">
+        {selectedEcoponto?.Distancia && stringDistancia(selectedEcoponto.Distancia)}
+
+        {/*       <div className="sectionDirecoes">
           <div style={{ color: 'rgba(0, 0, 0, 0.655)' }}>Direções</div>
 
           <IonSegment value="car">
@@ -65,7 +71,7 @@ const ModalPageEcoSelecionado: React.FC = () => {
           <IonSegmentContent id="car">Carro</IonSegmentContent>
           <IonSegmentContent id="walk">Andar</IonSegmentContent>
           <IonSegmentContent id="cycle">Bicicleta</IonSegmentContent>
-        </IonSegmentView>
+        </IonSegmentView>*/}
       </IonContent>
     </IonPage>
   );

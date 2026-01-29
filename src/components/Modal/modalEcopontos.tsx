@@ -15,7 +15,12 @@ import { EcopontosContext } from '../../context/ecopontosContext';
 import './modalEcopontos.css';
 import markerEcoponto from '../../assets/marker_ecoponto.png';
 
-const ModalPageEcopontos: React.FC = () => {
+
+interface Props {
+  stringDistancia: (distancia: number) => string;
+}
+
+const ModalPageEcopontos: React.FC<Props> = ({stringDistancia}) => {
   const { arrayEcopontos, setSelectedEcoponto, setModalEcoSelecionado } = useContext(EcopontosContext);
 
   // Código para fazer a Searchbar funcionar
@@ -30,7 +35,7 @@ const ModalPageEcopontos: React.FC = () => {
   };
 
   // Função para transformar corretamente a distância entre o user e o ecoponto
-  const stringDistancia = (distancia: number) => {
+  const stringDistanciaa = (distancia: number) => {
     if (distancia < 1) {
       return `${(distancia * 1000).toFixed(0)} m`;
     } else {

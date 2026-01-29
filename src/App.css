@@ -65,7 +65,7 @@ ion-avatar {
 }
 
 .active {
-  transform: translateY(-200px);
+  transform: translateY(-130px);
 }
 
 .containerResiduosAtivos .residuosAtivos {
