@@ -14,7 +14,7 @@ import {
   IonHeader,
   IonAvatar,
 } from '@ionic/react';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 
 import { locationOutline, filter } from 'ionicons/icons';
 import recycleIcon from './icon/recycle.svg';
@@ -99,7 +99,11 @@ const AppContent: React.FC = () => {
 
   // Código a executar quando botão back do Hardware é clicado
   document.addEventListener('ionBackButton', (event: any) => {
-    event.detail.register(10, setModalEcoSelecionado(false));
+    event.detail.register(10, () => {
+      setSelectedEcoponto(null);
+      setModalEcoSelecionado(false);
+      setRemoveCameraTiltTrigger((t) => t + 1);
+    });
   });
 
   const [designSelected, setDesignSelected] = useState('mapa');
@@ -281,8 +285,8 @@ const AppContent: React.FC = () => {
         <IonModal
           isOpen={callShowModalEcoSelecionado}
           className="ecoselecionado"
-          initialBreakpoint={0.65}
-          breakpoints={[0.65, 0]}
+          initialBreakpoint={0.6}
+          breakpoints={[0.6, 0]}
           onIonModalWillDismiss={(e) => {
             const { role } = e.detail;
 
@@ -297,6 +301,7 @@ const AppContent: React.FC = () => {
           expandToScroll={false}
           handle={true}
           //backdropBreakpoint={1} // nunca ativa o backdrop
+          //style={{ height: '400px' }}
         >
           <ModalPageEcoSelecionado stringDistancia={stringDistanciaFuncao} />
         </IonModal>
@@ -358,7 +363,7 @@ const AppContent: React.FC = () => {
               }}
             >
               <IonIcon icon={filter} />
-              <IonLabel>Filtro</IonLabel>
+              <IonLabel>Filtros</IonLabel>
             </IonTabButton>
             {/*
             <IonTabButton

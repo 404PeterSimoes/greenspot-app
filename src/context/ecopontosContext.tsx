@@ -19,7 +19,7 @@ interface Ecoponto {
   Tem_vidro: boolean;
   Tem_oleao: boolean;
   Tem_pilhao: boolean;
-  Distancia: number;
+  DistanciaHaversine: number;
   Mostrar: boolean;
 }
 

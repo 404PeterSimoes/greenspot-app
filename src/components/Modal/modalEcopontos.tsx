@@ -15,12 +15,11 @@ import { EcopontosContext } from '../../context/ecopontosContext';
 import './modalEcopontos.css';
 import markerEcoponto from '../../assets/marker_ecoponto.png';
 
-
 interface Props {
   stringDistancia: (distancia: number) => string;
 }
 
-const ModalPageEcopontos: React.FC<Props> = ({stringDistancia}) => {
+const ModalPageEcopontos: React.FC<Props> = ({ stringDistancia }) => {
   const { arrayEcopontos, setSelectedEcoponto, setModalEcoSelecionado } = useContext(EcopontosContext);
 
   // Código para fazer a Searchbar funcionar
@@ -32,15 +31,6 @@ const ModalPageEcopontos: React.FC<Props> = ({stringDistancia}) => {
     if (target) query = target.value!.toLowerCase();
 
     setResults(arrayEcopontos.filter((eco) => eco.Morada.toLowerCase().indexOf(query) > -1));
-  };
-
-  // Função para transformar corretamente a distância entre o user e o ecoponto
-  const stringDistanciaa = (distancia: number) => {
-    if (distancia < 1) {
-      return `${(distancia * 1000).toFixed(0)} m`;
-    } else {
-      return `${distancia.toFixed(2)} km`;
-    }
   };
 
   const Lista: React.FC = () => (
@@ -66,9 +56,9 @@ const ModalPageEcopontos: React.FC<Props> = ({stringDistancia}) => {
               <IonLabel>
                 <h2 className="morada">{eco.Morada}</h2>
               </IonLabel>
-              {eco.Distancia && <IonNote>{stringDistancia(eco.Distancia)}</IonNote>}
+              {eco.DistanciaHaversine && <IonNote>{stringDistancia(eco.DistanciaHaversine)}</IonNote>}
             </IonItem>
-          )
+          ),
       )}
     </IonList>
   );

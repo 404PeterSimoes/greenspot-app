@@ -12,7 +12,12 @@ export const GeolocationContext = createContext<DataContextType | undefined>(und
 
 export const GeolocationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [position, setPosition] = useState<Pos | null>(null);
-  const { arrayEcopontos, setEcopontos, showModalEcopontos } = useContext(EcopontosContext)!;
+  const [firstUpdateEcoGPS, setFirstUpdateEcoGPS] = useState(true);
+  const { arrayEcopontos, setEcopontos, showModalEcopontos, callShowModalEcoSelecionado } =
+    useContext(EcopontosContext)!;
+
+  // Para testes locais onde não há GPS:
+  //useEffect(() => setPosition({ lat: 38.98458023708152, lng: -8.5171352827064 }),[])
 
   // Inicia o watchPosition ao abrir a App
   useEffect(() => {
@@ -41,7 +46,16 @@ export const GeolocationProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   useEffect(() => {
     updateEcopontosPosition();
-  }, [showModalEcopontos]);
+  }, [showModalEcopontos, callShowModalEcoSelecionado /*position*/]);
+
+  // Apenas atualizar a Distancia Haversine quando a position do user for conseguida pela 1ª vez e caso
+  // esta ainda não tenha sido definida pelo useEffect acima
+  useEffect(() => {
+    if (firstUpdateEcoGPS) {
+      alert('foi');
+      updateEcopontosPosition();
+    }
+  }, [position]);
 
   function formulaHaversine(lat1: number, lon1: number, lat2: number, lon2: number) {
     const R = 6371; // raio da Terra em km
@@ -60,12 +74,16 @@ export const GeolocationProvider: React.FC<{ children: React.ReactNode }> = ({ c
       const arrayEcopontosOrdenados = arrayEcopontos
         .map((eco) => ({
           ...eco,
-          Distancia: formulaHaversine(position.lat, position.lng, eco.Latitude, eco.Longitude),
+          DistanciaHaversine: formulaHaversine(position.lat, position.lng, eco.Latitude, eco.Longitude),
         }))
-        .sort((a, b) => a.Distancia - b.Distancia);
+        .sort((a, b) => a.DistanciaHaversine - b.DistanciaHaversine);
 
       setEcopontos(arrayEcopontosOrdenados);
       console.log('Ecopontos updated!');
+
+      // Quando a distância Haversine do user for definida pela primeira vez, nunca mais
+      // deixar que se altere quando a position do user se alterar ***
+      setFirstUpdateEcoGPS(false);
     }
   }
 

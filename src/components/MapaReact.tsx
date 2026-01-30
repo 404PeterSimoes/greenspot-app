@@ -48,7 +48,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt }) => {
         bearing: randomInt(10, 360),
         duration: 3000,
         essential: true,
-        offset: [0, -260],
+        offset: [0, -230],
       });
     }
   }, [selectedEcoponto]);
