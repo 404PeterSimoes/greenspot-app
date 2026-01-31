@@ -112,7 +112,6 @@ const AppContent: React.FC = () => {
 
   const [showModalChatbot, setModalChatbot] = useState(false);
   const [showModalAccountInterface, setModalAccountInterface] = useState(false);
-  const [showModalDirecoes, setModalDirecoes] = useState(false);
 
   const [canClickMapa, setCanClickMapa] = useState(true);
 
@@ -128,6 +127,8 @@ const AppContent: React.FC = () => {
     showModalResiduos,
     setModalResiduos,
     residuosPretendidos,
+    showModalDirecoes,
+    setModalDirecoes,
   } = useContext(EcopontosContext);
 
   const { position } = useContext(GeolocationContext)!;

@@ -52,6 +52,9 @@ interface DataContextType {
 
   residuosPretendidos: ResiduosPretendidos;
   setResiduosPretendidos: React.Dispatch<React.SetStateAction<ResiduosPretendidos>>;
+
+  showModalDirecoes: boolean;
+  setModalDirecoes: (value: boolean) => void;
 }
 
 export const EcopontosContext = createContext<DataContextType>({
@@ -75,6 +78,9 @@ export const EcopontosContext = createContext<DataContextType>({
 
   residuosPretendidos: { Papel: true, Plastico: true, Vidro: true, Oleao: true, Pilhao: true },
   setResiduosPretendidos: () => {},
+
+  showModalDirecoes: false,
+  setModalDirecoes: () => {},
 });
 
 export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -84,6 +90,7 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
   const [showModalEcopontos, setModalEcopontos] = useState(false);
   const [showModalResiduos, setModalResiduos] = useState(false);
   const [showModalEcoSelecionado, setModalEcoSelecionado] = useState(false);
+  const [showModalDirecoes, setModalDirecoes] = useState(false);
 
   const [callShowModalEcoSelecionado, setCallShowModalEcoSelecionado] = useState(false);
 
@@ -114,6 +121,19 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
   }, []);
 
   function updateEcopontosResiduos() {
+  
+    if (showModalDirecoes && selectedEcoponto) {
+      const novoArrayEcopontos = arrayEcopontos.map((eco) => {
+        return {
+          ...eco,
+          Mostrar: selectedEcoponto.Codigo === eco.Codigo,
+        };
+      });
+      
+      setEcopontos(novoArrayEcopontos);
+      return;
+    }
+
     const filters = residuosPretendidos;
 
     const novoArrayEcopontos = arrayEcopontos.map((eco) => {
@@ -135,7 +155,7 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
 
   useEffect(() => {
     updateEcopontosResiduos();
-  }, [showModalResiduos]);
+  }, [showModalResiduos, showModalDirecoes]);
 
   return (
     <EcopontosContext.Provider
@@ -160,6 +180,9 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
 
         residuosPretendidos,
         setResiduosPretendidos,
+
+        showModalDirecoes,
+        setModalDirecoes,
       }}
     >
       {children}

@@ -111,7 +111,10 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
         const pointA: [number, number] = [selectedEcoponto.Longitude, selectedEcoponto.Latitude];
         const pointB: [number, number] = [position.lng, position.lat];
 
-        mapRef.current.fitBounds([pointA, pointB], { padding: 60, duration: 1200 });
+        mapRef.current.fitBounds([pointA, pointB], {
+          padding: { bottom: 370, left: 30, right: 30, top: 90 },
+          duration: 1200,
+        });
       }
     }
   }, [showModalDirecoes]);
@@ -281,7 +284,3 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
 };
 
 export default Mapa;
-
-export type MapHandle = {
-  remove3DCameraTilt: () => void;
-};
