@@ -12,9 +12,10 @@ import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 interface Props {
   flyToUserLocation: number;
   removeCameraTilt: number;
+  showModalDirecoes: boolean;
 }
 
-const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt }) => {
+const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalDirecoes }) => {
   const {
     arrayEcopontos,
     selectedEcoponto,
@@ -70,7 +71,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt }) => {
 
   // Remover custom 3D camera tilt quando modalEcoSelecionado fechar (por botões de IonTab)
   useEffect(() => {
-    if (!showModalEcoSelecionado && mapRef.current && selectedEcoponto) {
+    if (!showModalEcoSelecionado && !showModalDirecoes && mapRef.current && selectedEcoponto) {
       mapRef.current.flyTo({
         pitch: 0,
         bearing: 0,
@@ -87,7 +88,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt }) => {
     }
   }, [selectedEcoponto]);
 
-  // // Remover custom 3D camera tilt quando modalEcoSelecionado fechar (por gesture)
+  // Remover custom 3D camera tilt quando modalEcoSelecionado fechar (por gesture)
   useEffect(() => {
     if (mapRef.current) {
       mapRef.current.flyTo({
@@ -103,6 +104,17 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt }) => {
   const [markerPos, setMarkerPos] = useState<{ lat: number; lng: number } | null>(null);
   const animationRef = useRef<number | null>(null);
   const isAnimatingRef = useRef(false);
+
+  useEffect(() => {
+    if (mapRef.current && selectedEcoponto && position) {
+      if (showModalDirecoes) {
+        const pointA: [number, number] = [selectedEcoponto.Longitude, selectedEcoponto.Latitude];
+        const pointB: [number, number] = [position.lng, position.lat];
+
+        mapRef.current.fitBounds([pointA, pointB], { padding: 60, duration: 1200 });
+      }
+    }
+  }, [showModalDirecoes]);
 
   useEffect(() => {
     if (!position?.lat || !position?.lng) return;

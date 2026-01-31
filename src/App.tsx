@@ -74,6 +74,7 @@ import { NavigationBar } from '@capgo/capacitor-navigation-bar';
 
 import { authService } from './services/auth';
 import ModalPageAccountInterface from './components/Modal/accountInterface';
+import ModalPageDirecoes from './components/Modal/modalDirecoes';
 
 NavigationBar.setNavigationBarColor({ color: 'TRANSPARENT', darkButtons: true });
 
@@ -102,6 +103,7 @@ const AppContent: React.FC = () => {
     event.detail.register(10, () => {
       setSelectedEcoponto(null);
       setModalEcoSelecionado(false);
+      setModalDirecoes(false);
       setRemoveCameraTiltTrigger((t) => t + 1);
     });
   });
@@ -110,6 +112,7 @@ const AppContent: React.FC = () => {
 
   const [showModalChatbot, setModalChatbot] = useState(false);
   const [showModalAccountInterface, setModalAccountInterface] = useState(false);
+  const [showModalDirecoes, setModalDirecoes] = useState(false);
 
   const [canClickMapa, setCanClickMapa] = useState(true);
 
@@ -282,6 +285,29 @@ const AppContent: React.FC = () => {
         >
           <ModalPageChatbot />
         </IonModal>
+
+        <IonModal
+          isOpen={showModalDirecoes}
+          className="ecoselecionado"
+          initialBreakpoint={0.3}
+          breakpoints={[0.3, 0]}
+          backdropDismiss={false}
+          expandToScroll={false}
+          handle={true}
+          onWillPresent={() => setModalEcoSelecionado(false)}
+          onDidDismiss={(e) => {
+            const { role } = e.detail;
+
+            if (role === 'gesture') {
+              setDesignSelected('mapa');
+              setModalDirecoes(false);
+              setSelectedEcoponto(null);
+            }
+          }}
+        >
+          <ModalPageDirecoes />
+        </IonModal>
+
         <IonModal
           isOpen={callShowModalEcoSelecionado}
           className="ecoselecionado"
@@ -303,12 +329,16 @@ const AppContent: React.FC = () => {
           //backdropBreakpoint={1} // nunca ativa o backdrop
           //style={{ height: '400px' }}
         >
-          <ModalPageEcoSelecionado stringDistancia={stringDistanciaFuncao} />
+          <ModalPageEcoSelecionado stringDistancia={stringDistanciaFuncao} modalDirecoes={setModalDirecoes} />
         </IonModal>
         <IonTabs>
           <IonTab tab="home">
             <div className="map-container">
-              <Mapa flyToUserLocation={flyUserLocationTrigger} removeCameraTilt={removeCameraTiltTrigger} />
+              <Mapa
+                flyToUserLocation={flyUserLocationTrigger}
+                removeCameraTilt={removeCameraTiltTrigger}
+                showModalDirecoes={showModalDirecoes}
+              />
             </div>
           </IonTab>
           <IonTabBar slot="bottom">

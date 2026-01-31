@@ -40,9 +40,10 @@ import './ecopontoSelecionado.css';
 
 interface Props {
   stringDistancia: (distancia: number) => string;
+  modalDirecoes: (value: boolean) => void;
 }
 
-const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia }) => {
+const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDirecoes }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
 
   return (
@@ -71,7 +72,9 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia }) => {
           </IonRow>
           {/* Linha (secção) apenas carrega caso a distância seja calculada */}
           {selectedEcoponto?.DistanciaHaversine && (
-            <IonRow style={{ flex: 1, background: 'rgba(0, 0, 0, 0.04)',padding: '5px', paddingBottom: 0, paddingTop: 0 }}>
+            <IonRow
+              style={{ flex: 1, background: 'rgba(0, 0, 0, 0.04)', padding: '5px', paddingBottom: 0, paddingTop: 0 }}
+            >
               <IonCol style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
                 <div className="section">
                   <div style={{ color: 'rgba(0, 0, 0, 0.655)' }}>Distância:</div>
@@ -82,9 +85,14 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia }) => {
               </IonCol>
             </IonRow>
           )}
-          <IonRow style={{ flex: 1, background: 'white',padding: '5px', paddingTop: 0 }}>
+          <IonRow style={{ flex: 1, background: 'white', padding: '5px', paddingTop: 0 }}>
             <IonCol style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-              <IonButton style={{ width: '100%' }} expand="block" className="ecoSelecionado">
+              <IonButton
+                style={{ width: '100%' }}
+                expand="block"
+                className="ecoSelecionado"
+                onClick={() => modalDirecoes(true)}
+              >
                 <IonIcon slot="start" src={compass} />
                 Direções
               </IonButton>

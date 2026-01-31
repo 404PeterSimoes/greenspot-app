@@ -52,7 +52,6 @@ export const GeolocationProvider: React.FC<{ children: React.ReactNode }> = ({ c
   // esta ainda não tenha sido definida pelo useEffect acima
   useEffect(() => {
     if (firstUpdateEcoGPS) {
-      alert('foi');
       updateEcopontosPosition();
     }
   }, [position]);
