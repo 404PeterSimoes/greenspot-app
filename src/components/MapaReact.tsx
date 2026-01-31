@@ -50,6 +50,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
         duration: 3000,
         essential: true,
         offset: [0, -230],
+        padding: 0,
       });
     }
   }, [selectedEcoponto]);
@@ -65,6 +66,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
         duration: 3000,
         essential: true,
         offset: [0, -10],
+        padding: 0,
       });
     }
   }, [flyToUserLocation]);
@@ -77,6 +79,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
         bearing: 0,
         center: [selectedEcoponto.Longitude, selectedEcoponto.Latitude],
         duration: 1500,
+        padding: 0,
       });
     }
   }, [showModalEcoSelecionado]);
@@ -96,14 +99,10 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
         bearing: 0,
         center: [recentSelectedEcoponto.Longitude, recentSelectedEcoponto.Latitude],
         duration: 1500,
+        padding: 0,
       });
     }
   }, [removeCameraTilt]);
-
-  // Código para animar o Marker quando a posição GPS do user atualizar
-  const [markerPos, setMarkerPos] = useState<{ lat: number; lng: number } | null>(null);
-  const animationRef = useRef<number | null>(null);
-  const isAnimatingRef = useRef(false);
 
   useEffect(() => {
     if (mapRef.current && selectedEcoponto && position) {
@@ -112,12 +111,17 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
         const pointB: [number, number] = [position.lng, position.lat];
 
         mapRef.current.fitBounds([pointA, pointB], {
-          padding: { bottom: 370, left: 30, right: 30, top: 90 },
+          padding: { bottom: 370, left: 45, right: 45, top: 90 },
           duration: 1200,
         });
       }
     }
   }, [showModalDirecoes]);
+
+  // Código para animar o Marker quando a posição GPS do user atualizar
+  const [markerPos, setMarkerPos] = useState<{ lat: number; lng: number } | null>(null);
+  const animationRef = useRef<number | null>(null);
+  const isAnimatingRef = useRef(false);
 
   useEffect(() => {
     if (!position?.lat || !position?.lng) return;
