@@ -111,7 +111,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
         const pointB: [number, number] = [position.lng, position.lat];
 
         mapRef.current.fitBounds([pointA, pointB], {
-          padding: { bottom: 370, left: 45, right: 45, top: 90 },
+          padding: { bottom: 370, left: 55, right: 55, top: 90 },
           duration: 1200,
         });
       }

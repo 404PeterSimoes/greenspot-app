@@ -139,6 +139,7 @@ const AppContent: React.FC = () => {
     setModalChatbot(false);
     setModalEcoSelecionado(false);
     setCallShowModalEcoSelecionado(false);
+    setModalDirecoes(false);
     setModalAccountInterface(false);
     setTimeout(() => setSelectedEcoponto(null), 150);
   };
@@ -171,7 +172,8 @@ const AppContent: React.FC = () => {
       !showModalChatbot &&
       !showModalEcoSelecionado &&
       !callShowModalEcoSelecionado &&
-      !showModalAccountInterface
+      !showModalAccountInterface &&
+      !showModalDirecoes
     )
       return true;
     else return false;
@@ -210,7 +212,7 @@ const AppContent: React.FC = () => {
   return (
     <IonApp>
       <IonContent>
-        <div className={`containerResiduosAtivos ${showModalEcoSelecionado ? 'active' : ''}`}>
+        <div className={`containerResiduosAtivos ${showModalEcoSelecionado || showModalDirecoes ? 'active' : ''}`}>
           <div className="residuosAtivos">
             {residuosPretendidos.Papel && <img style={{ marginLeft: '6px' }} src={imgPapel} className="" />}
             {residuosPretendidos.Plastico && <img style={{ marginLeft: '4px' }} src={imgPlastico} />}
@@ -225,7 +227,7 @@ const AppContent: React.FC = () => {
             setModalAccountInterface(true);
             setDesignSelected('');
           }}
-          className={`containerAvatar ${showModalEcoSelecionado ? 'active' : ''}`}
+          className={`containerAvatar ${showModalEcoSelecionado || showModalDirecoes ? 'active' : ''}`}
         >
           <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
         </IonAvatar>

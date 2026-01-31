@@ -37,6 +37,7 @@ import {
 } from 'ionicons/icons';
 
 import './ecopontoSelecionado.css';
+import { GeolocationContext } from '../../context/geolocationContext';
 
 interface Props {
   stringDistancia: (distancia: number) => string;
@@ -45,6 +46,7 @@ interface Props {
 
 const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDirecoes }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
+  const { position } = useContext(GeolocationContext)!;
 
   return (
     <IonPage>
@@ -92,6 +94,7 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDireco
                 expand="block"
                 className="ecoSelecionado"
                 onClick={() => modalDirecoes(true)}
+                disabled={position ? false : true}
               >
                 <IonIcon slot="start" src={compass} />
                 Direções
