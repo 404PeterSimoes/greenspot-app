@@ -13,10 +13,10 @@ interface Props {
   flyToUserLocation: number;
   removeCameraTilt: number;
   showModalDirecoes: boolean;
-  //modeDirecoes: string;
+  modeDirecoes: string;
 }
 
-const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalDirecoes }) => {
+const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalDirecoes, modeDirecoes }) => {
   const {
     arrayEcopontos,
     selectedEcoponto,
@@ -177,34 +177,34 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
   }, [position]);
 
   // Função para conseguir a rota e fazer display no mapa
-  async function getRoute(start: number[], end: number[]) {
-    const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${start[0]},${start[1]};${end[0]},${
-      end[1]
-    }?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
+  async function getRoute(start: number[], end: number[], mode: string) {
+    const profile = mode === 'car' ? 'driving' : mode === 'walk' ? 'walking' : 'cycling';
 
-    const query = await fetch(url);
+    const url = `https://api.mapbox.com/directions/v5/mapbox/${profile}/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
 
-    const json = await query.json();
+    const res = await fetch(url);
+    const json = await res.json();
+
+    if (!json.routes?.length) return;
+
     const data = json.routes[0];
-    const geojson: Feature<Geometry, GeoJsonProperties> = {
+
+    const geojson: Feature = {
       type: 'Feature',
-      properties: {},
       geometry: data.geometry,
+      properties: {},
     };
 
     const map = mapRef.current?.getMap();
     if (!map) return;
 
-    const source = map.getSource('route');
-
-    if (source && source.type === 'geojson') {
-      (source as mapboxgl.GeoJSONSource).setData(geojson);
+    if (map.getSource('route')) {
+      (map.getSource('route') as mapboxgl.GeoJSONSource).setData(geojson);
     } else {
-      map.addSource('route', {
-        type: 'geojson',
-        data: geojson,
-      });
+      map.addSource('route', { type: 'geojson', data: geojson });
+    }
 
+    if (!map.getLayer('route')) {
       map.addLayer({
         id: 'route',
         type: 'line',
@@ -221,14 +221,28 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
       });
     }
 
-    console.log(data.distance);
+    console.log('Distance (m):', data.distance);
+  }
+
+  function clearRoute() {
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+
+    const source = map.getSource('route') as mapboxgl.GeoJSONSource | undefined;
+
+    if (source) {
+      source.setData({
+        type: 'FeatureCollection',
+        features: [],
+      });
+    }
   }
 
   useEffect(() => {
-    if (showModalDirecoes) {
-      
-    }
-  }, [showModalDirecoes]);
+    if (showModalDirecoes && position && selectedEcoponto) {
+      getRoute([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude], modeDirecoes);
+    } else if (!showModalDirecoes) clearRoute();
+  }, [showModalDirecoes, modeDirecoes]);
 
   return (
     <IonContent style={{ postition: 'relative' }}>

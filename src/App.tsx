@@ -194,6 +194,8 @@ const AppContent: React.FC = () => {
     }
   };
 
+  const [modeDirecoes, setModeDirecoes] = useState('car');
+
   // Ajustar StatusBar para dispositivos que não ajustem automaticamente (Samsung)
   useEffect(() => {
     const adjustStatusBar = async () => {
@@ -308,7 +310,7 @@ const AppContent: React.FC = () => {
             }
           }}
         >
-          <ModalPageDirecoes />
+          <ModalPageDirecoes modeDirecoes={modeDirecoes} setModeDirecoes={setModeDirecoes} />
         </IonModal>
 
         <IonModal
@@ -341,6 +343,7 @@ const AppContent: React.FC = () => {
                 flyToUserLocation={flyUserLocationTrigger}
                 removeCameraTilt={removeCameraTiltTrigger}
                 showModalDirecoes={showModalDirecoes}
+                modeDirecoes={modeDirecoes}
               />
             </div>
           </IonTab>
