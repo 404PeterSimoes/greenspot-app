@@ -19,10 +19,21 @@ interface Props {
   modeDirecoes: string;
   setModeDirecoes: (value: string) => void;
   dataDirecoes: { distance: number; duration: number };
+
+  stringDistancia: (distance: number) => string;
+  stringDuracao: (duration: number) => string;
 }
 
-const ModalPageDirecoes: React.FC<Props> = ({ modeDirecoes, setModeDirecoes }) => {
+const ModalPageDirecoes: React.FC<Props> = ({
+  modeDirecoes,
+  setModeDirecoes,
+  dataDirecoes,
+  stringDistancia,
+  stringDuracao,
+}) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
+
+  useEffect(() => setModeDirecoes('walk'),[])
 
   return (
     <IonPage>
@@ -57,9 +68,24 @@ const ModalPageDirecoes: React.FC<Props> = ({ modeDirecoes, setModeDirecoes }) =
             </IonSegmentButton>
           </IonSegment>
           <IonSegmentView>
-            <IonSegmentContent id="walk">Andar</IonSegmentContent>
-            <IonSegmentContent id="car">Carro</IonSegmentContent>
-            <IonSegmentContent id="cycle">Bicicleta</IonSegmentContent>
+            <IonSegmentContent id="walk">
+              Andar
+              <br />
+              {stringDistancia(dataDirecoes.distance)} <br />
+              {stringDuracao(dataDirecoes.duration)}
+            </IonSegmentContent>
+            <IonSegmentContent id="car">
+              Carro
+              <br />
+              {stringDistancia(dataDirecoes.distance)} <br />
+              {stringDuracao(dataDirecoes.duration)}
+            </IonSegmentContent>
+            <IonSegmentContent id="cycle">
+              Bicicleta
+              <br />
+              {stringDistancia(dataDirecoes.distance)} <br />
+              {stringDuracao(dataDirecoes.duration)}
+            </IonSegmentContent>
           </IonSegmentView>
         </div>
       </IonContent>

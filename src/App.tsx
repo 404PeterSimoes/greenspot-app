@@ -186,11 +186,27 @@ const AppContent: React.FC = () => {
   const [removeCameraTiltTrigger, setRemoveCameraTiltTrigger] = useState(0);
 
   // Função para transformar corretamente a distância entre o user e o ecoponto
-  const stringDistanciaFuncao = (distancia: number) => {
-    if (distancia < 1000) {
-      return `${distancia.toFixed(0)} m`;
+  const stringDistanciaFuncao = (distance: number) => {
+    if (distance <= 1000) {
+      return `${distance.toFixed(0)} m`;
     } else {
-      return `${(distancia / 1000).toFixed(2)} km`;
+      return `${(distance / 1000).toFixed(2)} km`;
+    }
+  };
+
+  // Função para transformar corretamente a duração da rota
+  const stringDuracaoFuncao = (duration: number) => {
+    if (duration < 60) {
+      return `1 min`;
+    } else if (duration < 3600) {
+      return `${Math.round(duration / 60)} min`;
+    } else {
+      const hours = Math.floor(duration / 3600);
+      const minutes = Math.round((duration % 3600) / 60);
+
+      if (minutes === 0) {
+        return `${hours} hr`;
+      } else return `${hours} hr ${minutes} min`;
     }
   };
 
@@ -315,6 +331,8 @@ const AppContent: React.FC = () => {
             modeDirecoes={modeDirecoes}
             setModeDirecoes={setModeDirecoes}
             dataDirecoes={dataDirecoes}
+            stringDistancia={stringDistanciaFuncao}
+            stringDuracao={stringDuracaoFuncao}
           />
         </IonModal>
 

@@ -188,7 +188,7 @@ const Mapa: React.FC<Props> = ({
   // Função para conseguir a rota e fazer display no mapa
   async function getRoute(start: number[], end: number[], mode: string) {
     const profile = mode === 'car' ? 'driving' : mode === 'walk' ? 'walking' : 'cycling';
-
+    
     const url = `https://api.mapbox.com/directions/v5/mapbox/${profile}/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
 
     const res = await fetch(url);
