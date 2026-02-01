@@ -13,6 +13,7 @@ interface Props {
   flyToUserLocation: number;
   removeCameraTilt: number;
   showModalDirecoes: boolean;
+  //modeDirecoes: string;
 }
 
 const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalDirecoes }) => {
@@ -222,6 +223,12 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
 
     console.log(data.distance);
   }
+
+  useEffect(() => {
+    if (showModalDirecoes) {
+      
+    }
+  }, [showModalDirecoes]);
 
   return (
     <IonContent style={{ postition: 'relative' }}>

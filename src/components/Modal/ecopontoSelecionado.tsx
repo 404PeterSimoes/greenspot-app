@@ -108,27 +108,6 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDireco
             </IonCol>
           </IonRow>
         </IonGrid>
-
-        {/*       <div className="sectionDirecoes">
-          <div style={{ color: 'rgba(0, 0, 0, 0.655)' }}>Direções</div>
-
-          <IonSegment value="car">
-            <IonSegmentButton value="car" contentId="car">
-              <IonIcon src={car} />
-            </IonSegmentButton>
-            <IonSegmentButton value="walk" contentId="walk">
-              <IonIcon src={walk} />
-            </IonSegmentButton>
-            <IonSegmentButton value="cycle" contentId="cycle">
-              <IonIcon src={bicycle} />
-            </IonSegmentButton>
-          </IonSegment>
-        </div>
-        <IonSegmentView>
-          <IonSegmentContent id="car">Carro</IonSegmentContent>
-          <IonSegmentContent id="walk">Andar</IonSegmentContent>
-          <IonSegmentContent id="cycle">Bicicleta</IonSegmentContent>
-        </IonSegmentView>*/}
       </IonContent>
     </IonPage>
   );

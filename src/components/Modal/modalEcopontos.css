@@ -19,3 +19,7 @@ img.markerEcoponto {
 .morada {
   font-size: 17px !important;
 }
+
+ion-item {
+  --ripple-color: rgb(0, 124, 0);
+}

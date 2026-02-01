@@ -17,8 +17,8 @@ export const GeolocationProvider: React.FC<{ children: React.ReactNode }> = ({ c
     useContext(EcopontosContext)!;
 
   // Para testes locais onde não há GPS:
-  //useEffect(() => setPosition({ lat: 38.98458023708152, lng: -8.5171352827064 }),[])
-
+  useEffect(() => setPosition({ lat: 38.98458023708152, lng: -8.5171352827064 }), []);
+  /*
   // Inicia o watchPosition ao abrir a App 
   useEffect(() => {
     let watchId: string | null = null;
@@ -42,11 +42,11 @@ export const GeolocationProvider: React.FC<{ children: React.ReactNode }> = ({ c
         Geolocation.clearWatch({ id: watchId });
       }
     };
-  }, []);
+  }, []);*/
 
   useEffect(() => {
     updateEcopontosPosition();
-  }, [showModalEcopontos, callShowModalEcoSelecionado /*position*/]); 
+  }, [showModalEcopontos, callShowModalEcoSelecionado /*position*/]);
 
   // Apenas atualizar a Distancia Haversine quando a position do user for conseguida pela 1ª vez e caso
   // esta ainda não tenha sido definida pelo useEffect acima
