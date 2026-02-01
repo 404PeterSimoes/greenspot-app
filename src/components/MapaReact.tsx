@@ -185,11 +185,12 @@ const Mapa: React.FC<Props> = ({
     };
   }, [position]);
 
-  // Função para conseguir a rota e fazer display no mapa
-  async function getRoute(start: number[], end: number[], mode: string) {
-    const profile = mode === 'car' ? 'driving' : mode === 'walk' ? 'walking' : 'cycling';
-    
-    const url = `https://api.mapbox.com/directions/v5/mapbox/${profile}/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
+  const [dataCarro, setDataCarro] = useState<Geometry | null>(null);
+  const [dataAndar, setDataAndar] = useState({ distance: 0, duration: 0 });
+  const [dataBicicleta, setDataBicicleta] = useState({ distance: 0, duration: 0 });
+
+  const getRouteCarro = async (start: number[], end: number[]) => {
+    const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
 
     const res = await fetch(url);
     const json = await res.json();
@@ -197,16 +198,36 @@ const Mapa: React.FC<Props> = ({
     if (!json.routes?.length) return;
 
     const data = json.routes[0];
+    setDataCarro(data.geometry);
     setDataDirecoes({ distance: data.distance, duration: data.duration });
+  };
 
-    // Caso modalDirecoes não esteja aberto, returnar, para não desenhar a rota no mapa
-    if (!showModalDirecoes) {
-      return;
-    }
+  const getRouteAndar = async (start: number[], end: number[]) => {
+    const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
 
+    const res = await fetch(url);
+    const json = await res.json();
+
+    if (!json.routes?.length) return;
+
+    const data = json.routes[0];
+  };
+
+  const getRouteBicicleta = async (start: number[], end: number[]) => {
+    const url = `https://api.mapbox.com/directions/v5/mapbox/cycling/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
+
+    const res = await fetch(url);
+    const json = await res.json();
+
+    if (!json.routes?.length) return;
+
+    const data = json.routes[0];
+  };
+
+  const setRouteMap = (data: Geometry) => {
     const geojson: Feature = {
       type: 'Feature',
-      geometry: data.geometry,
+      geometry: data,
       properties: {},
     };
 
@@ -235,7 +256,19 @@ const Mapa: React.FC<Props> = ({
         },
       });
     }
-  }
+  };
+
+  useEffect(() => {
+    if (showModalEcoSelecionado && position && selectedEcoponto) {
+      getRouteCarro([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude]);
+    }
+  }, [showModalEcoSelecionado]);
+
+  useEffect(() => {
+    if (showModalDirecoes && dataCarro) {
+      setRouteMap(dataCarro)
+    }
+  },[showModalDirecoes])
 
   function clearRoute() {
     const map = mapRef.current?.getMap();
@@ -250,13 +283,6 @@ const Mapa: React.FC<Props> = ({
       });
     }
   }
-
-  // Conseguir rota se modeDirecoes se alterar ou modalEcoSelec abrir
-  useEffect(() => {
-    if ((showModalEcoSelecionado || showModalDirecoes) && position && selectedEcoponto) {
-      getRoute([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude], modeDirecoes);
-    }
-  }, [modeDirecoes, callShowModalEcoSelecionado]);
 
   // Sempre que modalDirecoes fechar, limpar a rota no mapa
   useEffect(() => {
