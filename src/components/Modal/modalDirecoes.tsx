@@ -18,13 +18,11 @@ import { EcopontosContext } from '../../context/ecopontosContext';
 interface Props {
   modeDirecoes: string;
   setModeDirecoes: (value: string) => void;
+  dataDirecoes: { distance: number; duration: number };
 }
 
 const ModalPageDirecoes: React.FC<Props> = ({ modeDirecoes, setModeDirecoes }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
-  useEffect(() => {
-    setModeDirecoes('car');
-  }, []);
 
   return (
     <IonPage>
@@ -43,24 +41,24 @@ const ModalPageDirecoes: React.FC<Props> = ({ modeDirecoes, setModeDirecoes }) =
             onIonChange={(e) => {
               const value = e.detail.value;
 
-              if (value === 'car') setModeDirecoes('car');
-              else if (value === 'walk') setModeDirecoes('walk');
+              if (value === 'walk') setModeDirecoes('walk');
+              else if (value === 'car') setModeDirecoes('car');
               else if (value === 'cycle') setModeDirecoes('cycle');
             }}
           >
-            <IonSegmentButton value="car" contentId="car">
-              <IonIcon src={car} />
-            </IonSegmentButton>
             <IonSegmentButton value="walk" contentId="walk">
               <IonIcon src={walk} />
+            </IonSegmentButton>
+            <IonSegmentButton value="car" contentId="car">
+              <IonIcon src={car} />
             </IonSegmentButton>
             <IonSegmentButton value="cycle" contentId="cycle">
               <IonIcon src={bicycle} />
             </IonSegmentButton>
           </IonSegment>
           <IonSegmentView>
-            <IonSegmentContent id="car">Carro</IonSegmentContent>
             <IonSegmentContent id="walk">Andar</IonSegmentContent>
+            <IonSegmentContent id="car">Carro</IonSegmentContent>
             <IonSegmentContent id="cycle">Bicicleta</IonSegmentContent>
           </IonSegmentView>
         </div>

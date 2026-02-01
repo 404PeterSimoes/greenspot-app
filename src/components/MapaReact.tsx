@@ -14,13 +14,21 @@ interface Props {
   removeCameraTilt: number;
   showModalDirecoes: boolean;
   modeDirecoes: string;
+  setDataDirecoes: React.Dispatch<React.SetStateAction<{ distance: number; duration: number }>>;
 }
 
-const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalDirecoes, modeDirecoes }) => {
+const Mapa: React.FC<Props> = ({
+  flyToUserLocation,
+  removeCameraTilt,
+  showModalDirecoes,
+  modeDirecoes,
+  setDataDirecoes,
+}) => {
   const {
     arrayEcopontos,
     selectedEcoponto,
     showModalEcoSelecionado,
+    callShowModalEcoSelecionado,
     setSelectedEcoponto,
     setModalEcoSelecionado,
     setCallShowModalEcoSelecionado,
@@ -105,6 +113,7 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
     }
   }, [removeCameraTilt]);
 
+  // Colocar a posição da câmera de forma a que dê para ver os dois pontos para se desenhar a linha de rota
   useEffect(() => {
     if (mapRef.current && selectedEcoponto && position) {
       if (showModalDirecoes) {
@@ -188,6 +197,12 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
     if (!json.routes?.length) return;
 
     const data = json.routes[0];
+    setDataDirecoes({ distance: data.distance, duration: data.duration });
+
+    // Caso modalDirecoes não esteja aberto, returnar, para não desenhar a rota no mapa
+    if (!showModalDirecoes) {
+      return;
+    }
 
     const geojson: Feature = {
       type: 'Feature',
@@ -220,8 +235,6 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
         },
       });
     }
-
-    console.log('Distance (m):', data.distance);
   }
 
   function clearRoute() {
@@ -238,11 +251,17 @@ const Mapa: React.FC<Props> = ({ flyToUserLocation, removeCameraTilt, showModalD
     }
   }
 
+  // Conseguir rota se modeDirecoes se alterar ou modalEcoSelec abrir
   useEffect(() => {
-    if (showModalDirecoes && position && selectedEcoponto) {
+    if ((showModalEcoSelecionado || showModalDirecoes) && position && selectedEcoponto) {
       getRoute([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude], modeDirecoes);
-    } else if (!showModalDirecoes) clearRoute();
-  }, [showModalDirecoes, modeDirecoes]);
+    }
+  }, [modeDirecoes, callShowModalEcoSelecionado]);
+
+  // Sempre que modalDirecoes fechar, limpar a rota no mapa
+  useEffect(() => {
+    if (!showModalDirecoes) clearRoute();
+  }, [showModalDirecoes]);
 
   return (
     <IonContent style={{ postition: 'relative' }}>
