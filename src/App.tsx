@@ -187,10 +187,10 @@ const AppContent: React.FC = () => {
 
   // Função para transformar corretamente a distância entre o user e o ecoponto
   const stringDistanciaFuncao = (distancia: number) => {
-    if (distancia < 1) {
-      return `${(distancia * 1000).toFixed(0)} m`;
+    if (distancia < 1000) {
+      return `${distancia.toFixed(0)} m`;
     } else {
-      return `${distancia.toFixed(2)} km`;
+      return `${(distancia / 1000).toFixed(2)} km`;
     }
   };
 

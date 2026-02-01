@@ -83,7 +83,7 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDireco
                   <div style={{ color: 'rgba(0, 0, 0, 0.655)' }}>Distância:</div>
                   <div style={{ textAlign: 'center', fontSize: '20px' /*fontWeight:'bold'*/ }}>
                     {/*~{stringDistancia(selectedEcoponto.DistanciaHaversine)}*/}
-                    {dataDirecoes.distance}
+                    {stringDistancia(dataDirecoes.distance)}
                   </div>
                 </div>
               </IonCol>

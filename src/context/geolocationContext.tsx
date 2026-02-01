@@ -57,7 +57,7 @@ export const GeolocationProvider: React.FC<{ children: React.ReactNode }> = ({ c
   }, [position]);
 
   function formulaHaversine(lat1: number, lon1: number, lat2: number, lon2: number) {
-    const R = 6371; // raio da Terra em km
+    const R = 6371000; // raio da Terra em metros
     const toRad = (x: number) => (x * Math.PI) / 180;
 
     const dLat = toRad(lat2 - lat1);
