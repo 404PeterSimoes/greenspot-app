@@ -185,22 +185,9 @@ const Mapa: React.FC<Props> = ({
     };
   }, [position]);
 
-  const [dataCarro, setDataCarro] = useState<Geometry | null>(null);
-  const [dataAndar, setDataAndar] = useState({ distance: 0, duration: 0 });
-  const [dataBicicleta, setDataBicicleta] = useState({ distance: 0, duration: 0 });
-
-  const getRouteCarro = async (start: number[], end: number[]) => {
-    const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
-
-    const res = await fetch(url);
-    const json = await res.json();
-
-    if (!json.routes?.length) return;
-
-    const data = json.routes[0];
-    setDataCarro(data.geometry);
-    setDataDirecoes({ distance: data.distance, duration: data.duration });
-  };
+  const [geometryAndar, setGeometryAndar] = useState<Geometry | null>(null);
+  const [geometryCarro, setGeometryCarro] = useState<Geometry | null>(null);
+  const [geometryBicicleta, setGeometryBicicleta] = useState({ distance: 0, duration: 0 });
 
   const getRouteAndar = async (start: number[], end: number[]) => {
     const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
@@ -211,6 +198,21 @@ const Mapa: React.FC<Props> = ({
     if (!json.routes?.length) return;
 
     const data = json.routes[0];
+    setGeometryAndar(data.geometry)
+    setDataDirecoes({ distance: data.distance, duration: data.duration });
+  };
+
+  const getRouteCarro = async (start: number[], end: number[]) => {
+    const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
+
+    const res = await fetch(url);
+    const json = await res.json();
+
+    if (!json.routes?.length) return;
+
+    const data = json.routes[0];
+    setGeometryCarro(data.geometry);
+    setDataDirecoes({ distance: data.distance, duration: data.duration });
   };
 
   const getRouteBicicleta = async (start: number[], end: number[]) => {
@@ -259,14 +261,20 @@ const Mapa: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    if (showModalEcoSelecionado && position && selectedEcoponto) {
-      getRouteCarro([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude]);
+    if (callShowModalEcoSelecionado && position && selectedEcoponto) {
+      getRouteAndar([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude]);
+      console.log('aa')
     }
-  }, [showModalEcoSelecionado]);
+    if (showModalDirecoes && position && selectedEcoponto) {
+      getRouteCarro([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude]);
+      getRouteBicicleta([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude]);
+      console.log('bb')
+    }
+  }, [callShowModalEcoSelecionado]);
 
   useEffect(() => {
-    if (showModalDirecoes && dataCarro) {
-      setRouteMap(dataCarro)
+    if (showModalDirecoes && geometryAndar) {
+      setRouteMap(geometryAndar)
     }
   },[showModalDirecoes])
 
