@@ -14,7 +14,15 @@ interface Props {
   removeCameraTilt: number;
   showModalDirecoes: boolean;
   modeDirecoes: string;
-  setDataDirecoes: React.Dispatch<React.SetStateAction<{ distance: number; duration: number }>>;
+  setArrayDataDirecoes: React.Dispatch<
+    React.SetStateAction<
+      {
+        mode: string;
+        distance: number;
+        duration: number;
+      }[]
+    >
+  >;
 }
 
 const Mapa: React.FC<Props> = ({
@@ -22,7 +30,7 @@ const Mapa: React.FC<Props> = ({
   removeCameraTilt,
   showModalDirecoes,
   modeDirecoes,
-  setDataDirecoes,
+  setArrayDataDirecoes,
 }) => {
   const {
     arrayEcopontos,
@@ -187,7 +195,8 @@ const Mapa: React.FC<Props> = ({
 
   const [geometryAndar, setGeometryAndar] = useState<Geometry | null>(null);
   const [geometryCarro, setGeometryCarro] = useState<Geometry | null>(null);
-  const [geometryBicicleta, setGeometryBicicleta] = useState({ distance: 0, duration: 0 });
+  const [geometryBicicleta, setGeometryBicicleta] = useState<Geometry | null>(null);
+  //const [geometryBicicleta, setGeometryBicicleta] = useState({ distance: 0, duration: 0 });
 
   const getRouteAndar = async (start: number[], end: number[]) => {
     const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
@@ -198,8 +207,8 @@ const Mapa: React.FC<Props> = ({
     if (!json.routes?.length) return;
 
     const data = json.routes[0];
-    setGeometryAndar(data.geometry)
-    setDataDirecoes({ distance: data.distance, duration: data.duration });
+    setGeometryAndar(data.geometry);
+    setArrayDataDirecoes([{ mode: 'walk', distance: data.distance, duration: data.duration }]);
   };
 
   const getRouteCarro = async (start: number[], end: number[]) => {
@@ -212,7 +221,7 @@ const Mapa: React.FC<Props> = ({
 
     const data = json.routes[0];
     setGeometryCarro(data.geometry);
-    setDataDirecoes({ distance: data.distance, duration: data.duration });
+    setArrayDataDirecoes(prev => [...prev, { mode: 'car', distance: data.distance, duration: data.duration }]);
   };
 
   const getRouteBicicleta = async (start: number[], end: number[]) => {
@@ -224,6 +233,8 @@ const Mapa: React.FC<Props> = ({
     if (!json.routes?.length) return;
 
     const data = json.routes[0];
+    setGeometryBicicleta(data.geometry);
+    setArrayDataDirecoes(prev => [...prev, { mode: 'cycle', distance: data.distance, duration: data.duration }]);
   };
 
   const setRouteMap = (data: Geometry) => {
@@ -260,23 +271,33 @@ const Mapa: React.FC<Props> = ({
     }
   };
 
+  // Sempre que modalDirecoes abrir, mostrar automáticamente rota a pé
   useEffect(() => {
+    if (showModalDirecoes && geometryAndar) {
+      setRouteMap(geometryAndar);
+    }
+  }, [showModalDirecoes]);
+
+  useEffect(() => {
+    // Quando modalEcoSelec abrir, fazer fetch da rota a pé
     if (callShowModalEcoSelecionado && position && selectedEcoponto) {
       getRouteAndar([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude]);
-      console.log('aa')
+      console.log('Primeiro fetch direções');
     }
+    // Quando modalEcoSelec fechar e modalDirecoes abrir, fazer fetch da rota de carro e de bicicleta
     if (showModalDirecoes && position && selectedEcoponto) {
       getRouteCarro([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude]);
       getRouteBicicleta([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude]);
-      console.log('bb')
+      console.log('Segundo fetch direções');
     }
   }, [callShowModalEcoSelecionado]);
 
+  // Definir rota no mapa sempre que modeDirecoes se alterar
   useEffect(() => {
-    if (showModalDirecoes && geometryAndar) {
-      setRouteMap(geometryAndar)
-    }
-  },[showModalDirecoes])
+    if (modeDirecoes === 'walk' && geometryAndar) setRouteMap(geometryAndar);
+    if (modeDirecoes === 'car' && geometryCarro) setRouteMap(geometryCarro);
+    if (modeDirecoes === 'cycle' && geometryBicicleta) setRouteMap(geometryBicicleta);
+  }, [modeDirecoes]);
 
   function clearRoute() {
     const map = mapRef.current?.getMap();

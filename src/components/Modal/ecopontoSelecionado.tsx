@@ -42,10 +42,10 @@ import { GeolocationContext } from '../../context/geolocationContext';
 interface Props {
   stringDistancia: (distancia: number) => string;
   modalDirecoes: (value: boolean) => void;
-  dataDirecoes: { distance: number; duration: number };
+  arrayDataDirecoes: { mode: string; distance: number; duration: number }[];
 }
 
-const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDirecoes, dataDirecoes }) => {
+const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDirecoes, arrayDataDirecoes }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
   const { position } = useContext(GeolocationContext)!;
 
@@ -74,7 +74,7 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDireco
             </IonCol>
           </IonRow>
           {/* Linha (secção) apenas carrega caso a distância seja calculada */}
-          {dataDirecoes.distance != 0 && (
+          {arrayDataDirecoes.find((item) => item.mode === 'walk')?.distance != 0 && (
             <IonRow
               style={{ flex: 1, background: 'rgba(0, 0, 0, 0.04)', padding: '5px', paddingBottom: 0, paddingTop: 0 }}
             >
@@ -82,8 +82,7 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDireco
                 <div className="section">
                   <div style={{ color: 'rgba(0, 0, 0, 0.655)' }}>Distância:</div>
                   <div style={{ textAlign: 'center', fontSize: '20px' /*fontWeight:'bold'*/ }}>
-                    {/*~{stringDistancia(selectedEcoponto.DistanciaHaversine)}*/}
-                    {stringDistancia(dataDirecoes.distance)}
+                    {stringDistancia(arrayDataDirecoes.find((item) => item.mode === 'walk')?.distance ?? 0)}
                   </div>
                 </div>
               </IonCol>

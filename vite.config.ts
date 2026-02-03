@@ -13,7 +13,7 @@ export default defineConfig({
         setupFiles: './src/setupTests.ts',
     },
     server: {
-        allowedHosts: ['88f7299feaf0.ngrok-free.app'],
+        allowedHosts: ['b4cdddc5d191.ngrok-free.app'],
     },
     build: {
         target: 'esnext',

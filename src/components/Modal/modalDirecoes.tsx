@@ -18,7 +18,7 @@ import { EcopontosContext } from '../../context/ecopontosContext';
 interface Props {
   modeDirecoes: string;
   setModeDirecoes: (value: string) => void;
-  dataDirecoes: { distance: number; duration: number };
+  arrayDataDirecoes: { mode: string; distance: number; duration: number }[];
 
   stringDistancia: (distance: number) => string;
   stringDuracao: (duration: number) => string;
@@ -27,13 +27,13 @@ interface Props {
 const ModalPageDirecoes: React.FC<Props> = ({
   modeDirecoes,
   setModeDirecoes,
-  dataDirecoes,
+  arrayDataDirecoes,
   stringDistancia,
   stringDuracao,
 }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
 
-  useEffect(() => setModeDirecoes('walk'),[])
+  useEffect(() => setModeDirecoes('walk'), []);
 
   return (
     <IonPage>
@@ -71,20 +71,20 @@ const ModalPageDirecoes: React.FC<Props> = ({
             <IonSegmentContent id="walk">
               Andar
               <br />
-              {stringDistancia(dataDirecoes.distance)} <br />
-              {stringDuracao(dataDirecoes.duration)}
+              {stringDistancia(arrayDataDirecoes.find((item) => item.mode === 'walk')?.distance ?? 0)}
+              {stringDuracao(arrayDataDirecoes.find((item) => item.mode === 'walk')?.duration ?? 0)}
             </IonSegmentContent>
             <IonSegmentContent id="car">
               Carro
-              <br />
-              {stringDistancia(dataDirecoes.distance)} <br />
-              {stringDuracao(dataDirecoes.duration)}
+             <br />
+              {stringDistancia(arrayDataDirecoes.find((item) => item.mode === 'car')?.distance ?? 0)}
+              {stringDuracao(arrayDataDirecoes.find((item) => item.mode === 'car')?.duration ?? 0)}
             </IonSegmentContent>
             <IonSegmentContent id="cycle">
               Bicicleta
               <br />
-              {stringDistancia(dataDirecoes.distance)} <br />
-              {stringDuracao(dataDirecoes.duration)}
+              {stringDistancia(arrayDataDirecoes.find((item) => item.mode === 'cycle')?.distance ?? 0)}
+              {stringDuracao(arrayDataDirecoes.find((item) => item.mode === 'cycle')?.duration ?? 0)}
             </IonSegmentContent>
           </IonSegmentView>
         </div>
