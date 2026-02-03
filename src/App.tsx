@@ -313,6 +313,7 @@ const AppContent: React.FC = () => {
           className="ecoselecionado"
           initialBreakpoint={0.3}
           breakpoints={[0.3, 0]}
+          backdropBreakpoint={0.5}
           backdropDismiss={false}
           expandToScroll={false}
           handle={true}

@@ -128,14 +128,15 @@ const Mapa: React.FC<Props> = ({
       if (showModalDirecoes) {
         const pointA: [number, number] = [selectedEcoponto.Longitude, selectedEcoponto.Latitude];
         const pointB: [number, number] = [position.lng, position.lat];
-        
-        const modeGeometry = modeDirecoes === 'walk' ? geometryAndar : modeDirecoes === 'car' ? geometryCarro : geometryBicicleta
-        const coordinates = setRouteMap(modeGeometry!)
 
-        const bounds = new mapboxgl.LngLatBounds(pointA,pointB);
+        const modeGeometry =
+          modeDirecoes === 'walk' ? geometryAndar : modeDirecoes === 'car' ? geometryCarro : geometryBicicleta;
+        const coordinates = setRouteMap(modeGeometry!);
+
+        const bounds = new mapboxgl.LngLatBounds(pointA, pointB);
 
         for (const coord of coordinates!) {
-          bounds.extend(coord as [number, number])
+          bounds.extend(coord as [number, number]);
         }
 
         mapRef.current.fitBounds(bounds, {
@@ -231,7 +232,7 @@ const Mapa: React.FC<Props> = ({
 
     const data = json.routes[0];
     setGeometryCarro(data.geometry);
-    setArrayDataDirecoes(prev => [...prev, { mode: 'car', distance: data.distance, duration: data.duration }]);
+    setArrayDataDirecoes((prev) => [...prev, { mode: 'car', distance: data.distance, duration: data.duration }]);
   };
 
   const getRouteBicicleta = async (start: number[], end: number[]) => {
@@ -244,7 +245,7 @@ const Mapa: React.FC<Props> = ({
 
     const data = json.routes[0];
     setGeometryBicicleta(data.geometry);
-    setArrayDataDirecoes(prev => [...prev, { mode: 'cycle', distance: data.distance, duration: data.duration }]);
+    setArrayDataDirecoes((prev) => [...prev, { mode: 'cycle', distance: data.distance, duration: data.duration }]);
   };
 
   const setRouteMap = (data: LineString) => {
@@ -306,7 +307,7 @@ const Mapa: React.FC<Props> = ({
 
   // Definir rota no mapa sempre que modeDirecoes se alterar
   useEffect(() => {
-    if (modeDirecoes === 'walk' && geometryAndar) setRouteMap(geometryAndar,);
+    if (modeDirecoes === 'walk' && geometryAndar) setRouteMap(geometryAndar);
     if (modeDirecoes === 'car' && geometryCarro) setRouteMap(geometryCarro);
     if (modeDirecoes === 'cycle' && geometryBicicleta) setRouteMap(geometryBicicleta);
   }, [modeDirecoes]);
@@ -355,18 +356,15 @@ const Mapa: React.FC<Props> = ({
                 anchor="bottom"
                 onClick={() => {
                   // SetTimeout para o flyto acontecer mesmo que o user tenha feito double click no marker
-                  /*
-                getRoute(
-                  [-8.517099769640195, 38.984597035870635],
-                  [eco.Longitude, eco.Latitude]
-                  );*/
-                  /* Off temporariamente */
-                  setTimeout(() => {
-                    const ecoSelecionado = eco;
-                    setSelectedEcoponto(ecoSelecionado);
-                    setModalEcoSelecionado(true);
-                    setCallShowModalEcoSelecionado(true);
-                  }, 150);
+                  // Apenas executar caso modalDirecoes esteja fechado
+                  if (!showModalDirecoes) {
+                    setTimeout(() => {
+                      const ecoSelecionado = eco;
+                      setSelectedEcoponto(ecoSelecionado);
+                      setModalEcoSelecionado(true);
+                      setCallShowModalEcoSelecionado(true);
+                    }, 150);
+                  }
                 }}
               >
                 <img
