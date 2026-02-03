@@ -15,14 +15,21 @@ interface Props {
   removeCameraTilt: number;
   showModalDirecoes: boolean;
   modeDirecoes: string;
-  setArrayDataDirecoes: React.Dispatch<
-    React.SetStateAction<
-      {
-        mode: string;
+  setObjectDataDirecoes: React.Dispatch<
+    React.SetStateAction<{
+      walk: {
         distance: number;
         duration: number;
-      }[]
-    >
+      };
+      car: {
+        distance: number;
+        duration: number;
+      };
+      cycle: {
+        distance: number;
+        duration: number;
+      };
+    }>
   >;
 }
 
@@ -31,7 +38,7 @@ const Mapa: React.FC<Props> = ({
   removeCameraTilt,
   showModalDirecoes,
   modeDirecoes,
-  setArrayDataDirecoes,
+  setObjectDataDirecoes,
 }) => {
   const {
     arrayEcopontos,
@@ -204,10 +211,14 @@ const Mapa: React.FC<Props> = ({
     };
   }, [position]);
 
+  const initialDirecoes = {
+    car: { distance: 0, duration: 0 },
+    cycle: { distance: 0, duration: 0 },
+  };
+
   const [geometryAndar, setGeometryAndar] = useState<LineString | null>(null);
   const [geometryCarro, setGeometryCarro] = useState<LineString | null>(null);
   const [geometryBicicleta, setGeometryBicicleta] = useState<LineString | null>(null);
-  //const [geometryBicicleta, setGeometryBicicleta] = useState({ distance: 0, duration: 0 });
 
   const getRouteAndar = async (start: number[], end: number[]) => {
     const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
@@ -219,7 +230,7 @@ const Mapa: React.FC<Props> = ({
 
     const data = json.routes[0];
     setGeometryAndar(data.geometry);
-    setArrayDataDirecoes([{ mode: 'walk', distance: data.distance, duration: data.duration }]);
+    setObjectDataDirecoes({ ...initialDirecoes, walk: { distance: data.distance, duration: data.duration } });
   };
 
   const getRouteCarro = async (start: number[], end: number[]) => {
@@ -232,7 +243,7 @@ const Mapa: React.FC<Props> = ({
 
     const data = json.routes[0];
     setGeometryCarro(data.geometry);
-    setArrayDataDirecoes((prev) => [...prev, { mode: 'car', distance: data.distance, duration: data.duration }]);
+    setObjectDataDirecoes((prev) => ({ ...prev, car: { distance: data.distance, duration: data.duration } }));
   };
 
   const getRouteBicicleta = async (start: number[], end: number[]) => {
@@ -245,7 +256,7 @@ const Mapa: React.FC<Props> = ({
 
     const data = json.routes[0];
     setGeometryBicicleta(data.geometry);
-    setArrayDataDirecoes((prev) => [...prev, { mode: 'cycle', distance: data.distance, duration: data.duration }]);
+    setObjectDataDirecoes((prev) => ({ ...prev, cycle: { distance: data.distance, duration: data.duration } }));
   };
 
   const setRouteMap = (data: LineString) => {

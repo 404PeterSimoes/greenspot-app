@@ -211,7 +211,11 @@ const AppContent: React.FC = () => {
   };
 
   const [modeDirecoes, setModeDirecoes] = useState('walk');
-  const [arrayDataDirecoes, setArrayDataDirecoes] = useState([{ mode: '', distance: 0, duration: 0 }]);
+  const [objectDataDirecoes, setObjectDataDirecoes] = useState({
+    walk: { distance: 0, duration: 0 },
+    car: { distance: 0, duration: 0 },
+    cycle: { distance: 0, duration: 0 },
+  });
 
   // Ajustar StatusBar para dispositivos que não ajustem automaticamente (Samsung)
   useEffect(() => {
@@ -331,7 +335,7 @@ const AppContent: React.FC = () => {
           <ModalPageDirecoes
             modeDirecoes={modeDirecoes}
             setModeDirecoes={setModeDirecoes}
-            arrayDataDirecoes={arrayDataDirecoes}
+            objectDataDirecoes={objectDataDirecoes}
             stringDistancia={stringDistanciaFuncao}
             stringDuracao={stringDuracaoFuncao}
           />
@@ -361,7 +365,7 @@ const AppContent: React.FC = () => {
           <ModalPageEcoSelecionado
             stringDistancia={stringDistanciaFuncao}
             modalDirecoes={setModalDirecoes}
-            arrayDataDirecoes={arrayDataDirecoes}
+            objectDataDirecoes={objectDataDirecoes}
           />
         </IonModal>
         <IonTabs>
@@ -372,7 +376,7 @@ const AppContent: React.FC = () => {
                 removeCameraTilt={removeCameraTiltTrigger}
                 showModalDirecoes={showModalDirecoes}
                 modeDirecoes={modeDirecoes}
-                setArrayDataDirecoes={setArrayDataDirecoes}
+                setObjectDataDirecoes={setObjectDataDirecoes}
               />
             </div>
           </IonTab>
