@@ -9,6 +9,9 @@ import {
   IonIcon,
   IonSegmentView,
   IonSegmentContent,
+  IonGrid,
+  IonRow,
+  IonCol,
 } from '@ionic/react';
 import { car, walk, bicycle, chevronForwardOutline } from 'ionicons/icons';
 import './modalDirecoes.css';
@@ -20,18 +23,18 @@ interface Props {
   setModeDirecoes: (value: string) => void;
   objectDataDirecoes: {
     walk: {
-        distance: number;
-        duration: number;
+      distance: number;
+      duration: number;
     };
     car: {
-        distance: number;
-        duration: number;
+      distance: number;
+      duration: number;
     };
     cycle: {
-        distance: number;
-        duration: number;
+      distance: number;
+      duration: number;
     };
-}
+  };
 
   stringDistancia: (distance: number) => string;
   stringDuracao: (duration: number) => string;
@@ -82,22 +85,26 @@ const ModalPageDirecoes: React.FC<Props> = ({
           </IonSegment>
           <IonSegmentView>
             <IonSegmentContent id="walk">
-              Andar
-              <br />
-              {stringDistancia(objectDataDirecoes.walk.distance)}
-              {stringDuracao(objectDataDirecoes.walk.duration)}
+              <IonGrid>
+                <IonRow>
+                  <IonCol className='direcoesColumn' style={{ textAlign: 'center' }}>
+                    <span className='spanDuration'>{stringDuracao(objectDataDirecoes.walk.duration)}</span>{' '}
+                    <span className='spanDistance'>({stringDistancia(objectDataDirecoes.walk.distance)})</span>
+                  </IonCol>
+                </IonRow>
+              </IonGrid>
             </IonSegmentContent>
             <IonSegmentContent id="car">
-              Carro
-             <br />
-              {stringDistancia(objectDataDirecoes.car.distance)}
-              {stringDuracao(objectDataDirecoes.car.duration)}
+                  <IonCol className='direcoesColumn' style={{ textAlign: 'center' }}>
+                    <span className='spanDuration'>{stringDuracao(objectDataDirecoes.car.duration)}</span>{' '}
+                    <span className='spanDistance'>({stringDistancia(objectDataDirecoes.car.distance)})</span>
+                  </IonCol>
             </IonSegmentContent>
             <IonSegmentContent id="cycle">
-              Bicicleta
-              <br />
-              {stringDistancia(objectDataDirecoes.cycle.distance)}
-              {stringDuracao(objectDataDirecoes.cycle.duration)}
+                  <IonCol className='direcoesColumn' style={{ textAlign: 'center' }}>
+                    <span className='spanDuration'>{stringDuracao(objectDataDirecoes.cycle.duration)}</span>{' '}
+                    <span className='spanDistance'>({stringDistancia(objectDataDirecoes.cycle.distance)})</span>
+                  </IonCol>
             </IonSegmentContent>
           </IonSegmentView>
         </div>

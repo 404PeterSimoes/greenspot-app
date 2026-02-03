@@ -17,7 +17,7 @@ export const GeolocationProvider: React.FC<{ children: React.ReactNode }> = ({ c
     useContext(EcopontosContext)!;
 
   // Para testes locais onde não há GPS:
-  useEffect(() => setPosition({ lat: 38.98458023708152, lng: -8.5171352827064 }), []);
+  useEffect(() => setPosition({ lat: 39.07816347970216, lng: -8.505462853182044 }), []);
   /*
   // Inicia o watchPosition ao abrir a App 
   useEffect(() => {

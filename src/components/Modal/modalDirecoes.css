@@ -3,6 +3,7 @@ ion-segment-content {
   align-items: center;
   justify-content: center;
 }
+/*
 ion-segment-content:nth-of-type(1) {
   background: lightpink;
 }
@@ -11,6 +12,10 @@ ion-segment-content:nth-of-type(2) {
 }
 ion-segment-content:nth-of-type(3) {
   background: lightgreen;
+}*/
+
+ion-segment-button {
+  background: rgba(0, 0, 0, 0.02)
 }
 
 .segment-button-checked::part(native) {
@@ -22,11 +27,20 @@ ion-segment-button::part(indicator-background) {
 }
 
 ion-toolbar.direcoesToolbar {
-    text-align: center;
+  text-align: center;
 }
 
 .direcoesContentHeight {
   height: 100%;
   display: flex;
   flex-direction: column;
-} 
+}
+
+.direcoesColumn {
+  font-size: 20px;
+
+}
+
+.spanDuration {color: #2b7f3f}
+
+.spanDistance {color: #5e5e5e}

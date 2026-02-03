@@ -74,7 +74,7 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDireco
           <IonRow style={{ flex: 1, background: 'white', padding: '5px', paddingBottom: 0 }}>
             <IonCol style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
               <div className="section">
-                <div style={{ color: 'rgba(0, 0, 0, 0.655)' }}>Pode depositar:</div>
+                <span style={{ color: 'rgba(0, 0, 0, 0.655)' }}>Pode depositar:</span>
 
                 <div className="containerPodeDepositar">
                   {selectedEcoponto?.Tem_papel && <img src={imgPapel} />}
@@ -93,10 +93,10 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDireco
             >
               <IonCol style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
                 <div className="section">
-                  <div style={{ color: 'rgba(0, 0, 0, 0.655)' }}>Distância:</div>
-                  <div style={{ textAlign: 'center', fontSize: '20px' /*fontWeight:'bold'*/ }}>
+                  <span style={{ color: 'rgba(0, 0, 0, 0.655)' }}>Distância:</span>
+                  <span style={{ textAlign: 'center', fontSize: '20px' /*fontWeight:'bold'*/ }}>
                     {stringDistancia(objectDataDirecoes.walk.distance)}
-                  </div>
+                  </span>
                 </div>
               </IonCol>
             </IonRow>

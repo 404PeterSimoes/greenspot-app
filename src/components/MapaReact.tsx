@@ -60,7 +60,6 @@ const Mapa: React.FC<Props> = ({
   // Função para escolher aleatóriamente um inteiro dentro de dois fornecidos
   const randomInt = (min: number, max: number) => {
     const random = Math.floor(Math.random() * (max - min + 1) + min);
-    console.log(random);
     return random;
   };
 
