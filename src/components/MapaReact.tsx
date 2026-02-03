@@ -6,7 +6,8 @@ import imgMarkerEcoponto from '../assets/marker_ecoponto.png';
 import './MapaReact.css';
 import { EcopontosContext } from '../context/ecopontosContext';
 import { GeolocationContext } from '../context/geolocationContext';
-import { Feature, GeoJsonProperties, Geometry } from 'geojson';
+import { Feature, GeoJsonProperties, Geometry, LineString } from 'geojson';
+import mapboxgl, { MercatorCoordinate } from 'mapbox-gl';
 //import { forwardRef, useImperativeHandle } from 'react';
 
 interface Props {
@@ -127,14 +128,23 @@ const Mapa: React.FC<Props> = ({
       if (showModalDirecoes) {
         const pointA: [number, number] = [selectedEcoponto.Longitude, selectedEcoponto.Latitude];
         const pointB: [number, number] = [position.lng, position.lat];
+        
+        const modeGeometry = modeDirecoes === 'walk' ? geometryAndar : modeDirecoes === 'car' ? geometryCarro : geometryBicicleta
+        const coordinates = setRouteMap(modeGeometry!)
 
-        mapRef.current.fitBounds([pointA, pointB], {
+        const bounds = new mapboxgl.LngLatBounds(pointA,pointB);
+
+        for (const coord of coordinates!) {
+          bounds.extend(coord as [number, number])
+        }
+
+        mapRef.current.fitBounds(bounds, {
           padding: { bottom: 370, left: 55, right: 55, top: 90 },
           duration: 1200,
         });
       }
     }
-  }, [showModalDirecoes]);
+  }, [showModalDirecoes, modeDirecoes]);
 
   // Código para animar o Marker quando a posição GPS do user atualizar
   const [markerPos, setMarkerPos] = useState<{ lat: number; lng: number } | null>(null);
@@ -193,9 +203,9 @@ const Mapa: React.FC<Props> = ({
     };
   }, [position]);
 
-  const [geometryAndar, setGeometryAndar] = useState<Geometry | null>(null);
-  const [geometryCarro, setGeometryCarro] = useState<Geometry | null>(null);
-  const [geometryBicicleta, setGeometryBicicleta] = useState<Geometry | null>(null);
+  const [geometryAndar, setGeometryAndar] = useState<LineString | null>(null);
+  const [geometryCarro, setGeometryCarro] = useState<LineString | null>(null);
+  const [geometryBicicleta, setGeometryBicicleta] = useState<LineString | null>(null);
   //const [geometryBicicleta, setGeometryBicicleta] = useState({ distance: 0, duration: 0 });
 
   const getRouteAndar = async (start: number[], end: number[]) => {
@@ -237,8 +247,8 @@ const Mapa: React.FC<Props> = ({
     setArrayDataDirecoes(prev => [...prev, { mode: 'cycle', distance: data.distance, duration: data.duration }]);
   };
 
-  const setRouteMap = (data: Geometry) => {
-    const geojson: Feature = {
+  const setRouteMap = (data: LineString) => {
+    const geojson: Feature<LineString> = {
       type: 'Feature',
       geometry: data,
       properties: {},
@@ -269,6 +279,8 @@ const Mapa: React.FC<Props> = ({
         },
       });
     }
+
+    return geojson.geometry.coordinates;
   };
 
   // Sempre que modalDirecoes abrir, mostrar automáticamente rota a pé
@@ -294,7 +306,7 @@ const Mapa: React.FC<Props> = ({
 
   // Definir rota no mapa sempre que modeDirecoes se alterar
   useEffect(() => {
-    if (modeDirecoes === 'walk' && geometryAndar) setRouteMap(geometryAndar);
+    if (modeDirecoes === 'walk' && geometryAndar) setRouteMap(geometryAndar,);
     if (modeDirecoes === 'car' && geometryCarro) setRouteMap(geometryCarro);
     if (modeDirecoes === 'cycle' && geometryBicicleta) setRouteMap(geometryBicicleta);
   }, [modeDirecoes]);
