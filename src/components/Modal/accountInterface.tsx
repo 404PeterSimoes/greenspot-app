@@ -21,20 +21,37 @@ async function handleLogout() {
   }
 }
 
-// Exemplos
 async function getUserProfile() {
-  const { data: user } = await supabase.auth.getUser();
+  const { data: authData, error: authError } = await supabase.auth.getUser();
 
-  if (user) {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.user?.id)
-      .single();
-
-    return data;
+  if (authError) {
+    console.error('Error getting user:', authError);
+    return null;
   }
+
+  if (!authData?.user) {
+    console.log('No user logged in');
+    return null;
+  }
+
+  const { data: profile, error: profileError } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', authData.user.id)
+    .maybeSingle();
+
+  if (profileError) {
+    console.error('Error getting profile:', profileError);
+    return null;
+  }
+  if (profile) console.log('profile value:', profile);
+
+  
+  console.log(authData.user.id);
+
+  return profile;
 }
+
 async function updateUserProfile(updates: any) {
   const { data: user } = await supabase.auth.getUser();
 
