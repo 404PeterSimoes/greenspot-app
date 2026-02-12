@@ -35,7 +35,7 @@ async function getUserProfile() {
   }
 
   const { data: profile, error: profileError } = await supabase
-    .from('profiles')
+    .from('table_profiles')
     .select('*')
     .eq('id', authData.user.id)
     .maybeSingle();
@@ -48,6 +48,7 @@ async function getUserProfile() {
 
   
   console.log(authData.user.id);
+  console.log(authData.user.user_metadata)
 
   return profile;
 }
