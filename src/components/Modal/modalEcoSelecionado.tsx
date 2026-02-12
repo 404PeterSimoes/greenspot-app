@@ -36,7 +36,7 @@ import {
   trash,
 } from 'ionicons/icons';
 
-import './ecopontoSelecionado.css';
+import './modalEcoSelecionado.css';
 import { GeolocationContext } from '../../context/geolocationContext';
 
 interface Props {

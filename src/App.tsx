@@ -54,7 +54,7 @@ import Mapa from './components/MapaReact';
 import ModalPageEcopontos from './components/Modal/modalEcopontos';
 import ModalPageResiduos from './components/Modal/modalResiduos';
 import ModalPageChatbot from './components/Modal/modalChatbot';
-import ModalPageEcoSelecionado from './components/Modal/ecopontoSelecionado';
+import ModalPageEcoSelecionado from './components/Modal/modalEcoSelecionado';
 
 import { EcopontosContext, EcopontosProvider } from './context/ecopontosContext';
 import { GeolocationProvider, GeolocationContext } from './context/geolocationContext';
@@ -73,7 +73,7 @@ setupIonicReact();
 import { NavigationBar } from '@capgo/capacitor-navigation-bar';
 
 import { authService } from './services/auth';
-import ModalPageAccountInterface from './components/Modal/accountInterface';
+import ModalPageAccount from './components/Modal/modalAccount';
 import ModalPageDirecoes from './components/Modal/modalDirecoes';
 
 NavigationBar.setNavigationBarColor({ color: 'TRANSPARENT', darkButtons: true });
@@ -111,7 +111,7 @@ const AppContent: React.FC = () => {
   const [designSelected, setDesignSelected] = useState('mapa');
 
   const [showModalChatbot, setModalChatbot] = useState(false);
-  const [showModalAccountInterface, setModalAccountInterface] = useState(false);
+  const [showModalAccount, setModalAccount] = useState(false);
 
   const [canClickMapa, setCanClickMapa] = useState(true);
 
@@ -140,7 +140,7 @@ const AppContent: React.FC = () => {
     setModalEcoSelecionado(false);
     setCallShowModalEcoSelecionado(false);
     setModalDirecoes(false);
-    setModalAccountInterface(false);
+    setModalAccount(false);
     setTimeout(() => setSelectedEcoponto(null), 150);
   };
 
@@ -152,7 +152,7 @@ const AppContent: React.FC = () => {
       setModalEcopontos(false);
       setModalResiduos(false);
       setModalChatbot(false);
-      setModalAccountInterface(false);
+      setModalAccount(false);
       setDesignSelected('mapa');
 
       setTimeout(() => {
@@ -172,7 +172,7 @@ const AppContent: React.FC = () => {
       !showModalChatbot &&
       !showModalEcoSelecionado &&
       !callShowModalEcoSelecionado &&
-      !showModalAccountInterface &&
+      !showModalAccount &&
       !showModalDirecoes
     )
       return true;
@@ -247,7 +247,7 @@ const AppContent: React.FC = () => {
 
         <IonAvatar
           onClick={() => {
-            setModalAccountInterface(true);
+            setModalAccount(true);
             setDesignSelected('');
           }}
           className={`containerAvatar ${showModalEcoSelecionado || showModalDirecoes ? 'active' : ''}`}
@@ -256,13 +256,13 @@ const AppContent: React.FC = () => {
         </IonAvatar>
 
         <IonModal
-          isOpen={showModalAccountInterface}
+          isOpen={showModalAccount}
           onDidDismiss={() => {
-            setModalAccountInterface(false);
+            setModalAccount(false);
             setDesignSelected('mapa');
           }}
         >
-          <ModalPageAccountInterface />
+          <ModalPageAccount />
         </IonModal>
 
         <IonModal

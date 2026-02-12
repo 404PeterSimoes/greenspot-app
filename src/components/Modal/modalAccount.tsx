@@ -66,7 +66,14 @@ async function updateUserProfile(updates: any) {
   }
 }
 
-const ModalPageAccountInterface: React.FC = () => {
+const PageNoAccount: React.FC = () => {
+  return (<IonPage>Não tás logado</IonPage>)
+}
+const PageLoggedIn: React.FC = () => {
+  return (<IonPage>Tás logado</IonPage>)
+}
+
+const ModalPageAccount: React.FC = () => {
 
   return (
     <IonPage>
@@ -82,4 +89,4 @@ const ModalPageAccountInterface: React.FC = () => {
   );
 };
 
-export default ModalPageAccountInterface;
+export default ModalPageAccount;
