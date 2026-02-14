@@ -58,6 +58,7 @@ import ModalPageEcoSelecionado from './components/Modal/modalEcoSelecionado';
 
 import { EcopontosContext, EcopontosProvider } from './context/ecopontosContext';
 import { GeolocationProvider, GeolocationContext } from './context/geolocationContext';
+import { AccountProvider } from './context/accountContext';
 
 import { StatusBar } from '@capacitor/status-bar';
 import { Capacitor } from '@capacitor/core';
@@ -88,15 +89,18 @@ const AppContent: React.FC = () => {
     await authService.initializeSocialLogin();
   };
 
+  useEffect(() => {
+    initializeApp();
+  }, []);
+
+  /*
   authService.onAuthStateChange((event, session) => {
     if (event === 'SIGNED_IN') {
       console.log('User signed in:', session.user);
     } else if (event === 'SIGNED_OUT') {
       console.log('User signed out');
     }
-  });
-
-  initializeApp();
+  });*/
 
   // Código a executar quando botão back do Hardware é clicado
   document.addEventListener('ionBackButton', (event: any) => {
@@ -456,11 +460,13 @@ const AppContent: React.FC = () => {
 };
 
 const App: React.FC = () => (
-  <EcopontosProvider>
-    <GeolocationProvider>
-      <AppContent />
-    </GeolocationProvider>
-  </EcopontosProvider>
+  <AccountProvider>
+    <EcopontosProvider>
+      <GeolocationProvider>
+        <AppContent />
+      </GeolocationProvider>
+    </EcopontosProvider>
+  </AccountProvider>
 );
 
 export default App;

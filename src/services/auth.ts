@@ -1,6 +1,7 @@
 import { SocialLogin } from '@capgo/capacitor-social-login';
 import { supabase } from './supabaseClient';
 
+// Classe que interliga a Google Cloud ao Supabase
 export class AuthService {
   async initializeSocialLogin() {
     await SocialLogin.initialize({
@@ -24,10 +25,11 @@ export class AuthService {
         throw new Error('Google login failed');
       }
 
-      // GoogleLoginResponse is a union type - check responseType to determine flow
       if (googleResult.responseType === 'online') {
+        // Resposta conseguida pela Google Cloud
         console.log(googleResult)
-        // Online mode: use idToken directly with Supabase
+
+        // Fazer sign-in no Supabase com o token recebido pelo plugin (pelo contacto com a Google Cloud)
         const { data, error } = await supabase.auth.signInWithIdToken({
           provider: 'google',
           token: googleResult.idToken!,
@@ -47,12 +49,8 @@ export class AuthService {
 
     // Optionally sign out from social providers
     await SocialLogin.logout({
-      provider: 'google', // or 'apple', 'facebook'
+      provider: 'google',
     });
-  }
-
-  getCurrentUser() {
-    return supabase.auth.getUser();
   }
 
   onAuthStateChange(callback: (event: string, session: any) => void) {
