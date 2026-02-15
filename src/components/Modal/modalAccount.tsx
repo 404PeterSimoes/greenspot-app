@@ -1,21 +1,54 @@
-import { IonButton, IonPage } from '@ionic/react';
+import { IonAvatar, IonButton, IonPage } from '@ionic/react';
 import { authService } from '../../services/auth';
 import { supabase } from '../../services/supabaseClient';
 import { useContext, useEffect, useState } from 'react';
 import { AccountContext } from '../../context/accountContext';
+import { AuthContextType, Profile } from '../../context/accountContext';
 
-const PageNoAccount: React.FC = () => {
+interface PageNoAccountProps {
+  loginWithGoogle: () => Promise<void>;
+  logout: () => Promise<void>;
+}
+
+interface PageLoggedInProps {
+  profile: Profile | null;
+  logout: () => Promise<void>;
+}
+
+const PageNoAccount: React.FC<PageNoAccountProps> = ({ loginWithGoogle, logout }) => {
   return (
     <IonPage>
       <h1>Não tás logado</h1>
-      {/*<IonButton onClick={handleGoogleLogin}>handleGoogleLogin</IonButton>*/}
+      <IonButton onClick={loginWithGoogle}>handleGoogleLogin</IonButton>
+      <IonButton onClick={logout}>handleLogout</IonButton>
     </IonPage>
   );
 };
-const PageLoggedIn: React.FC = () => {
+
+const PageLoggedIn: React.FC<PageLoggedInProps> = ({ profile, logout }) => {
+  const printProfile = () => {
+    console.log(profile?.avatar_url);
+  };
+
+	// Apenas mostrar o avatar após ele ter sido carregado
+  const [avatarState, setAvatarState] = useState(false);
+  useEffect(() => {
+    if (profile?.avatar_url) {
+      setAvatarState(true);
+    }
+  },[profile?.avatar_url]);
+
   return (
     <IonPage>
+      {avatarState && (
+        <IonAvatar>
+          <img src={profile?.avatar_url} />
+        </IonAvatar>
+      )}
       <h1>Tás logado</h1>
+      <p>{profile?.email}</p>
+      <IonButton onClick={printProfile}>getUserProfile</IonButton>
+      <IonButton onClick={logout}>handleLogout</IonButton>
     </IonPage>
   );
 };
@@ -23,19 +56,20 @@ const PageLoggedIn: React.FC = () => {
 const ModalPageAccount: React.FC = () => {
   const { user, profile, loading, loginWithGoogle, logout } = useContext(AccountContext);
 
-  const printProfile = () => {
-    console.log(profile?.name);
-  };
+  const [loggedInPageBool, setLoggedInPageBool] = useState(false);
+
+  useEffect(() => {
+    if (profile) setTimeout(() => setLoggedInPageBool(true), 100);
+    else setTimeout(() => setLoggedInPageBool(false), 100);
+  });
 
   return (
     <IonPage>
-      <h1>conta</h1>
-      <IonButton onClick={loginWithGoogle}>handleGoogleLogin</IonButton>
-      <IonButton onClick={logout}>handleLogout</IonButton>
-
-      <IonButton onClick={printProfile}>getUserProfile</IonButton>
-
-      <p></p>
+      {loggedInPageBool ? (
+        <PageLoggedIn profile={profile} logout={logout} />
+      ) : (
+        <PageNoAccount loginWithGoogle={loginWithGoogle} logout={logout} />
+      )}
     </IonPage>
     //profile ? <PageLoggedIn /> : <PageNoAccount />
   );

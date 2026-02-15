@@ -3,7 +3,7 @@ import { supabase } from '../services/supabaseClient';
 import { authService } from '../services/auth';
 import { User } from '@supabase/supabase-js';
 
-interface Profile {
+export interface Profile {
   id: string;
   name: string;
   email: string;
@@ -11,7 +11,7 @@ interface Profile {
   created_at: string;
 }
 
-interface AuthContextType {
+export interface AuthContextType {
   user: User | null;
   profile: Profile | null;
   loading: boolean;
