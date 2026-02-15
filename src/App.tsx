@@ -58,7 +58,7 @@ import ModalPageEcoSelecionado from './components/Modal/modalEcoSelecionado';
 
 import { EcopontosContext, EcopontosProvider } from './context/ecopontosContext';
 import { GeolocationProvider, GeolocationContext } from './context/geolocationContext';
-import { AccountProvider } from './context/accountContext';
+import { AccountContext, AccountProvider } from './context/accountContext';
 
 import { StatusBar } from '@capacitor/status-bar';
 import { Capacitor } from '@capacitor/core';
@@ -136,6 +136,8 @@ const AppContent: React.FC = () => {
   } = useContext(EcopontosContext);
 
   const { position } = useContext(GeolocationContext)!;
+
+  const { profile } = useContext(AccountContext);
 
   const closeModals = () => {
     setModalEcopontos(false);
@@ -256,7 +258,7 @@ const AppContent: React.FC = () => {
           }}
           className={`containerAvatar ${showModalEcoSelecionado || showModalDirecoes ? 'active' : ''}`}
         >
-          <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+          <img src={profile ? profile.avatar_url : 'https://ionicframework.com/docs/img/demos/avatar.svg'} />
         </IonAvatar>
 
         <IonModal

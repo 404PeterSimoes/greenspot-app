@@ -71,7 +71,6 @@ const ModalPageAccount: React.FC = () => {
         <PageNoAccount loginWithGoogle={loginWithGoogle} logout={logout} />
       )}
     </IonPage>
-    //profile ? <PageLoggedIn /> : <PageNoAccount />
   );
 };
 
