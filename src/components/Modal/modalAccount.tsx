@@ -18,7 +18,7 @@ import { AuthContextType, Profile } from '../../context/accountContext';
 import './modalAccount.css';
 import BackgroundSvg from '../BackgroundSvg';
 import GoogleButton from '../GoogleButton';
-import GreenspotBigLogo from '../../assets/greenspot_big_logo.png';
+import GreenSpot from '../../assets/Icon_GreenSpot.png';
 
 interface PageNoAccountProps {
   loginWithGoogle: () => Promise<void>;
@@ -33,37 +33,60 @@ interface PageLoggedInProps {
 const PageNoAccount: React.FC<PageNoAccountProps> = ({ loginWithGoogle, logout }) => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <h2 style={{ textAlign: 'center' }}>Iniciar Sessão</h2>
-        </IonToolbar>
-      </IonHeader>
       <IonContent>
+        <div className="pagNoAccount">
+          <IonImg className="iconGreenSpot" src={GreenSpot} />
+          <div className="iniciarSessaoPanel">
+            <IonGrid style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <IonRow style={{ flex: 1.5 }}>
+                <IonCol style={{ justifyContent: 'center', display: 'flex', flexDirection: 'column', height: '100%', gap: '20px' }}>
+                  <span className='welcomeBackText'>Bem-vindo de volta! 👋</span>
+                  <span className='iniciarSessaoText'>Iniciar Sessão</span>
+                </IonCol>
+              </IonRow>
+              <IonRow style={{ flex: 1 }}>
+                <IonCol style={{ justifyContent: 'center', display: 'flex', height: '100%' }}>
+                  <div className="divGoogleButton">
+                    <GoogleButton click={loginWithGoogle} />
+                  </div>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </div>
+        </div>
+        {/*
         <BackgroundSvg
           style={{
             position: 'fixed',
             left: -10,
             right: -10,
-            bottom: 0, 
-            height: 'auto', 
+            bottom: 0,
+            height: 'auto',
             zIndex: 0,
           }}
         />
 
         <IonGrid style={{ height: '100%', padding: 0, display: 'flex', flexDirection: 'column' }}>
-          <IonRow style={{ flex: 5 }}>
+          <IonRow style={{ flex: 6 }}>
             <IonCol style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
               <IonImg className="greenspotImg" src={GreenspotBigLogo} />
             </IonCol>
           </IonRow>
+					<IonRow style={{flex: 8}}>
+						<IonCol style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+							<h1>
+								Iniciar Sessão
+							</h1>
+						</IonCol>
+					</IonRow>
           <IonRow style={{ flex: 10 }}>
-            <IonCol style={{display: 'flex', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
-              <GoogleButton click={loginWithGoogle} />
+            <IonCol style={{ display: 'flex', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+              <div className='divGoogleButton'>
+                <GoogleButton click={loginWithGoogle} />
+              </div>
             </IonCol>
           </IonRow>
-        </IonGrid>
-
-        <h1>Não tás logado</h1>
+        </IonGrid>*/}
       </IonContent>
     </IonPage>
   );
