@@ -1,4 +1,15 @@
-import { IonAvatar, IonButton, IonHeader, IonPage, IonToolbar, IonContent } from '@ionic/react';
+import {
+  IonAvatar,
+  IonButton,
+  IonHeader,
+  IonPage,
+  IonToolbar,
+  IonContent,
+  IonImg,
+  IonGrid,
+  IonRow,
+  IonCol,
+} from '@ionic/react';
 import { authService } from '../../services/auth';
 import { supabase } from '../../services/supabaseClient';
 import { useContext, useEffect, useState } from 'react';
@@ -7,6 +18,7 @@ import { AuthContextType, Profile } from '../../context/accountContext';
 import './modalAccount.css';
 import BackgroundSvg from '../BackgroundSvg';
 import GoogleButton from '../GoogleButton';
+import GreenspotBigLogo from '../../assets/greenspot_big_logo.png';
 
 interface PageNoAccountProps {
   loginWithGoogle: () => Promise<void>;
@@ -29,15 +41,29 @@ const PageNoAccount: React.FC<PageNoAccountProps> = ({ loginWithGoogle, logout }
       <IonContent>
         <BackgroundSvg
           style={{
-            position: 'absolute',
+            position: 'fixed',
             left: -10,
-						right: -10,
-						bottom: 0,
+            right: -10,
+            bottom: 0, 
+            height: 'auto', 
             zIndex: 0,
           }}
         />
+
+        <IonGrid style={{ height: '100%', padding: 0, display: 'flex', flexDirection: 'column' }}>
+          <IonRow style={{ flex: 5 }}>
+            <IonCol style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
+              <IonImg className="greenspotImg" src={GreenspotBigLogo} />
+            </IonCol>
+          </IonRow>
+          <IonRow style={{ flex: 10 }}>
+            <IonCol style={{display: 'flex', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+              <GoogleButton click={loginWithGoogle} />
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+
         <h1>Não tás logado</h1>
-        <GoogleButton click={loginWithGoogle} />
       </IonContent>
     </IonPage>
   );
