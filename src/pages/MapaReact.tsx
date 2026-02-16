@@ -53,7 +53,7 @@ const Mapa: React.FC<Props> = ({
   // Coordenadas da posição atual do user
   const { position } = useContext(GeolocationContext)!;
 
-  const [recentSelectedEcoponto, setRecentSelecEco] = useState({ Latitude: 0, Longitude: 0 });
+  const [recentSelectedEcoponto, setRecentSelecEco] = useState({ Latitude: 38.96373575159655, Longitude: -8.525892398242028 });
 
   const mapRef = useRef<MapRef>(null);
 
@@ -122,6 +122,7 @@ const Mapa: React.FC<Props> = ({
         pitch: 0,
         bearing: 0,
         center: [recentSelectedEcoponto.Longitude, recentSelectedEcoponto.Latitude],
+        zoom: 14.12,
         duration: 1500,
         padding: 0,
       });

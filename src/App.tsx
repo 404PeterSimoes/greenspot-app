@@ -265,9 +265,9 @@ const AppContent: React.FC = () => {
           isOpen={showModalAccount}
           onDidDismiss={() => {
             setModalAccount(false);
-            setDesignSelected('mapa');
+            if (showModalAccount) setDesignSelected('mapa');
           }}
-        > 
+        >
           <ModalPageAccount />
         </IonModal>
 
