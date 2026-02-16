@@ -30,7 +30,7 @@
 }
 
 .iniciarSessaoPanel {
-  background-image: linear-gradient(0deg,rgba(222, 255, 222, 1) 0%, rgba(255, 255, 255, 1) 100%);
+  background-image: linear-gradient(0deg, rgba(222, 255, 222, 1) 0%, rgba(255, 255, 255, 1) 100%);
   text-align: center;
   width: 80%;
   height: 30%;
@@ -39,9 +39,16 @@
   filter: drop-shadow(0px 0px 7px rgba(0, 0, 0, 0.445));
 }
 
+.contentIniciarSessaoPanel {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 20px;
+}
+
 .iniciarSessaoText {
   font-size: 25px;
-  padding-top: 10px;
   font-weight: 700;
   color: rgb(62, 62, 62);
 }
@@ -53,5 +60,6 @@
 .divGoogleButton {
   filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.233));
   display: flex;
-  align-items: center;
+  justify-content: center;
+  padding-top: 25px;
 }

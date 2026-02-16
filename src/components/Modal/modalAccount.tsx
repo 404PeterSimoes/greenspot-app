@@ -37,21 +37,15 @@ const PageNoAccount: React.FC<PageNoAccountProps> = ({ loginWithGoogle, logout }
         <div className="pagNoAccount">
           <IonImg className="iconGreenSpot" src={GreenSpot} />
           <div className="iniciarSessaoPanel">
-            <IonGrid style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <IonRow style={{ flex: 1.5 }}>
-                <IonCol style={{ justifyContent: 'center', display: 'flex', flexDirection: 'column', height: '100%', gap: '20px' }}>
-                  <span className='welcomeBackText'>Bem-vindo de volta! 👋</span>
-                  <span className='iniciarSessaoText'>Iniciar Sessão</span>
-                </IonCol>
-              </IonRow>
-              <IonRow style={{ flex: 1 }}>
-                <IonCol style={{ justifyContent: 'center', display: 'flex', height: '100%' }}>
-                  <div className="divGoogleButton">
-                    <GoogleButton click={loginWithGoogle} />
-                  </div>
-                </IonCol>
-              </IonRow>
-            </IonGrid>
+            <div
+							className='contentIniciarSessaoPanel'
+            >
+              <span className="welcomeBackText">Bem-vindo! 👋</span>
+              <span className="iniciarSessaoText">Iniciar Sessão</span>
+              <div className="divGoogleButton">
+                <GoogleButton click={loginWithGoogle} />
+              </div>
+            </div>
           </div>
         </div>
         {/*
