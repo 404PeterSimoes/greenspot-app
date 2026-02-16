@@ -17,7 +17,7 @@ import {
 import { useState, useContext, useEffect, useRef } from 'react';
 
 import { locationOutline, filter } from 'ionicons/icons';
-import recycleIcon from './icon/recycle.svg';
+import recycleIcon from './assets/recycle.svg';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -50,7 +50,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import './App.css';
 
-import Mapa from './components/MapaReact';
+import Mapa from './pages/MapaReact';
 import ModalPageEcopontos from './components/Modal/modalEcopontos';
 import ModalPageResiduos from './components/Modal/modalResiduos';
 import ModalPageChatbot from './components/Modal/modalChatbot';
@@ -267,7 +267,7 @@ const AppContent: React.FC = () => {
             setModalAccount(false);
             setDesignSelected('mapa');
           }}
-        >
+        > 
           <ModalPageAccount />
         </IonModal>
 
