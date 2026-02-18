@@ -1,19 +1,5 @@
 .pagNoAccount {
-  background-image: linear-gradient(
-    to right top,
-    #7dd16b,
-    #7ed574,
-    #80da7d,
-    #81de86,
-    #83e28f,
-    #81e591,
-    #7fe992,
-    #7dec94,
-    #76f08e,
-    #6ff488,
-    #67f781,
-    #5ffb7a
-  );
+  background-image: linear-gradient(to bottom, #38A31A, #38A31A, #38A31A, #eaeaea, #ffffff);
   height: 100%;
   width: 100%;
   z-index: -1;
@@ -26,11 +12,11 @@
 
 .iconGreenSpot {
   width: 250px;
-  filter: drop-shadow(0px 0px 15px white);
+  filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.301));
 }
 
 .iniciarSessaoPanel {
-  background-image: linear-gradient(0deg, rgba(222, 255, 222, 1) 0%, rgba(255, 255, 255, 1) 100%);
+  background: white;
   text-align: center;
   width: 80%;
   height: 30%;
