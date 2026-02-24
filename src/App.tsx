@@ -353,6 +353,7 @@ const AppContent: React.FC = () => {
             objectDataDirecoes={objectDataDirecoes}
             stringDistancia={stringDistanciaFuncao}
             stringDuracao={stringDuracaoFuncao}
+            followDirection={followDirection}
             setFollowDirection={setFollowDirection}
             setRefreshDirection={setRefreshDirection}
           />

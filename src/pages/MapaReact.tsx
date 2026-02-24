@@ -157,7 +157,7 @@ const Mapa: React.FC<Props> = ({
         }
 
         mapRef.current.fitBounds(bounds, {
-          padding: { bottom: 390, left: 55, right: 55, top: 100 },
+          padding: { bottom: 390, left: 55, right: 55, top: 110 },
           duration: 1200,
         });
       }

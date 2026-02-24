@@ -48,6 +48,7 @@ interface Props {
   stringDistancia: (distance: number) => string;
   stringDuracao: (duration: number) => string;
 
+  followDirection: boolean;
   setFollowDirection: (value: boolean) => void;
   setRefreshDirection: (value: boolean) => void;
 }
@@ -58,6 +59,7 @@ const ModalPageDirecoes: React.FC<Props> = ({
   objectDataDirecoes,
   stringDistancia,
   stringDuracao,
+  followDirection,
   setFollowDirection,
   setRefreshDirection,
 }) => {
@@ -124,15 +126,27 @@ const ModalPageDirecoes: React.FC<Props> = ({
           <IonGrid style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', padding: 0 }}>
             <IonRow>
               <IonCol style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-                <IonButton
-                  className="direcoes"
-                  style={{ width: '100%' }}
-                  expand="block"
-                  onClick={() => setFollowDirection(true)}
-                >
-                  <IonIcon src={arrowForwardOutline} slot="start" />
-                  Seguir
-                </IonButton>
+                {followDirection ? (
+                  <IonButton
+                    className="direcoes vermelho"
+                    style={{ width: '100%' }}
+                    expand="block"
+                    onClick={() => setFollowDirection(false)}
+                  >
+                    <IonIcon src={arrowForwardOutline} slot="start" />
+                    Deixar de Seguir
+                  </IonButton>
+                ) : (
+                  <IonButton
+                    className="direcoes"
+                    style={{ width: '100%' }}
+                    expand="block"
+                    onClick={() => setFollowDirection(true)}
+                  >
+                    <IonIcon src={arrowForwardOutline} slot="start" />
+                    Seguir
+                  </IonButton>
+                )}
               </IonCol>
               <IonCol style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
                 <IonButton
