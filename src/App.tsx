@@ -258,7 +258,7 @@ const AppContent: React.FC = () => {
           }}
           className={`containerAvatar ${showModalEcoSelecionado || showModalDirecoes ? 'active' : ''}`}
         >
-          <img src={profile ? profile.avatar_url : 'https://ionicframework.com/docs/img/demos/avatar.svg'} />
+          <img referrerPolicy="no-referrer" src={profile ? profile.avatar_url : 'https://ionicframework.com/docs/img/demos/avatar.svg'} />
         </IonAvatar>
 
         <IonModal

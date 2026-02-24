@@ -37,9 +37,7 @@ const PageNoAccount: React.FC<PageNoAccountProps> = ({ loginWithGoogle, logout }
         <div className="pagNoAccount">
           <IonImg className="iconGreenSpot" src={GreenSpot} />
           <div className="iniciarSessaoPanel">
-            <div
-							className='contentIniciarSessaoPanel'
-            >
+            <div className="contentIniciarSessaoPanel">
               <span className="welcomeBackText">Bem-vindo! 👋</span>
               <span className="iniciarSessaoText">Iniciar Sessão</span>
               <div className="divGoogleButton">
@@ -103,7 +101,7 @@ const PageLoggedIn: React.FC<PageLoggedInProps> = ({ profile, logout }) => {
     <IonPage>
       {avatarState && (
         <IonAvatar>
-          <img src={profile?.avatar_url} />
+          <img src={profile?.avatar_url} referrerPolicy="no-referrer" />
         </IonAvatar>
       )}
       <h1>Tás logado</h1>
