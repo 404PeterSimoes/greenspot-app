@@ -31,6 +31,10 @@ interface Props {
       };
     }>
   >;
+
+  followDirection: boolean;
+  refreshDirection: boolean;
+  setRefreshDirection: (value: boolean) => void;
 }
 
 const Mapa: React.FC<Props> = ({
@@ -39,6 +43,9 @@ const Mapa: React.FC<Props> = ({
   showModalDirecoes,
   modeDirecoes,
   setObjectDataDirecoes,
+  followDirection,
+  refreshDirection,
+  setRefreshDirection,
 }) => {
   const {
     arrayEcopontos,
@@ -53,7 +60,10 @@ const Mapa: React.FC<Props> = ({
   // Coordenadas da posição atual do user
   const { position } = useContext(GeolocationContext)!;
 
-  const [recentSelectedEcoponto, setRecentSelecEco] = useState({ Latitude: 38.96373575159655, Longitude: -8.525892398242028 });
+  const [recentSelectedEcoponto, setRecentSelecEco] = useState({
+    Latitude: 38.96373575159655,
+    Longitude: -8.525892398242028,
+  });
 
   const mapRef = useRef<MapRef>(null);
 
@@ -147,7 +157,7 @@ const Mapa: React.FC<Props> = ({
         }
 
         mapRef.current.fitBounds(bounds, {
-          padding: { bottom: 370, left: 55, right: 55, top: 90 },
+          padding: { bottom: 390, left: 55, right: 55, top: 100 },
           duration: 1200,
         });
       }
@@ -316,11 +326,15 @@ const Mapa: React.FC<Props> = ({
     }
   }, [callShowModalEcoSelecionado]);
 
-  // Definir rota no mapa sempre que modeDirecoes se alterar
-  useEffect(() => {
+  const atualizarRouteNoMapa = () => {
     if (modeDirecoes === 'walk' && geometryAndar) setRouteMap(geometryAndar);
     if (modeDirecoes === 'car' && geometryCarro) setRouteMap(geometryCarro);
     if (modeDirecoes === 'cycle' && geometryBicicleta) setRouteMap(geometryBicicleta);
+  };
+
+  // Definir rota no mapa sempre que modeDirecoes se alterar
+  useEffect(() => {
+    atualizarRouteNoMapa();
   }, [modeDirecoes]);
 
   function clearRoute() {
@@ -341,6 +355,50 @@ const Mapa: React.FC<Props> = ({
   useEffect(() => {
     if (!showModalDirecoes) clearRoute();
   }, [showModalDirecoes]);
+
+  // Caso followDirection este ligado (modalDirecoes), sempre que a posição GPS atualizar,
+  // levar o utilizador até à localização
+  useEffect(() => {
+    if (followDirection && position && mapRef.current) {
+      mapRef.current.flyTo({
+        pitch: 0,
+        bearing: 0,
+        center: [position.lng, position.lat],
+        zoom: 17.5,
+        padding: 0,
+        offset: [0, -180],
+      });
+    }
+  }, [position, followDirection]);
+
+  // Sempre que refreshDirection levar trigger, fazer fetch das rotas e colocar
+  // geojson no mapa correspondente ao modeDirecoes atual
+  const refreshLock = useRef(false);
+
+  const handleRefresh = async () => {
+    if (refreshLock.current) return;
+
+    refreshLock.current = true;
+
+    if (position && selectedEcoponto) {
+      await getRouteAndar([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude]);
+      await getRouteCarro([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude]);
+      await getRouteBicicleta([position.lng, position.lat], [selectedEcoponto.Longitude, selectedEcoponto.Latitude]);
+
+      atualizarRouteNoMapa();
+
+      setTimeout(() => {
+        refreshLock.current = false;
+      }, 5000);
+    }
+  };
+
+  useEffect(() => {
+    if (refreshDirection && position && selectedEcoponto) {
+      handleRefresh();
+      setRefreshDirection(false);
+    }
+  }, [refreshDirection]);
 
   return (
     <IonContent style={{ postition: 'relative' }}>

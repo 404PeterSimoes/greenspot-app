@@ -47,6 +47,9 @@ interface Props {
 
   stringDistancia: (distance: number) => string;
   stringDuracao: (duration: number) => string;
+
+  setFollowDirection: (value: boolean) => void;
+  setRefreshDirection: (value: boolean) => void;
 }
 
 const ModalPageDirecoes: React.FC<Props> = ({
@@ -55,6 +58,8 @@ const ModalPageDirecoes: React.FC<Props> = ({
   objectDataDirecoes,
   stringDistancia,
   stringDuracao,
+  setFollowDirection,
+  setRefreshDirection,
 }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
 
@@ -119,13 +124,23 @@ const ModalPageDirecoes: React.FC<Props> = ({
           <IonGrid style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', padding: 0 }}>
             <IonRow>
               <IonCol style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-                <IonButton className="direcoes" style={{ width: '100%' }} expand="block">
+                <IonButton
+                  className="direcoes"
+                  style={{ width: '100%' }}
+                  expand="block"
+                  onClick={() => setFollowDirection(true)}
+                >
                   <IonIcon src={arrowForwardOutline} slot="start" />
                   Seguir
                 </IonButton>
               </IonCol>
               <IonCol style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-                <IonButton className="direcoes" style={{ width: '100%' }} expand="block">
+                <IonButton
+                  className="direcoes"
+                  style={{ width: '100%' }}
+                  expand="block"
+                  onClick={() => setRefreshDirection(true)}
+                >
                   <IonIcon src={refreshOutline} slot="start" />
                   Atualizar
                 </IonButton>

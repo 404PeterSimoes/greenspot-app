@@ -108,6 +108,7 @@ const AppContent: React.FC = () => {
       setSelectedEcoponto(null);
       setModalEcoSelecionado(false);
       setModalDirecoes(false);
+      setFollowDirection(false);
       setRemoveCameraTiltTrigger((t) => t + 1);
     });
   });
@@ -147,6 +148,7 @@ const AppContent: React.FC = () => {
     setCallShowModalEcoSelecionado(false);
     setModalDirecoes(false);
     setModalAccount(false);
+    setFollowDirection(false);
     setTimeout(() => setSelectedEcoponto(null), 150);
   };
 
@@ -223,6 +225,9 @@ const AppContent: React.FC = () => {
     cycle: { distance: 0, duration: 0 },
   });
 
+  const [followDirection, setFollowDirection] = useState(false);
+  const [refreshDirection, setRefreshDirection] = useState(false);
+
   // Ajustar StatusBar para dispositivos que não ajustem automaticamente (Samsung)
   useEffect(() => {
     const adjustStatusBar = async () => {
@@ -258,7 +263,10 @@ const AppContent: React.FC = () => {
           }}
           className={`containerAvatar ${showModalEcoSelecionado || showModalDirecoes ? 'active' : ''}`}
         >
-          <img referrerPolicy="no-referrer" src={profile ? profile.avatar_url : 'https://ionicframework.com/docs/img/demos/avatar.svg'} />
+          <img
+            referrerPolicy="no-referrer"
+            src={profile ? profile.avatar_url : 'https://ionicframework.com/docs/img/demos/avatar.svg'}
+          />
         </IonAvatar>
 
         <IonModal
@@ -335,6 +343,7 @@ const AppContent: React.FC = () => {
               setDesignSelected('mapa');
               setModalDirecoes(false);
               setSelectedEcoponto(null);
+              setFollowDirection(false);
             }
           }}
         >
@@ -344,6 +353,8 @@ const AppContent: React.FC = () => {
             objectDataDirecoes={objectDataDirecoes}
             stringDistancia={stringDistanciaFuncao}
             stringDuracao={stringDuracaoFuncao}
+            setFollowDirection={setFollowDirection}
+            setRefreshDirection={setRefreshDirection}
           />
         </IonModal>
 
@@ -383,6 +394,9 @@ const AppContent: React.FC = () => {
                 showModalDirecoes={showModalDirecoes}
                 modeDirecoes={modeDirecoes}
                 setObjectDataDirecoes={setObjectDataDirecoes}
+                followDirection={followDirection}
+                refreshDirection={refreshDirection}
+                setRefreshDirection={setRefreshDirection}
               />
             </div>
           </IonTab>

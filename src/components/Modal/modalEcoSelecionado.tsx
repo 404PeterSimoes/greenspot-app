@@ -108,7 +108,7 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDireco
                 expand="block"
                 className="ecoSelecionado"
                 onClick={() => modalDirecoes(true)}
-                disabled={position ? false : true}
+                disabled={objectDataDirecoes.walk.distance ? false : true}
               >
                 <IonIcon slot="start" src={compass} />
                 Direções

@@ -16,7 +16,6 @@ import { useContext, useEffect, useState } from 'react';
 import { AccountContext } from '../../context/accountContext';
 import { AuthContextType, Profile } from '../../context/accountContext';
 import './modalAccount.css';
-import BackgroundSvg from '../BackgroundSvg';
 import GoogleButton from '../GoogleButton';
 import GreenSpot from '../../assets/Icon_GreenSpot.png';
 
