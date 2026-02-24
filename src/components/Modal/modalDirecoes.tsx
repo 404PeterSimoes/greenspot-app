@@ -12,8 +12,17 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonButton,
 } from '@ionic/react';
-import { car, walk, bicycle, chevronForwardOutline } from 'ionicons/icons';
+import {
+  car,
+  walk,
+  bicycle,
+  chevronForwardOutline,
+  arrowForward,
+  arrowForwardOutline,
+  refreshOutline,
+} from 'ionicons/icons';
 import './modalDirecoes.css';
 import { useContext, useEffect } from 'react';
 import { EcopontosContext } from '../../context/ecopontosContext';
@@ -107,6 +116,22 @@ const ModalPageDirecoes: React.FC<Props> = ({
               </IonCol>
             </IonSegmentContent>
           </IonSegmentView>
+          <IonGrid style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', padding: 0 }}>
+            <IonRow>
+              <IonCol style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+                <IonButton className="direcoes" style={{ width: '100%' }} expand="block">
+                  <IonIcon src={arrowForwardOutline} slot="start" />
+                  Seguir
+                </IonButton>
+              </IonCol>
+              <IonCol style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+                <IonButton className="direcoes" style={{ width: '100%' }} expand="block">
+                  <IonIcon src={refreshOutline} slot="start" />
+                  Atualizar
+                </IonButton>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
         </div>
       </IonContent>
     </IonPage>

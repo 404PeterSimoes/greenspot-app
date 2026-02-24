@@ -15,7 +15,7 @@ ion-segment-content:nth-of-type(3) {
 }*/
 
 ion-segment-button {
-  background: rgba(0, 0, 0, 0.02)
+  background: rgba(0, 0, 0, 0.02);
 }
 
 .segment-button-checked::part(native) {
@@ -38,9 +38,16 @@ ion-toolbar.direcoesToolbar {
 
 .direcoesColumn {
   font-size: 20px;
-
 }
 
-.spanDuration {color: #2b7f3f}
+.spanDuration {
+  color: #2b7f3f;
+}
 
-.spanDistance {color: #5e5e5e}
+.spanDistance {
+  color: #5e5e5e;
+}
+
+ion-button.direcoes {
+  --background: rgb(0, 109, 9);
+}
