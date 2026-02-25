@@ -142,7 +142,7 @@ const Mapa: React.FC<Props> = ({
   // Colocar a posição da câmera de forma a que dê para ver os dois pontos para se desenhar a linha de rota
   useEffect(() => {
     if (mapRef.current && selectedEcoponto && position) {
-      if (showModalDirecoes) {
+      if (showModalDirecoes && !followDirection) {
         const pointA: [number, number] = [selectedEcoponto.Longitude, selectedEcoponto.Latitude];
         const pointB: [number, number] = [position.lng, position.lat];
 
@@ -162,7 +162,7 @@ const Mapa: React.FC<Props> = ({
         });
       }
     }
-  }, [showModalDirecoes, modeDirecoes]);
+  }, [showModalDirecoes, modeDirecoes, followDirection]);
 
   // Código para animar o Marker quando a posição GPS do user atualizar
   const [markerPos, setMarkerPos] = useState<{ lat: number; lng: number } | null>(null);
