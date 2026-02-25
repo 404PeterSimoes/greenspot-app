@@ -1,5 +1,5 @@
 .pagNoAccount {
-  background-image: linear-gradient(to bottom, #38A31A, #38A31A, #38A31A, #eaeaea, #ffffff);
+  background-image: linear-gradient(to bottom, #38a31a, #38a31a, #38a31a, #eaeaea, #ffffff);
   height: 100%;
   width: 100%;
   z-index: -1;
@@ -48,4 +48,26 @@
   display: flex;
   justify-content: center;
   padding-top: 25px;
+}
+
+.pagAccount {
+  background: rgb(255, 255, 255);
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.pagAccount .container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pagAccount .containerPerfilEmail {
+  display: flex;
+  flex-direction: column;
+  gap: 5px
 }

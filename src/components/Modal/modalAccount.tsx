@@ -45,39 +45,6 @@ const PageNoAccount: React.FC<PageNoAccountProps> = ({ loginWithGoogle, logout }
             </div>
           </div>
         </div>
-        {/*
-        <BackgroundSvg
-          style={{
-            position: 'fixed',
-            left: -10,
-            right: -10,
-            bottom: 0,
-            height: 'auto',
-            zIndex: 0,
-          }}
-        />
-
-        <IonGrid style={{ height: '100%', padding: 0, display: 'flex', flexDirection: 'column' }}>
-          <IonRow style={{ flex: 6 }}>
-            <IonCol style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
-              <IonImg className="greenspotImg" src={GreenspotBigLogo} />
-            </IonCol>
-          </IonRow>
-					<IonRow style={{flex: 8}}>
-						<IonCol style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-							<h1>
-								Iniciar Sessão
-							</h1>
-						</IonCol>
-					</IonRow>
-          <IonRow style={{ flex: 10 }}>
-            <IonCol style={{ display: 'flex', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-              <div className='divGoogleButton'>
-                <GoogleButton click={loginWithGoogle} />
-              </div>
-            </IonCol>
-          </IonRow>
-        </IonGrid>*/}
       </IonContent>
     </IonPage>
   );
@@ -88,25 +55,22 @@ const PageLoggedIn: React.FC<PageLoggedInProps> = ({ profile, logout }) => {
     console.log(profile?.avatar_url);
   };
 
-  // Apenas mostrar o avatar após ele ter sido carregado
-  const [avatarState, setAvatarState] = useState(false);
-  useEffect(() => {
-    if (profile?.avatar_url) {
-      setAvatarState(true);
-    }
-  }, [profile?.avatar_url]);
-
   return (
     <IonPage>
-      {avatarState && (
-        <IonAvatar>
-          <img src={profile?.avatar_url} referrerPolicy="no-referrer" />
-        </IonAvatar>
-      )}
-      <h1>Tás logado</h1>
-      <p>{profile?.email}</p>
-      <IonButton onClick={printProfile}>getUserProfile</IonButton>
-      <IonButton onClick={logout}>handleLogout</IonButton>
+      <IonContent>
+        <div className="pagAccount">
+          <div className='container1'>
+            <IonAvatar style={{ width: '150px', height: '150px' }}>
+              <img src={profile?.avatar_url} referrerPolicy="no-referrer" />
+            </IonAvatar>
+            <div className='containerPerfilEmail'>
+              <span style={{fontSize: '23px'}}>{profile?.name}</span>
+              <span>{profile?.email}</span>
+            </div>
+          </div>
+          <IonButton onClick={logout}>a</IonButton>
+        </div>
+      </IonContent>
     </IonPage>
   );
 };

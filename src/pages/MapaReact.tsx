@@ -157,7 +157,7 @@ const Mapa: React.FC<Props> = ({
         }
 
         mapRef.current.fitBounds(bounds, {
-          padding: { bottom: 390, left: 55, right: 55, top: 110 },
+          padding: { bottom: 390, left: 55, right: 55, top: 90 },
           duration: 1200,
         });
       }
@@ -364,9 +364,10 @@ const Mapa: React.FC<Props> = ({
         pitch: 0,
         bearing: 0,
         center: [position.lng, position.lat],
-        zoom: 17.5,
+        zoom: 16.5,
         padding: 0,
         offset: [0, -180],
+        duration: 500,
       });
     }
   }, [position, followDirection]);

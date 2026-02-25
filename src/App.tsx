@@ -261,7 +261,7 @@ const AppContent: React.FC = () => {
             setModalAccount(true);
             setDesignSelected('');
           }}
-          className={`containerAvatar ${showModalEcoSelecionado || showModalDirecoes ? 'active' : ''}`}
+          className={`avatarMain containerAvatar ${showModalEcoSelecionado || showModalDirecoes ? 'active' : ''}`}
         >
           <img
             referrerPolicy="no-referrer"
