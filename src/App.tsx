@@ -76,6 +76,7 @@ import { NavigationBar } from '@capgo/capacitor-navigation-bar';
 import { authService } from './services/auth';
 import ModalPageAccount from './components/Modal/modalAccount';
 import ModalPageDirecoes from './components/Modal/modalDirecoes';
+import ModalPageReportar from './components/Modal/modalReportar';
 
 NavigationBar.setNavigationBarColor({ color: 'TRANSPARENT', darkButtons: true });
 
@@ -107,8 +108,10 @@ const AppContent: React.FC = () => {
     event.detail.register(10, () => {
       setSelectedEcoponto(null);
       setModalEcoSelecionado(false);
+      setModalReportar(false);
       setModalDirecoes(false);
       setFollowDirection(false);
+      setModalReportar(false);
       setRemoveCameraTiltTrigger((t) => t + 1);
     });
   });
@@ -117,6 +120,7 @@ const AppContent: React.FC = () => {
 
   const [showModalChatbot, setModalChatbot] = useState(false);
   const [showModalAccount, setModalAccount] = useState(false);
+  const [showModalReportar, setModalReportar] = useState(false);
 
   const [canClickMapa, setCanClickMapa] = useState(true);
 
@@ -149,6 +153,7 @@ const AppContent: React.FC = () => {
     setModalDirecoes(false);
     setModalAccount(false);
     setFollowDirection(false);
+    setModalReportar(false);
     setTimeout(() => setSelectedEcoponto(null), 150);
   };
 
@@ -186,6 +191,16 @@ const AppContent: React.FC = () => {
       return true;
     else return false;
   };
+
+  const fecharReportarProblema = () => {
+    if (callShowModalEcoSelecionado && showModalReportar) {
+      setModalReportar(false);
+      return false;
+    }
+    else {
+      if (verificarTudoFechado()) return true;
+    }
+  }
 
   // Trigger para o mapa voar para a localização do utilizador
   const [flyUserLocationTrigger, setFlyUserLocTrigger] = useState(0);
@@ -384,7 +399,12 @@ const AppContent: React.FC = () => {
             stringDistancia={stringDistanciaFuncao}
             modalDirecoes={setModalDirecoes}
             objectDataDirecoes={objectDataDirecoes}
+            modalReportar={setModalReportar}
           />
+        </IonModal>
+
+        <IonModal isOpen={showModalReportar}>
+          <ModalPageReportar />
         </IonModal>
         <IonTabs>
           <IonTab tab="home">

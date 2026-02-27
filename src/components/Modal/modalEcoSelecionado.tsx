@@ -44,21 +44,27 @@ interface Props {
   modalDirecoes: (value: boolean) => void;
   objectDataDirecoes: {
     walk: {
-        distance: number;
-        duration: number;
+      distance: number;
+      duration: number;
     };
     car: {
-        distance: number;
-        duration: number;
+      distance: number;
+      duration: number;
     };
     cycle: {
-        distance: number;
-        duration: number;
+      distance: number;
+      duration: number;
     };
-}
+  };
+  modalReportar: (value: boolean) => void;
 }
 
-const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDirecoes, objectDataDirecoes }) => {
+const ModalPageEcoSelecionado: React.FC<Props> = ({
+  stringDistancia,
+  modalDirecoes,
+  objectDataDirecoes,
+  modalReportar,
+}) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
   const { position } = useContext(GeolocationContext)!;
 
@@ -115,7 +121,12 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({ stringDistancia, modalDireco
               </IonButton>
             </IonCol>
             <IonCol style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-              <IonButton style={{ width: '100%' }} expand="block" className="ecoSelecionado">
+              <IonButton
+                style={{ width: '100%' }}
+                expand="block"
+                className="ecoSelecionado"
+                onClick={() => modalReportar(true)}
+              >
                 <IonIcon slot="start" src={trash} />
                 Reportar problema
               </IonButton>
