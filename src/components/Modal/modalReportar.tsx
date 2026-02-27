@@ -1,16 +1,47 @@
-import { IonContent, IonHeader, IonPage, IonToolbar } from "@ionic/react"
+import {
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonList,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
+import { useContext } from 'react';
+import { EcopontosContext } from '../../context/ecopontosContext';
 
-const ModalPageReportar: React.FC = () => {
-    return (
-        <IonPage>
-            <IonHeader>
-                <IonToolbar>
-                    Teste
-                </IonToolbar>
-            </IonHeader>
-            <IonContent>Teste</IonContent>
-        </IonPage>
-    )
+interface Props {
+    setModalReportar: (value: boolean) => void;
 }
 
-export default ModalPageReportar
+const ModalPageReportar: React.FC<Props> = ({setModalReportar}) => {
+  const { selectedEcoponto } = useContext(EcopontosContext);
+
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons onClick={() => setModalReportar(false)} slot="start">
+            <IonBackButton defaultHref='#' />
+          </IonButtons>
+          <IonTitle style={{ color: '#272727' }}>Reportar problema</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <div>
+          <IonList>
+            <IonItem>
+              <IonInput label="Nome" labelPlacement="floating" value={`Ecoponto ${selectedEcoponto?.Morada}`} />
+            </IonItem>
+          </IonList>
+        </div>
+      </IonContent>
+    </IonPage>
+  );
+};
+
+export default ModalPageReportar;

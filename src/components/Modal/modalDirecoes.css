@@ -26,7 +26,7 @@ ion-segment-button::part(indicator-background) {
   background: #028006;
 }
 
-ion-toolbar.direcoesToolbar {
+ion-toolbar.centerToolbar {
   text-align: center;
 }
 

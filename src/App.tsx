@@ -111,7 +111,7 @@ const AppContent: React.FC = () => {
       setModalReportar(false);
       setModalDirecoes(false);
       setFollowDirection(false);
-      setModalReportar(false);
+      //setModalReportar(false);
       setRemoveCameraTiltTrigger((t) => t + 1);
     });
   });
@@ -290,7 +290,7 @@ const AppContent: React.FC = () => {
           breakpoints={[0.8, 0]}
           backdropDismiss={true}
           expandToScroll={false}
-          handle={false}
+          handle={true}
           onDidDismiss={(e) => {
             const { role } = e.detail;
 
@@ -308,7 +308,7 @@ const AppContent: React.FC = () => {
           breakpoints={[0.33, 0]}
           backdropDismiss={true}
           expandToScroll={false}
-          handle={false}
+          handle={true}
           onDidDismiss={(e) => {
             const { role } = e.detail;
 
@@ -394,7 +394,7 @@ const AppContent: React.FC = () => {
         </IonModal>
 
         <IonModal isOpen={showModalReportar}>
-          <ModalPageReportar />
+          <ModalPageReportar setModalReportar={setModalReportar} />
         </IonModal>
         <IonTabs>
           <IonTab tab="home">

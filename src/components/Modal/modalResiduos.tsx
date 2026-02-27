@@ -12,6 +12,7 @@ import {
   IonRow,
   IonCol,
   IonIcon,
+  IonTitle,
 } from '@ionic/react';
 import { useContext, useEffect, useState } from 'react';
 import './modalResiduos.css';
@@ -45,7 +46,7 @@ const ModalPageResiduos: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar style={{ textAlign: 'center' }}>
-          <IonLabel className="firstText">O que pretende depositar?</IonLabel>
+          <IonTitle style={{color: '#272727'}}>O que pretende depositar?</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

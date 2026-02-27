@@ -57,16 +57,6 @@ div.formatacaoCima {
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.197));
 }
 
-ion-label.firstText {
-  /*
-    position: absolute;
-    margin-top: -10px;
-    margin-left: 13px;*/
-  /*color:rgb(26, 92, 0);*/
-  color: rgba(0, 0, 0, 0.753);
-  font-weight: bold;
-}
-
 .wrapper {
   display: flex;
   align-items: center;
