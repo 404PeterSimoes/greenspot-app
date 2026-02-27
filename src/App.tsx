@@ -192,16 +192,6 @@ const AppContent: React.FC = () => {
     else return false;
   };
 
-  const fecharReportarProblema = () => {
-    if (callShowModalEcoSelecionado && showModalReportar) {
-      setModalReportar(false);
-      return false;
-    }
-    else {
-      if (verificarTudoFechado()) return true;
-    }
-  }
-
   // Trigger para o mapa voar para a localização do utilizador
   const [flyUserLocationTrigger, setFlyUserLocTrigger] = useState(0);
 
@@ -441,7 +431,9 @@ const AppContent: React.FC = () => {
                     }, 1000);
                   }
                 }
-                closeModals();
+                if (callShowModalEcoSelecionado && showModalReportar) {
+                  setModalReportar(false);
+                } else closeModals();
               }}
             >
               <IonIcon icon={locationOutline} />
