@@ -233,6 +233,13 @@ const AppContent: React.FC = () => {
   const [followDirection, setFollowDirection] = useState(false);
   const [refreshDirection, setRefreshDirection] = useState(false);
 
+  // Mudar design de selecionado na Toolbar quando modalReportar abre
+  useEffect(() => {
+    if (showModalReportar) {
+      setDesignSelected('');
+    }
+  }, [showModalReportar]);
+
   // Ajustar StatusBar para dispositivos que não ajustem automaticamente (Samsung)
   useEffect(() => {
     const adjustStatusBar = async () => {
@@ -394,7 +401,7 @@ const AppContent: React.FC = () => {
         </IonModal>
 
         <IonModal isOpen={showModalReportar}>
-          <ModalPageReportar setModalReportar={setModalReportar} />
+          <ModalPageReportar setModalReportar={setModalReportar} setDesignSelected={setDesignSelected} />
         </IonModal>
         <IonTabs>
           <IonTab tab="home">

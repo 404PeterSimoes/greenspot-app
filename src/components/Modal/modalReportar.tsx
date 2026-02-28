@@ -16,16 +16,17 @@ import { EcopontosContext } from '../../context/ecopontosContext';
 
 interface Props {
     setModalReportar: (value: boolean) => void;
+    setDesignSelected: (value: string) => void;
 }
 
-const ModalPageReportar: React.FC<Props> = ({setModalReportar}) => {
+const ModalPageReportar: React.FC<Props> = ({setModalReportar, setDesignSelected}) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons onClick={() => setModalReportar(false)} slot="start">
+          <IonButtons onClick={() => {setModalReportar(false); setDesignSelected('mapa')}} slot="start">
             <IonBackButton defaultHref='#' />
           </IonButtons>
           <IonTitle style={{ color: '#272727' }}>Reportar problema</IonTitle>
