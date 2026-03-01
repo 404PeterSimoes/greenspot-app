@@ -15,6 +15,7 @@ import {
 } from '@ionic/react';
 import { useContext, useEffect, useState } from 'react';
 import { EcopontosContext } from '../../context/ecopontosContext';
+import { usePhotoGallery } from '../../hooks/usePhotoGallery';
 
 interface Props {
   setModalReportar: (value: boolean) => void;
@@ -39,6 +40,8 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
     Freguesia: '',
     Problema: '',
   });
+
+  useEffect(() => console.log(problema), [problema]);
 
   return (
     <IonPage>
@@ -65,8 +68,7 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
             fill="outline"
             onIonChange={(e) => {
               setProblema({ ...problema, Local: e.detail.value });
-              console.log(problema);
-            }} // quase a funcionar
+            }}
           />
           <br />
           <IonInput
@@ -99,6 +101,7 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
             <IonSelectOption value="inexistente">Inexistente</IonSelectOption>
             <IonSelectOption value="outro">Outro</IonSelectOption>
           </IonSelect>
+          <IonButton onClick={() => {}}>ola</IonButton>
         </div>
       </IonContent>
     </IonPage>
