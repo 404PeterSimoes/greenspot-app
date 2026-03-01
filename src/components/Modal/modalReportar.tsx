@@ -19,6 +19,8 @@ import { EcopontosContext } from '../../context/ecopontosContext';
 import { usePhotoGallery } from '../../hooks/usePhotoGallery';
 import './modalReportar.css';
 import { camera, cameraOutline, image, imageOutline, close, colorFill, send } from 'ionicons/icons';
+import { EmailComposer } from 'capacitor-email-composer';
+import { ExceptionCode } from '@capacitor/core';
 
 interface Props {
   setModalReportar: (value: boolean) => void;
@@ -27,27 +29,71 @@ interface Props {
 
 interface ProblemaProps {
   Local: string | undefined | null;
-  Coordenadas: string | undefined | null;
-  Concelho: string | undefined | null;
-  Freguesia: string | undefined | null;
-  Problema: string | undefined | null;
+  Coordenadas: CoordenadasProps | undefined;
+  Concelho: string | undefined;
+  Freguesia: string | undefined;
+  Problema: string | undefined;
   OutroProblema: string | undefined | null;
+  Photo: string | undefined;
+}
+
+interface CoordenadasProps {
+  Lat: number | undefined;
+  Lon: number | undefined;
 }
 
 const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelected }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
-  const { pickPhotoFromGallery, photo, deletePhoto } = usePhotoGallery();
+  const { pickPhotoFromGallery, photo, deletePhoto, photoBase64 } = usePhotoGallery();
 
   const [problema, setProblema] = useState<ProblemaProps>({
     Local: `${selectedEcoponto?.Morada} (${selectedEcoponto?.Tipologia})`,
-    Coordenadas: '',
-    Concelho: '',
-    Freguesia: '',
-    Problema: '',
-    OutroProblema: '',
+    Coordenadas: { Lat: undefined, Lon: undefined },
+    Concelho: undefined,
+    Freguesia: undefined,
+    Problema: undefined,
+    OutroProblema: undefined,
+    Photo: undefined,
   });
 
-  useEffect(() => console.log(problema), [problema]);
+  //useEffect(() => alert(problema.Photo), [problema]);
+
+  const sendEmail = async () => {
+    try {
+      if (!problema.Local || !problema.Problema || (problema.Problema === 'outro' && !problema.OutroProblema)) {
+        console.log('escolhe bem o problema');
+        return;
+      }
+
+      setProblema({
+        ...problema,
+        Coordenadas: { Lat: selectedEcoponto?.Latitude, Lon: selectedEcoponto?.Longitude },
+        Concelho: selectedEcoponto?.Concelho,
+        Freguesia: selectedEcoponto?.Freguesia,
+      });
+
+      if (photo) {
+        setProblema({ ...problema, Photo: photoBase64 });
+      }
+
+      await EmailComposer.open({
+        to: ['ecoleziria@emailteste.pt'],
+        subject: `Reporte Problema - ${problema.Local}`,
+        body: 'teste',
+        ...(photoBase64 && {
+          attachments: [
+            {
+              type: 'base64',
+              path: photoBase64.split(',')[1],
+              name: 'photo.jpeg',
+            },
+          ],
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <IonPage>
@@ -88,21 +134,15 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
             fill="outline"
             disabled={true}
           >
-            <div slot="label">
-              Coordenadas
-            </div>
+            <div slot="label">Coordenadas</div>
           </IonInput>
           <br />
           <IonInput labelPlacement="floating" value={selectedEcoponto?.Concelho} fill="outline" disabled={true}>
-            <div slot="label">
-              Concelho
-            </div>
+            <div slot="label">Concelho</div>
           </IonInput>
           <br />
           <IonInput labelPlacement="floating" value={selectedEcoponto?.Freguesia} fill="outline" disabled={true}>
-            <div slot="label">
-              Freguesia
-            </div>
+            <div slot="label">Freguesia</div>
           </IonInput>
           <br />
           <br />
@@ -156,7 +196,7 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
             )}
           </div>
           <br />
-          <IonButton className="sendButton" expand="block">
+          <IonButton className="sendButton" expand="block" onClick={sendEmail}>
             Enviar
           </IonButton>
         </div>
