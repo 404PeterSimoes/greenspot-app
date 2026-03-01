@@ -1,0 +1,3 @@
+.safe-toolbar {
+  margin-top: env(safe-area-inset-top);
+}

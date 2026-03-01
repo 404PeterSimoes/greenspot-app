@@ -16,6 +16,7 @@ import {
 import { useContext, useEffect, useState } from 'react';
 import { EcopontosContext } from '../../context/ecopontosContext';
 import { usePhotoGallery } from '../../hooks/usePhotoGallery';
+import './modalReportar.css';
 
 interface Props {
   setModalReportar: (value: boolean) => void;
@@ -32,6 +33,7 @@ interface ProblemaProps {
 
 const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelected }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
+  const { photos, addNewToGallery } = usePhotoGallery();
 
   const [problema, setProblema] = useState<ProblemaProps>({
     Local: '',
@@ -46,18 +48,20 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonButtons
-            onClick={() => {
-              setModalReportar(false);
-              setDesignSelected('mapa');
-            }}
-            slot="start"
-          >
-            <IonBackButton defaultHref="#" />
-          </IonButtons>
-          <IonTitle style={{ color: '#272727' }}>Reportar problema</IonTitle>
-        </IonToolbar>
+        <div className='safe-toolbar'>
+          <IonToolbar>
+            <IonButtons
+              onClick={() => {
+                setModalReportar(false);
+                setDesignSelected('mapa');
+              }}
+              slot="start"
+            >
+              <IonBackButton defaultHref="#" />
+            </IonButtons>
+            <IonTitle style={{ color: '#272727' }}>Reportar problema</IonTitle>
+          </IonToolbar>
+        </div>
       </IonHeader>
       <IonContent>
         <div className="divContentReportar" style={{ marginLeft: '16px', marginRight: '16px', marginTop: '24px' }}>
@@ -101,7 +105,11 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
             <IonSelectOption value="inexistente">Inexistente</IonSelectOption>
             <IonSelectOption value="outro">Outro</IonSelectOption>
           </IonSelect>
-          <IonButton onClick={() => {}}>ola</IonButton>
+          <IonButton onClick={addNewToGallery}>ola</IonButton>
+          {photos.map((photo, index) => (
+            <img key={index} src={photo.webviewPath} />
+          ))}
+
         </div>
       </IonContent>
     </IonPage>

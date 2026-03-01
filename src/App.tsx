@@ -60,7 +60,7 @@ import { EcopontosContext, EcopontosProvider } from './context/ecopontosContext'
 import { GeolocationProvider, GeolocationContext } from './context/geolocationContext';
 import { AccountContext, AccountProvider } from './context/accountContext';
 
-import { StatusBar } from '@capacitor/status-bar';
+import { StatusBar, Style } from '@capacitor/status-bar';
 import { Capacitor } from '@capacitor/core';
 
 import imgPapel from './assets/papel.png';
@@ -78,14 +78,17 @@ import ModalPageAccount from './components/Modal/modalAccount';
 import ModalPageDirecoes from './components/Modal/modalDirecoes';
 import ModalPageReportar from './components/Modal/modalReportar';
 
-NavigationBar.setNavigationBarColor({ color: 'TRANSPARENT', darkButtons: true });
-
 // Colocar mapa no principal, não usar outras paginas, pagina principal (Mapa) sempre em load
 // Ion-Modals irão estão integrados noutras pastas mas trazidas para o App.tsx
 
 // https://ionicframework.com/docs/api/modal#controller-modals
 
 const AppContent: React.FC = () => {
+  useEffect(() => {
+    NavigationBar.setNavigationBarColor({ color: 'TRANSPARENT', darkButtons: true });
+    StatusBar.setStyle({ style: Style.Dark });
+  }, []);
+
   const initializeApp = async () => {
     await authService.initializeSocialLogin();
   };
@@ -400,7 +403,15 @@ const AppContent: React.FC = () => {
           />
         </IonModal>
 
-        <IonModal isOpen={showModalReportar}>
+        <IonModal
+          isOpen={showModalReportar}
+          onWillPresent={() => {
+            StatusBar.setStyle({ style: Style.Light });
+          }}
+          onWillDismiss={() => {
+            StatusBar.setStyle({ style: Style.Dark });
+          }}
+        >
           <ModalPageReportar setModalReportar={setModalReportar} setDesignSelected={setDesignSelected} />
         </IonModal>
         <IonTabs>

@@ -4,7 +4,7 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Preferences } from '@capacitor/preferences';
 import { isPlatform } from '@ionic/react';
 import { Capacitor } from '@capacitor/core';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export interface UserPhoto {
   filepath: string;
@@ -12,7 +12,7 @@ export interface UserPhoto {
 }
 
 export const usePhotoGallery = () => {
-  const photos = useRef<UserPhoto[]>([]);
+  const [photos, setPhotos] = useState<UserPhoto[]>([]);
 
   const PHOTO_STORAGE = 'photos';
 
@@ -28,7 +28,7 @@ export const usePhotoGallery = () => {
     // Save the picture and add it to photo collection
     const savedImageFile = await savePicture(capturedPhoto, fileName);
 
-    photos.current = [savedImageFile, ...photos.current];
+    setPhotos((prev) => [savedImageFile, ...prev]);
   };
 
   const savePicture = async (photo: Photo, fileName: string): Promise<UserPhoto> => {
@@ -82,13 +82,13 @@ export const usePhotoGallery = () => {
   const cachePhotos = () => {
     Preferences.set({
       key: PHOTO_STORAGE,
-      value: JSON.stringify(photos.current),
+      value: JSON.stringify(photos),
     });
   };
 
   const loadSaved = async () => {
     const photoList = await Preferences.get({ key: PHOTO_STORAGE });
-    const photosInPreferences = photoList.value ? JSON.parse(photoList.value) : [];
+    const photosInPreferences = photoList.value && photoList.value !== 'undefined' ? JSON.parse(photoList.value) : [];
 
     // If running on the web...
     if (!isPlatform('hybrid')) {
@@ -102,7 +102,7 @@ export const usePhotoGallery = () => {
       }
     }
 
-    photos.current = photosInPreferences;
+    setPhotos(photosInPreferences);
   };
 
   useEffect(() => {
