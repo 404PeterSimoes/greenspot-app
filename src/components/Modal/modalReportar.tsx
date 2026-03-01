@@ -33,7 +33,7 @@ interface ProblemaProps {
 
 const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelected }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
-  const { photos, addNewToGallery } = usePhotoGallery();
+  const { pickPhotoFromGallery, photo } = usePhotoGallery();
 
   const [problema, setProblema] = useState<ProblemaProps>({
     Local: '',
@@ -48,7 +48,7 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
   return (
     <IonPage>
       <IonHeader>
-        <div className='safe-toolbar'>
+        <div className="safe-toolbar">
           <IonToolbar>
             <IonButtons
               onClick={() => {
@@ -105,11 +105,8 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
             <IonSelectOption value="inexistente">Inexistente</IonSelectOption>
             <IonSelectOption value="outro">Outro</IonSelectOption>
           </IonSelect>
-          <IonButton onClick={addNewToGallery}>ola</IonButton>
-          {photos.map((photo, index) => (
-            <img key={index} src={photo.webviewPath} />
-          ))}
-
+          <IonButton onClick={pickPhotoFromGallery}>ola</IonButton>
+          {photo && <img src={photo.webviewPath} />}
         </div>
       </IonContent>
     </IonPage>
