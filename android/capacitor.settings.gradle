@@ -31,3 +31,6 @@ project(':capgo-capacitor-navigation-bar').projectDir = new File('../node_module
 
 include ':capgo-capacitor-social-login'
 project(':capgo-capacitor-social-login').projectDir = new File('../node_modules/@capgo/capacitor-social-login/android')
+
+include ':capacitor-email-composer'
+project(':capacitor-email-composer').projectDir = new File('../node_modules/capacitor-email-composer/android')

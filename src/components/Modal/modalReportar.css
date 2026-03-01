@@ -1,3 +1,37 @@
 .safe-toolbar {
   margin-top: env(safe-area-inset-top);
 }
+
+ion-button.galleryButton {
+  --background: rgb(255, 255, 255);
+  --border-color: rgb(0, 109, 9);
+  --border-style: solid;
+  --border-width: 1px;
+  --color: rgb(0, 109, 9)
+}
+
+ion-button.sendButton {
+  --background: rgb(0, 109, 9);
+}
+
+.divPhotoReportar {
+  border-radius: 10px;
+  background-color: white;
+  padding: 10px;
+  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.395));
+  width: 70%;
+}
+
+.eliminarPhoto {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 50%;
+  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.395));
+}

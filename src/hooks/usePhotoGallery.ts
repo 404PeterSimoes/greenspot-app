@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 export interface UserPhoto {
   webviewPath?: string;
+  fileName?: string;
 }
 
 export const usePhotoGallery = () => {
@@ -28,8 +29,13 @@ export const usePhotoGallery = () => {
     setPhoto(tempPhoto);
   };
 
+  const deletePhoto = () => {
+    setPhoto(null);
+  };
+
   return {
     photo,
     pickPhotoFromGallery,
+    deletePhoto,
   };
 };

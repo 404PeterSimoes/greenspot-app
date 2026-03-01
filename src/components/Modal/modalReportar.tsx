@@ -4,6 +4,7 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonInput,
   IonItem,
   IonList,
@@ -17,6 +18,7 @@ import { useContext, useEffect, useState } from 'react';
 import { EcopontosContext } from '../../context/ecopontosContext';
 import { usePhotoGallery } from '../../hooks/usePhotoGallery';
 import './modalReportar.css';
+import { camera, cameraOutline, image, imageOutline, close, colorFill, send } from 'ionicons/icons';
 
 interface Props {
   setModalReportar: (value: boolean) => void;
@@ -29,18 +31,20 @@ interface ProblemaProps {
   Concelho: string | undefined | null;
   Freguesia: string | undefined | null;
   Problema: string | undefined | null;
+  OutroProblema: string | undefined | null;
 }
 
 const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelected }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
-  const { pickPhotoFromGallery, photo } = usePhotoGallery();
+  const { pickPhotoFromGallery, photo, deletePhoto } = usePhotoGallery();
 
   const [problema, setProblema] = useState<ProblemaProps>({
-    Local: '',
+    Local: `${selectedEcoponto?.Morada} (${selectedEcoponto?.Tipologia})`,
     Coordenadas: '',
     Concelho: '',
     Freguesia: '',
     Problema: '',
+    OutroProblema: '',
   });
 
   useEffect(() => console.log(problema), [problema]);
@@ -66,47 +70,95 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
       <IonContent>
         <div className="divContentReportar" style={{ marginLeft: '16px', marginRight: '16px', marginTop: '24px' }}>
           <IonInput
-            label="Local"
             labelPlacement="floating"
-            value={problema.Local || `${selectedEcoponto?.Morada} (${selectedEcoponto?.Tipologia})`}
+            value={problema.Local}
             fill="outline"
             onIonChange={(e) => {
               setProblema({ ...problema, Local: e.detail.value });
             }}
-          />
+          >
+            <div slot="label">
+              Local <span style={{ color: 'red' }}>*</span>
+            </div>
+          </IonInput>
           <br />
           <IonInput
-            label="Coordenadas"
             labelPlacement="floating"
             value={`${selectedEcoponto?.Latitude}   ${selectedEcoponto?.Longitude}`}
             fill="outline"
             disabled={true}
-          />
+          >
+            <div slot="label">
+              Coordenadas
+            </div>
+          </IonInput>
           <br />
-          <IonInput
-            label="Concelho"
+          <IonInput labelPlacement="floating" value={selectedEcoponto?.Concelho} fill="outline" disabled={true}>
+            <div slot="label">
+              Concelho
+            </div>
+          </IonInput>
+          <br />
+          <IonInput labelPlacement="floating" value={selectedEcoponto?.Freguesia} fill="outline" disabled={true}>
+            <div slot="label">
+              Freguesia
+            </div>
+          </IonInput>
+          <br />
+          <br />
+          <IonSelect
             labelPlacement="floating"
-            value={selectedEcoponto?.Concelho}
+            interface="popover"
             fill="outline"
-            disabled={true}
-          />
-          <br />
-          <IonInput
-            label="Freguesia"
-            labelPlacement="floating"
-            value={selectedEcoponto?.Freguesia}
-            fill="outline"
-            disabled={true}
-          />
-          <br />
-          <IonSelect label="Problema" labelPlacement="floating" interface="popover" fill="outline">
+            onIonChange={(e) => {
+              setProblema({ ...problema, Problema: e.detail.value });
+            }}
+          >
+            <div slot="label">
+              Problema <span style={{ color: 'red' }}>*</span>
+            </div>
             <IonSelectOption value="danificado">Danificado</IonSelectOption>
             <IonSelectOption value="deslocado">Deslocado</IonSelectOption>
             <IonSelectOption value="inexistente">Inexistente</IonSelectOption>
             <IonSelectOption value="outro">Outro</IonSelectOption>
           </IonSelect>
-          <IonButton onClick={pickPhotoFromGallery}>ola</IonButton>
-          {photo && <img src={photo.webviewPath} />}
+          <br />
+          {problema.Problema === 'outro' && (
+            <>
+              <IonInput
+                labelPlacement="stacked"
+                fill="outline"
+                onIonChange={(e) => {
+                  setProblema({ ...problema, OutroProblema: e.detail.value });
+                }}
+              >
+                <div slot="label">
+                  Outro <span style={{ color: 'red' }}>*</span>
+                </div>
+              </IonInput>
+              <br />
+            </>
+          )}
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            {photo ? (
+              <div className="divPhotoReportar">
+                <div className="eliminarPhoto" onClick={deletePhoto}>
+                  <IonIcon src={close} />
+                </div>
+
+                <img src={photo.webviewPath} />
+              </div>
+            ) : (
+              <IonButton className="galleryButton" onClick={pickPhotoFromGallery}>
+                <IonIcon src={image} slot="start" />
+                Anexar Imagem
+              </IonButton>
+            )}
+          </div>
+          <br />
+          <IonButton className="sendButton" expand="block">
+            Enviar
+          </IonButton>
         </div>
       </IonContent>
     </IonPage>
