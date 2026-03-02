@@ -17,7 +17,7 @@ import {
 } from '@ionic/react';
 import { useState, useContext, useEffect, useRef } from 'react';
 
-import { locationOutline, filter } from 'ionicons/icons';
+import { locationOutline, filter, helpOutline } from 'ionicons/icons';
 import recycleIcon from './assets/recycle.svg';
 
 /* Core CSS required for Ionic components to work properly */
@@ -244,6 +244,18 @@ const AppContent: React.FC = () => {
     }
   }, [showModalReportar]);
 
+  // State com as mensagens da IA da sessão
+  const [aiMessages, setAiMessages] = useState<{ role: 'user' | 'assistant'; content: string }[]>([]);
+
+  useEffect(() => {
+    setAiMessages([
+      {
+        role: 'assistant',
+        content: `Olá! Sou o assistente de IA da <span style='color:rgb(0, 109, 9)'><b>GreenSpot</b></span>. <br /><br />Qual é o resíduo que pretendes depositar?`,
+      },
+    ]);
+  }, []);
+
   // Ajustar StatusBar para dispositivos que não ajustem automaticamente (Samsung)
   useEffect(() => {
     const adjustStatusBar = async () => {
@@ -331,15 +343,8 @@ const AppContent: React.FC = () => {
         >
           <ModalPageResiduos />
         </IonModal>
-        <IonModal
-          isOpen={showModalChatbot}
-          initialBreakpoint={0.85}
-          breakpoints={[0.85]}
-          backdropDismiss={false}
-          expandToScroll={false}
-          handle={false}
-        >
-          <ModalPageChatbot />
+        <IonModal isOpen={showModalChatbot} onIonModalDidDismiss={() => setModalChatbot(false)}>
+          <ModalPageChatbot messages={aiMessages} setMessages={setAiMessages} />
         </IonModal>
 
         <IonModal
@@ -487,7 +492,7 @@ const AppContent: React.FC = () => {
               <IonIcon icon={filter} />
               <IonLabel>Filtros</IonLabel>
             </IonTabButton>
-            {/*
+
             <IonTabButton
               tab="home"
               className={designSelected === 'chatbot' ? 'designSelectedClass' : ''}
@@ -500,7 +505,7 @@ const AppContent: React.FC = () => {
             >
               <IonIcon icon={helpOutline} />
               <IonLabel>Chatbot</IonLabel>
-            </IonTabButton>*/}
+            </IonTabButton>
           </IonTabBar>
         </IonTabs>
       </IonContent>
