@@ -1,16 +1,27 @@
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 import { isPlatform } from '@ionic/react';
 import { useState } from 'react';
 
 export interface UserPhoto {
   webviewPath?: string;
+  filePath?: string;
   fileName?: string;
 }
 
 export const usePhotoGallery = () => {
   const [photo, setPhoto] = useState<UserPhoto | null>(null);
-  const [photoBase64, setPhotoBase64] = useState<any>(null);
+
+  const blobToBase64 = (blob: Blob): Promise<string> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve((reader.result as string).split(',')[1]);
+      };
+      reader.readAsDataURL(blob);
+    });
+  };
 
   /** ---------------------------
    * Pick a photo from the gallery
@@ -22,35 +33,51 @@ export const usePhotoGallery = () => {
       quality: 90,
     });
 
-    const tempPhoto: UserPhoto = {
-      webviewPath: isPlatform('hybrid') ? Capacitor.convertFileSrc(selectedPhoto.path!) : selectedPhoto.webPath!,
-    };
+    if (!selectedPhoto.path && !selectedPhoto.webPath) return;
 
-    // Save it temporarily in state only
-    setPhoto(tempPhoto);
+    const fileName = `ecoponto_${Date.now()}.jpg`;
 
     const response = await fetch(selectedPhoto.webPath!);
     const blob = await response.blob();
 
-    const base64 = await new Promise<string>((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        resolve(reader.result as string);
-      };
-      reader.readAsDataURL(blob);
+    const base64Data = await blobToBase64(blob);
+
+    // save to temporary cache directory
+    await Filesystem.writeFile({
+      path: fileName,
+      data: base64Data,
+      directory: Directory.Cache,
     });
 
-    setPhotoBase64(base64);
+    // get real file URI
+    const fileUri = await Filesystem.getUri({
+      directory: Directory.Cache,
+      path: fileName,
+    });
+
+    // save file URI in state
+    setPhoto({
+      webviewPath: Capacitor.convertFileSrc(fileUri.uri),
+      filePath: fileUri.uri,
+      fileName: fileName,
+    });
   };
 
-  const deletePhoto = () => {
-    setPhoto(null);
-    setPhotoBase64(null)
+  const deletePhoto = async () => {
+    try {
+      await Filesystem.deleteFile({
+        directory: Directory.Cache,
+        path: photo!.fileName!,
+      });
+
+      setPhoto(null);
+    } catch (error) {
+      alert(`Erro ao apagar foto: ${error}`);
+    }
   };
 
   return {
     photo,
-    photoBase64,
     pickPhotoFromGallery,
     deletePhoto,
   };

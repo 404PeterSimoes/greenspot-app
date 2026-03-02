@@ -29,9 +29,8 @@ interface Props {
 }
 
 interface ProblemaProps {
-  Problema: string | undefined;
+  Problema: string | undefined | null;
   OutroProblema: string | undefined | null;
-  Photo: string | undefined;
 }
 
 interface CoordenadasProps {
@@ -41,25 +40,15 @@ interface CoordenadasProps {
 
 const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelected }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
-  const {profile} = useContext(AccountContext)
-  const { pickPhotoFromGallery, photo, deletePhoto, photoBase64 } = usePhotoGallery();
+  const { profile } = useContext(AccountContext);
+  const { pickPhotoFromGallery, photo, deletePhoto } = usePhotoGallery();
 
   const [problema, setProblema] = useState<ProblemaProps>({
     Problema: undefined,
     OutroProblema: undefined,
-    Photo: undefined,
   });
 
   //useEffect(() => alert(problema.Photo), [problema]);
-
-  const updateProblema = () => {
-    const problemaAtualizado = {
-      ...problema,
-      ...(photoBase64 && { Photo: photoBase64 }),
-    };
-
-    setProblema(problemaAtualizado);
-  };
 
   const sendEmail = async () => {
     try {
@@ -83,12 +72,11 @@ Coordenadas:
 ------------------------------------------------
 
 Utilizador: ${profile ? profile.name : 'Sem sessão iniciada'}`,
-        ...(photoBase64 && {
+        ...(photo && {
           attachments: [
             {
-              type: 'base64',
-              path: photoBase64.split(',')[1],
-              name: 'ecoponto.jpeg',
+              type: 'absolute',
+              path: photo.filePath!.replace('file://', ''),
             },
           ],
         }),
@@ -198,10 +186,7 @@ Utilizador: ${profile ? profile.name : 'Sem sessão iniciada'}`,
           <IonButton
             className="sendButton"
             expand="block"
-            onClick={() => {
-              updateProblema();
-              sendEmail();
-            }}
+            onClick={sendEmail}
             disabled={!problema.Problema || (problema.Problema === 'outro' && !problema.OutroProblema)}
           >
             Enviar
