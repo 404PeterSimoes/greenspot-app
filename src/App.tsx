@@ -411,6 +411,7 @@ const AppContent: React.FC = () => {
           onWillDismiss={() => {
             StatusBar.setStyle({ style: Style.Dark });
           }}
+          onIonModalDidDismiss={() => setModalReportar(false)}
         >
           <ModalPageReportar setModalReportar={setModalReportar} setDesignSelected={setDesignSelected} />
         </IonModal>

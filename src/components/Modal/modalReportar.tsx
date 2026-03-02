@@ -21,6 +21,7 @@ import './modalReportar.css';
 import { camera, cameraOutline, image, imageOutline, close, colorFill, send } from 'ionicons/icons';
 import { EmailComposer } from 'capacitor-email-composer';
 import { ExceptionCode } from '@capacitor/core';
+import { AccountContext } from '../../context/accountContext';
 
 interface Props {
   setModalReportar: (value: boolean) => void;
@@ -28,10 +29,6 @@ interface Props {
 }
 
 interface ProblemaProps {
-  Local: string | undefined | null;
-  Coordenadas: CoordenadasProps | undefined;
-  Concelho: string | undefined;
-  Freguesia: string | undefined;
   Problema: string | undefined;
   OutroProblema: string | undefined | null;
   Photo: string | undefined;
@@ -44,13 +41,10 @@ interface CoordenadasProps {
 
 const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelected }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
+  const {profile} = useContext(AccountContext)
   const { pickPhotoFromGallery, photo, deletePhoto, photoBase64 } = usePhotoGallery();
 
   const [problema, setProblema] = useState<ProblemaProps>({
-    Local: `${selectedEcoponto?.Morada} (${selectedEcoponto?.Tipologia})`,
-    Coordenadas: { Lat: undefined, Lon: undefined },
-    Concelho: undefined,
-    Freguesia: undefined,
     Problema: undefined,
     OutroProblema: undefined,
     Photo: undefined,
@@ -58,40 +52,49 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
 
   //useEffect(() => alert(problema.Photo), [problema]);
 
+  const updateProblema = () => {
+    const problemaAtualizado = {
+      ...problema,
+      ...(photoBase64 && { Photo: photoBase64 }),
+    };
+
+    setProblema(problemaAtualizado);
+  };
+
   const sendEmail = async () => {
     try {
-      if (!problema.Local || !problema.Problema || (problema.Problema === 'outro' && !problema.OutroProblema)) {
-        console.log('escolhe bem o problema');
-        return;
-      }
-
-      setProblema({
-        ...problema,
-        Coordenadas: { Lat: selectedEcoponto?.Latitude, Lon: selectedEcoponto?.Longitude },
-        Concelho: selectedEcoponto?.Concelho,
-        Freguesia: selectedEcoponto?.Freguesia,
-      });
-
-      if (photo) {
-        setProblema({ ...problema, Photo: photoBase64 });
-      }
-
       await EmailComposer.open({
         to: ['ecoleziria@emailteste.pt'],
-        subject: `Reporte Problema - ${problema.Local}`,
-        body: 'teste',
+        subject: `Reporte Problema: Ecoponto ${selectedEcoponto?.Morada} - ${selectedEcoponto?.Concelho}`,
+        body: `GreenSpot - Reporte de Problema em Ecoponto
+
+Problema: ${problema.Problema === 'outro' ? `${problema.OutroProblema}` : `Ecoponto ${problema.Problema}`}
+
+------------------------------------------------
+ID Ecoponto: ${selectedEcoponto?.Codigo}
+
+Morada / Lugar: ${selectedEcoponto?.Morada}
+Concelho: ${selectedEcoponto?.Concelho}
+Freguesia: ${selectedEcoponto?.Freguesia}
+
+Coordenadas:
+- Latitude: ${selectedEcoponto?.Latitude}
+- Longitude: ${selectedEcoponto?.Longitude}
+------------------------------------------------
+
+Utilizador: ${profile ? profile.name : 'Sem sessão iniciada'}`,
         ...(photoBase64 && {
           attachments: [
             {
               type: 'base64',
               path: photoBase64.split(',')[1],
-              name: 'photo.jpeg',
+              name: 'ecoponto.jpeg',
             },
           ],
         }),
       });
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -117,15 +120,11 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
         <div className="divContentReportar" style={{ marginLeft: '16px', marginRight: '16px', marginTop: '24px' }}>
           <IonInput
             labelPlacement="floating"
-            value={problema.Local}
+            value={`Ecoponto ${selectedEcoponto?.Morada}`}
             fill="outline"
-            onIonChange={(e) => {
-              setProblema({ ...problema, Local: e.detail.value });
-            }}
+            disabled={true}
           >
-            <div slot="label">
-              Local <span style={{ color: 'red' }}>*</span>
-            </div>
+            <div slot="label">Local</div>
           </IonInput>
           <br />
           <IonInput
@@ -157,9 +156,9 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
             <div slot="label">
               Problema <span style={{ color: 'red' }}>*</span>
             </div>
-            <IonSelectOption value="danificado">Danificado</IonSelectOption>
-            <IonSelectOption value="deslocado">Deslocado</IonSelectOption>
-            <IonSelectOption value="inexistente">Inexistente</IonSelectOption>
+            <IonSelectOption value="Danificado">Danificado</IonSelectOption>
+            <IonSelectOption value="Deslocado">Deslocado</IonSelectOption>
+            <IonSelectOption value="Inexistente">Inexistente</IonSelectOption>
             <IonSelectOption value="outro">Outro</IonSelectOption>
           </IonSelect>
           <br />
@@ -196,7 +195,15 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
             )}
           </div>
           <br />
-          <IonButton className="sendButton" expand="block" onClick={sendEmail}>
+          <IonButton
+            className="sendButton"
+            expand="block"
+            onClick={() => {
+              updateProblema();
+              sendEmail();
+            }}
+            disabled={!problema.Problema || (problema.Problema === 'outro' && !problema.OutroProblema)}
+          >
             Enviar
           </IonButton>
         </div>

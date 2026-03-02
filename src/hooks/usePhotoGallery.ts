@@ -19,7 +19,7 @@ export const usePhotoGallery = () => {
     const selectedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Uri,
       source: CameraSource.Photos, // open gallery
-      quality: 100,
+      quality: 90,
     });
 
     const tempPhoto: UserPhoto = {
