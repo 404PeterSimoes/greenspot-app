@@ -12,6 +12,8 @@ import {
   IonSpinner,
   IonChip,
   IonIcon,
+  IonButtons,
+  IonBackButton,
 } from '@ionic/react';
 import React, { useState, useEffect, useRef } from 'react';
 import { openaiClient } from '../../services/openaiClient';
@@ -29,9 +31,11 @@ interface Props {
       }[]
     >
   >;
+  setModalChatbot: (value: boolean) => void;
+  setDesignSelected: (value: string) => void;
 }
 
-const ModalPageChatbot: React.FC<Props> = ({ messages, setMessages }) => {
+const ModalPageChatbot: React.FC<Props> = ({ messages, setMessages, setModalChatbot, setDesignSelected }) => {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const contentRef = useRef<HTMLIonContentElement>(null);
@@ -78,7 +82,7 @@ const ModalPageChatbot: React.FC<Props> = ({ messages, setMessages }) => {
         model: 'gpt-4o-mini',
         prompt: {
           id: 'pmpt_69a602da74508197b9d5780831d08ad605c62581dcc3e361',
-          version: '8',
+          version: '9',
         },
         input: userMsg.content, // só a mensagem do utilizador
       });
@@ -96,9 +100,20 @@ const ModalPageChatbot: React.FC<Props> = ({ messages, setMessages }) => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar style={{ textAlign: 'center' }}>
-          <IonTitle style={{ color: '#272727' }}>Chatbot – Inteligência Artificial</IonTitle>
-        </IonToolbar>
+        <div className="safe-toolbar">
+          <IonToolbar>
+            <IonButtons
+              onClick={() => {
+                setModalChatbot(false);
+                setDesignSelected('mapa');
+              }}
+              slot="start"
+            >
+              <IonBackButton defaultHref="#" />
+            </IonButtons>
+            <IonTitle style={{ color: '#272727' }}>Chatbot – Inteligência Artificial</IonTitle>
+          </IonToolbar>
+        </div>
       </IonHeader>
 
       <IonContent ref={contentRef} style={{ '--background': '#f7f9fb' }}>

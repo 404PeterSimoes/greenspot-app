@@ -343,8 +343,22 @@ const AppContent: React.FC = () => {
         >
           <ModalPageResiduos />
         </IonModal>
-        <IonModal isOpen={showModalChatbot} onIonModalDidDismiss={() => setModalChatbot(false)}>
-          <ModalPageChatbot messages={aiMessages} setMessages={setAiMessages} />
+        <IonModal
+          isOpen={showModalChatbot}
+          onIonModalDidDismiss={() => setModalChatbot(false)}
+          onWillPresent={() => {
+            StatusBar.setStyle({ style: Style.Light });
+          }}
+          onWillDismiss={() => {
+            StatusBar.setStyle({ style: Style.Dark });
+          }}
+        >
+          <ModalPageChatbot
+            messages={aiMessages}
+            setMessages={setAiMessages}
+            setDesignSelected={setDesignSelected}
+            setModalChatbot={setModalChatbot}
+          />
         </IonModal>
 
         <IonModal
