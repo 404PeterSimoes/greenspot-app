@@ -15,6 +15,9 @@ import {
 } from '@ionic/react';
 import React, { useState, useEffect, useRef } from 'react';
 import { openaiClient } from '../../services/openaiClient';
+import { Keyboard, KeyboardResize } from '@capacitor/keyboard';
+import './modalChatbot.css';
+import { PluginListenerHandle } from '@capacitor/core';
 
 interface Props {
   messages: { role: 'user' | 'assistant'; content: string }[];
@@ -36,6 +39,30 @@ const ModalPageChatbot: React.FC<Props> = ({ messages, setMessages }) => {
   useEffect(() => {
     contentRef.current?.scrollToBottom(300);
   }, [messages, isTyping]);
+
+  // Subir a caixa de texto quando o telcado aparecer no ecrã no mobile
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  useEffect(() => {
+    let showListenerHandle: any;
+    let hideListenerHandle: any;
+
+    const setupKeyboardListeners = async () => {
+      showListenerHandle = await Keyboard.addListener('keyboardWillShow', (info) => {
+        setKeyboardHeight(info.keyboardHeight - 68);
+      });
+
+      hideListenerHandle = await Keyboard.addListener('keyboardWillHide', () => {
+        setKeyboardHeight(0);
+      });
+    };
+
+    setupKeyboardListeners();
+
+    return () => {
+      if (showListenerHandle) showListenerHandle.remove();
+      if (hideListenerHandle) hideListenerHandle.remove();
+    };
+  }, []);
 
   const sendMessage = async (textOverride?: string) => {
     const textToSend = textOverride || input;
@@ -113,7 +140,10 @@ const ModalPageChatbot: React.FC<Props> = ({ messages, setMessages }) => {
         </IonList>
       </IonContent>
 
-      <IonFooter className="ion-no-border" style={{ background: '#f7f9fb' }}>
+      <IonFooter
+        className="ion-no-border"
+        style={{ background: '#f7f9fb', transform: `translateY(-${keyboardHeight}px)`, transition: '0.1s' }}
+      >
         <IonToolbar style={{ '--background': '#ffffff', padding: '8px' }}>
           <div
             style={{
