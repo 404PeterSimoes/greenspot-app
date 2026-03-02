@@ -13,6 +13,7 @@ import {
   IonCol,
   IonIcon,
   IonTitle,
+  IonRippleEffect,
 } from '@ionic/react';
 import { useContext, useEffect, useState } from 'react';
 import './modalResiduos.css';
@@ -46,7 +47,7 @@ const ModalPageResiduos: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar style={{ textAlign: 'center' }}>
-          <IonTitle style={{color: '#272727'}}>O que pretende depositar?</IonTitle>
+          <IonTitle style={{ color: '#272727' }}>O que pretende depositar?</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -55,13 +56,15 @@ const ModalPageResiduos: React.FC = () => {
             <IonRow>
               <IonCol></IonCol>
               <IonCol size="auto">
-                <div onClick={setTudo} className="formatacaoCima">
+                <div onClick={setTudo} className="formatacaoCima ion-activatable ripple-parent">
                   Tudo
+                  <IonRippleEffect />
                 </div>
               </IonCol>
               <IonCol size="auto">
-                <div onClick={setLimpar} className="formatacaoCima">
+                <div onClick={setLimpar} className="formatacaoCima ion-activatable ripple-parent">
                   Limpar
+                  <IonRippleEffect />
                 </div>
               </IonCol>
             </IonRow>
@@ -75,12 +78,13 @@ const ModalPageResiduos: React.FC = () => {
                       Papel: !prev.Papel,
                     }));
                   }}
-                  className={residuosPretendidos.Papel ? 'formatacao papel' : 'formatacao desativado'}
+                  className={`${residuosPretendidos.Papel ? 'formatacao papel' : 'formatacao desativado'} ion-activatable ripple-parent`}
                 >
                   {residuosPretendidos.Papel && (
                     <IonIcon size="large" icon={residuosPretendidos.Papel ? checkmarkOutline : undefined} />
                   )}
                   Papel
+                  <IonRippleEffect />
                 </div>
               </IonCol>
               <IonCol>
@@ -91,7 +95,7 @@ const ModalPageResiduos: React.FC = () => {
                       Plastico: !prev.Plastico,
                     }));
                   }}
-                  className={residuosPretendidos.Plastico ? 'formatacao plastico' : 'formatacao desativado'}
+                  className={`${residuosPretendidos.Plastico ? 'formatacao plastico' : 'formatacao desativado'} ion-activatable ripple-parent`}
                 >
                   {residuosPretendidos.Plastico && (
                     <IonIcon
@@ -101,6 +105,7 @@ const ModalPageResiduos: React.FC = () => {
                     />
                   )}
                   Plástico
+                  <IonRippleEffect />
                 </div>
               </IonCol>
               <IonCol>
@@ -111,12 +116,13 @@ const ModalPageResiduos: React.FC = () => {
                       Vidro: !prev.Vidro,
                     }));
                   }}
-                  className={residuosPretendidos.Vidro ? 'formatacao vidro' : 'formatacao desativado'}
+                  className={`${residuosPretendidos.Vidro ? 'formatacao vidro' : 'formatacao desativado'} ion-activatable ripple-parent`}
                 >
                   {residuosPretendidos.Vidro && (
                     <IonIcon size="large" icon={residuosPretendidos.Vidro ? checkmarkOutline : undefined} />
                   )}
                   Vidro
+                  <IonRippleEffect />
                 </div>
               </IonCol>
             </IonRow>
@@ -129,12 +135,13 @@ const ModalPageResiduos: React.FC = () => {
                       Oleao: !prev.Oleao,
                     }));
                   }}
-                  className={residuosPretendidos.Oleao ? 'formatacao oleao' : 'formatacao oleao desativado'}
+                  className={`${residuosPretendidos.Oleao ? 'formatacao oleao' : 'formatacao desativado'} ion-activatable ripple-parent`}
                 >
                   {residuosPretendidos.Oleao && (
                     <IonIcon size="large" icon={residuosPretendidos.Oleao ? checkmarkOutline : undefined} />
                   )}
                   Óleos Alimentares
+                  <IonRippleEffect />
                 </div>
               </IonCol>
               <IonCol>
@@ -145,12 +152,13 @@ const ModalPageResiduos: React.FC = () => {
                       Pilhao: !prev.Pilhao,
                     }));
                   }}
-                  className={residuosPretendidos.Pilhao ? 'formatacao pilhao' : 'formatacao desativado'}
+                  className={`${residuosPretendidos.Pilhao ? 'formatacao pilhao' : 'formatacao desativado'} ion-activatable ripple-parent`}
                 >
                   {residuosPretendidos.Pilhao && (
                     <IonIcon size="large" icon={residuosPretendidos.Pilhao ? checkmarkOutline : undefined} />
                   )}
                   Pilhas
+                  <IonRippleEffect />
                 </div>
               </IonCol>
             </IonRow>

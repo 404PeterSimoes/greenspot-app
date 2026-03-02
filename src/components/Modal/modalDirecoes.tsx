@@ -71,7 +71,7 @@ const ModalPageDirecoes: React.FC<Props> = ({
     <IonPage>
       <IonHeader>
         <IonToolbar className="centerToolbar">
-          <h5 style={{ paddingLeft: '16px', paddingRight: '16px', color: '#272727' }}>
+          <h5 style={{ paddingLeft: '16px', paddingRight: '16px', marginTop: '10px', color: '#272727' }}>
             Localização Atual <IonIcon src={chevronForwardOutline} />
             <span style={{ fontWeight: 'bold' }}> {selectedEcoponto?.Morada}</span>
           </h5>

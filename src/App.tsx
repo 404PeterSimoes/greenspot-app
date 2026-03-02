@@ -13,6 +13,7 @@ import {
   IonSearchbar,
   IonHeader,
   IonAvatar,
+  IonRippleEffect,
 } from '@ionic/react';
 import { useState, useContext, useEffect, useRef } from 'react';
 

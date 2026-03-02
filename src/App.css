@@ -27,7 +27,7 @@ ion-tab-button:not(.designSelectedClass) {
 
 ion-modal {
   height: calc(100% - 68px - env(safe-area-inset-bottom));
- }
+}
 
 .ecoselecionado {
   --backdrop-opacity: 0;
@@ -62,6 +62,7 @@ ion-modal {
   height: 45px;
   transform: translateY(0);
   transition: transform 0.4s ease;
+  filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.624))
 }
 
 .active {
@@ -78,3 +79,7 @@ ion-modal {
   filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.51));
 }
 
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+}
