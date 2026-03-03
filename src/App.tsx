@@ -49,8 +49,6 @@ import '@ionic/react/css/display.css';
 /* import '@ionic/react/css/palettes/dark.class.css'; */
 // import '@ionic/react/css/palettes/dark.system.css'; ***********
 
-/* Theme variables */
-import './theme/variables.css';
 import './App.css';
 
 import Mapa from './pages/MapaReact';
@@ -384,7 +382,10 @@ const AppContent: React.FC = () => {
         </IonModal>
         <IonModal
           isOpen={showModalChatbot}
-          onIonModalDidDismiss={() => setModalChatbot(false)}
+          onIonModalDidDismiss={() => {
+            setModalChatbot(false);
+            setDesignSelected('mapa');
+          }}
           onWillPresent={() => {
             StatusBar.setStyle({ style: Style.Light });
           }}
@@ -470,7 +471,10 @@ const AppContent: React.FC = () => {
           onWillDismiss={() => {
             StatusBar.setStyle({ style: Style.Dark });
           }}
-          onIonModalDidDismiss={() => setModalReportar(false)}
+          onIonModalDidDismiss={() => {
+            setModalReportar(false);
+            setDesignSelected('mapa');
+          }}
         >
           <ModalPageReportar setModalReportar={setModalReportar} setDesignSelected={setDesignSelected} />
         </IonModal>

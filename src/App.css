@@ -90,10 +90,10 @@ ion-fab-button {
 }
 
 ion-fab.fabBottom {
-  margin-bottom: calc(70px + env(safe-area-inset-bottom));
+  margin-bottom: calc(90px + env(safe-area-inset-bottom));
 }
 ion-fab.fabTop {
-  margin-bottom: calc(140px + env(safe-area-inset-bottom));
+  margin-bottom: calc(165px + env(safe-area-inset-bottom));
 }
 
 ion-fab.fabTop ion-fab-button {

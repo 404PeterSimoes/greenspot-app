@@ -410,11 +410,11 @@ const Mapa: React.FC<Props> = ({
         ref={mapRef}
         initialViewState={{
           latitude: 38.96373575159655,
-          longitude: -8.525892398242028,
-          zoom: 14.12,
+          longitude: -8.527892398242028,
+          zoom: 13.5,
         }}
         style={{ width: '100%', height: '100%' }}
-        mapStyle={mapStyle ? 'mapbox://styles/mapbox/streets-v12' : 'mapbox://styles/mapbox/standard-satellite'}
+        mapStyle={mapStyle ? 'mapbox://styles/mapbox/standard-satellite' : 'mapbox://styles/mapbox/streets-v12'}
         attributionControl={false}
       >
         {arrayEcopontos.map(
