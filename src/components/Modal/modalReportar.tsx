@@ -188,6 +188,7 @@ Utilizador: ${profile ? profile.name : 'Sem sessão iniciada'}`,
             expand="block"
             onClick={sendEmail}
             disabled={!problema.Problema || (problema.Problema === 'outro' && !problema.OutroProblema)}
+            style={{marginBottom: '15px'}}
           >
             Enviar
           </IonButton>

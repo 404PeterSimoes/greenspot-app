@@ -14,10 +14,12 @@ import {
   IonHeader,
   IonAvatar,
   IonRippleEffect,
+  IonFab,
+  IonFabButton,
 } from '@ionic/react';
 import { useState, useContext, useEffect, useRef } from 'react';
 
-import { locationOutline, filter, helpOutline } from 'ionicons/icons';
+import { locationOutline, filter, helpOutline, mapOutline, locateOutline } from 'ionicons/icons';
 import recycleIcon from './assets/recycle.svg';
 
 /* Core CSS required for Ionic components to work properly */
@@ -115,7 +117,8 @@ const AppContent: React.FC = () => {
       setModalReportar(false);
       setModalDirecoes(false);
       setFollowDirection(false);
-      //setModalReportar(false);
+      setModalChatbot(false);
+      setModalReportar(false);
       setRemoveCameraTiltTrigger((t) => t + 1);
     });
   });
@@ -202,6 +205,9 @@ const AppContent: React.FC = () => {
   // Trigger para remover o tilt do mapa quando modalEcoSelecionado fecha por gesture
   const [removeCameraTiltTrigger, setRemoveCameraTiltTrigger] = useState(0);
 
+  // Style do mapa
+  const [mapStyle, setMapStyle] = useState(false);
+
   // Função para transformar corretamente a distância entre o user e o ecoponto
   const stringDistanciaFuncao = (distance: number) => {
     if (distance <= 1000) {
@@ -284,6 +290,9 @@ const AppContent: React.FC = () => {
           </div>
         </div>
 
+        {/*
+        // Desativado por agora
+
         <IonAvatar
           onClick={() => {
             setModalAccount(true);
@@ -295,7 +304,7 @@ const AppContent: React.FC = () => {
             referrerPolicy="no-referrer"
             src={profile ? profile.avatar_url : 'https://ionicframework.com/docs/img/demos/avatar.svg'}
           />
-        </IonAvatar>
+        </IonAvatar> 
 
         <IonModal
           isOpen={showModalAccount}
@@ -305,7 +314,35 @@ const AppContent: React.FC = () => {
           }}
         >
           <ModalPageAccount />
-        </IonModal>
+        </IonModal>*/}
+
+        <IonFab className="fabTop" slot="fixed" vertical="bottom" horizontal="end">
+          <IonFabButton
+            onClick={() => {
+              if (canClickMapa) {
+                setFlyUserLocTrigger((t) => t + 1);
+
+                // Não ser possível clicar muito rápido
+                setCanClickMapa(false);
+                setTimeout(() => {
+                  setCanClickMapa(true);
+                }, 1000);
+              }
+            }}
+          >
+            <IonIcon icon={locateOutline}></IonIcon>
+          </IonFabButton>
+        </IonFab>
+
+        <IonFab className="fabBottom" slot="fixed" vertical="bottom" horizontal="end">
+          <IonFabButton
+            onClick={() => {
+              setMapStyle(!mapStyle);
+            }}
+          >
+            <IonIcon icon={mapOutline}></IonIcon>
+          </IonFabButton>
+        </IonFab>
 
         <IonModal
           isOpen={showModalEcopontos}
@@ -447,6 +484,7 @@ const AppContent: React.FC = () => {
                 followDirection={followDirection}
                 refreshDirection={refreshDirection}
                 setRefreshDirection={setRefreshDirection}
+                mapStyle={mapStyle}
               />
             </div>
           </IonTab>

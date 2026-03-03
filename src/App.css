@@ -62,7 +62,7 @@ ion-modal {
   height: 45px;
   transform: translateY(0);
   transition: transform 0.4s ease;
-  filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.624))
+  filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.624));
 }
 
 .active {
@@ -82,4 +82,20 @@ ion-modal {
 .ripple-parent {
   position: relative;
   overflow: hidden;
+}
+
+ion-fab-button {
+  --background: rgb(237, 237, 237);
+  --color: rgb(100, 100, 100);
+}
+
+ion-fab.fabBottom {
+  margin-bottom: calc(70px + env(safe-area-inset-bottom));
+}
+ion-fab.fabTop {
+  margin-bottom: calc(140px + env(safe-area-inset-bottom));
+}
+
+ion-fab.fabTop ion-fab-button {
+  --color: #164a00;
 }

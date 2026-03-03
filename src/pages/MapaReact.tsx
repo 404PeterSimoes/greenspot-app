@@ -35,6 +35,7 @@ interface Props {
   followDirection: boolean;
   refreshDirection: boolean;
   setRefreshDirection: (value: boolean) => void;
+  mapStyle: boolean;
 }
 
 const Mapa: React.FC<Props> = ({
@@ -46,6 +47,7 @@ const Mapa: React.FC<Props> = ({
   followDirection,
   refreshDirection,
   setRefreshDirection,
+  mapStyle,
 }) => {
   const {
     arrayEcopontos,
@@ -412,8 +414,7 @@ const Mapa: React.FC<Props> = ({
           zoom: 14.12,
         }}
         style={{ width: '100%', height: '100%' }}
-        //mapStyle="mapbox://styles/mapbox/streets-v9"
-        mapStyle="mapbox://styles/mapbox/standard-satellite"
+        mapStyle={mapStyle ? 'mapbox://styles/mapbox/streets-v12' : 'mapbox://styles/mapbox/standard-satellite'}
         attributionControl={false}
       >
         {arrayEcopontos.map(
