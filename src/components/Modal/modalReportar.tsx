@@ -33,11 +33,6 @@ interface ProblemaProps {
   OutroProblema: string | undefined | null;
 }
 
-interface CoordenadasProps {
-  Lat: number | undefined;
-  Lon: number | undefined;
-}
-
 const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelected }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
   const { profile } = useContext(AccountContext);
@@ -47,8 +42,6 @@ const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelecte
     Problema: undefined,
     OutroProblema: undefined,
   });
-
-  //useEffect(() => alert(problema.Photo), [problema]);
 
   const sendEmail = async () => {
     try {
@@ -69,9 +62,7 @@ Freguesia: ${selectedEcoponto?.Freguesia}
 Coordenadas:
 - Latitude: ${selectedEcoponto?.Latitude}
 - Longitude: ${selectedEcoponto?.Longitude}
-------------------------------------------------
-
-Utilizador: ${profile ? profile.name : 'Sem sessão iniciada'}`,
+------------------------------------------------`,
         ...(photo && {
           attachments: [
             {

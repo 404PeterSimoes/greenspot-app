@@ -81,6 +81,8 @@ import ModalPageAccount from './components/Modal/modalAccount';
 import ModalPageDirecoes from './components/Modal/modalDirecoes';
 import ModalPageReportar from './components/Modal/modalReportar';
 
+import useMapStyle from './hooks/storageMapStyle';
+
 // Colocar mapa no principal, não usar outras paginas, pagina principal (Mapa) sempre em load
 // Ion-Modals irão estão integrados noutras pastas mas trazidas para o App.tsx
 
@@ -206,7 +208,7 @@ const AppContent: React.FC = () => {
   const [removeCameraTiltTrigger, setRemoveCameraTiltTrigger] = useState(0);
 
   // Style do mapa
-  const [mapStyle, setMapStyle] = useState(false);
+  const { mapStyle, updateMapStyle } = useMapStyle();
 
   // Função para transformar corretamente a distância entre o user e o ecoponto
   const stringDistanciaFuncao = (distance: number) => {
@@ -337,7 +339,7 @@ const AppContent: React.FC = () => {
         <IonFab className="fabBottom" slot="fixed" vertical="bottom" horizontal="end">
           <IonFabButton
             onClick={() => {
-              setMapStyle(!mapStyle);
+              updateMapStyle(!mapStyle);
             }}
           >
             <IonIcon icon={mapOutline}></IonIcon>
