@@ -57,7 +57,7 @@ export const usePhotoGallery = () => {
 
     // save file URI in state
     setPhoto({
-      webviewPath: Capacitor.convertFileSrc(fileUri.uri),
+      webviewPath: isPlatform('hybrid') ? Capacitor.convertFileSrc(selectedPhoto.webPath!) : selectedPhoto.webPath!,
       filePath: fileUri.uri,
       fileName: fileName,
     });
