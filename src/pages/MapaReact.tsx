@@ -297,9 +297,9 @@ const Mapa: React.FC<Props> = ({
           'line-cap': 'round',
         },
         paint: {
-          'line-color': '#0062ff',
+          'line-color': 'rgb(0, 255, 47)',
           'line-width': 5,
-          'line-opacity': 0.75,
+          'line-opacity': 1,
         },
       });
     }

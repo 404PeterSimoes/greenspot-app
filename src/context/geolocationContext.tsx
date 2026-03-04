@@ -20,7 +20,6 @@ export const GeolocationProvider: React.FC<{ children: React.ReactNode }> = ({ c
   //useEffect(() => setPosition({ lat: 39.07816347970216, lng: -8.505462853182044 }), []);
   
   // Inicia o watchPosition ao abrir a App 
-
   useEffect(() => {
     let watchId: string | null = null;
 
