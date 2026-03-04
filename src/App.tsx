@@ -80,6 +80,7 @@ import ModalPageDirecoes from './components/Modal/modalDirecoes';
 import ModalPageReportar from './components/Modal/modalReportar';
 
 import useMapStyle from './hooks/storageMapStyle';
+import SplashScreen from './pages/SplashScreen';
 
 // Colocar mapa no principal, não usar outras paginas, pagina principal (Mapa) sempre em load
 // Ion-Modals irão estão integrados noutras pastas mas trazidas para o App.tsx
@@ -571,14 +572,19 @@ const AppContent: React.FC = () => {
   );
 };
 
-const App: React.FC = () => (
-  <AccountProvider>
-    <EcopontosProvider>
-      <GeolocationProvider>
-        <AppContent />
-      </GeolocationProvider>
-    </EcopontosProvider>
-  </AccountProvider>
-);
+const App: React.FC = () => {
+  const [showSplash, setShowSplash] = useState(true);
+  return (
+    <AccountProvider>
+      <EcopontosProvider>
+        <GeolocationProvider>
+          {/*Splash screen nos primeiros segundos*/}
+          {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
+          <AppContent />
+        </GeolocationProvider>
+      </EcopontosProvider>
+    </AccountProvider>
+  );
+};
 
 export default App;

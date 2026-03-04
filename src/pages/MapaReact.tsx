@@ -297,7 +297,7 @@ const Mapa: React.FC<Props> = ({
           'line-cap': 'round',
         },
         paint: {
-          'line-color': 'rgb(0, 255, 47)',
+          'line-color': 'rgb(0, 212, 39)',
           'line-width': 5,
           'line-opacity': 1,
         },
@@ -363,8 +363,6 @@ const Mapa: React.FC<Props> = ({
   useEffect(() => {
     if (followDirection && position && mapRef.current) {
       mapRef.current.flyTo({
-        pitch: 0,
-        bearing: 0,
         center: [position.lng, position.lat],
         zoom: 16.5,
         padding: 0,
