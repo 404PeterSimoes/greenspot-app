@@ -34,6 +34,9 @@ import {
   trashBinOutline,
   trashOutline,
   trash,
+  compassOutline,
+  alert,
+  alertCircle,
 } from 'ionicons/icons';
 
 import './modalEcoSelecionado.css';
@@ -127,8 +130,8 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({
                 className="ecoSelecionado"
                 onClick={() => modalReportar(true)}
               >
-                <IonIcon slot="start" src={trash} />
-                Reportar problema
+                <IonIcon slot="start" src={alertCircle} />
+                <span style={{fontSize: '11px'}}>Reportar problema</span>
               </IonButton>
             </IonCol>
           </IonRow>
