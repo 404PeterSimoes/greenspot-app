@@ -21,7 +21,6 @@ div.formatacao {
 }
 .oleao {
   background-color: rgb(213, 119, 68);
-  width: 225px;
 }
 .pilhao {
   background-color: rgb(191, 56, 56);
@@ -29,6 +28,10 @@ div.formatacao {
 
 .desativado {
   background-color: rgb(183, 183, 183);
+}
+
+.oleao1 {
+  width: 225px;
 }
 
 div.containerCima {

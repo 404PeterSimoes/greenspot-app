@@ -135,7 +135,7 @@ const ModalPageResiduos: React.FC = () => {
                       Oleao: !prev.Oleao,
                     }));
                   }}
-                  className={`${residuosPretendidos.Oleao ? 'formatacao oleao' : 'formatacao desativado'} ion-activatable ripple-parent`}
+                  className={`oleao1 ${residuosPretendidos.Oleao ? 'formatacao oleao' : 'formatacao desativado'} ion-activatable ripple-parent`}
                 >
                   {residuosPretendidos.Oleao && (
                     <IonIcon size="large" icon={residuosPretendidos.Oleao ? checkmarkOutline : undefined} />
