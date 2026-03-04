@@ -1,0 +1,8 @@
+colocar spinner infinito caso internet nao conectar (@capacitor/network)
+e caso nao haja fetch dos ecopontos
+
+colocar conta google
+
+editar ecopontos pela aplicacao
+
+email para enviar reportes a dar fetch pelo supabase 
