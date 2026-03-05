@@ -82,7 +82,6 @@ const ModalPageChatbot: React.FC<Props> = ({ messages, setMessages, setModalChat
         model: 'gpt-4o-mini',
         prompt: {
           id: 'pmpt_69a602da74508197b9d5780831d08ad605c62581dcc3e361',
-          version: '9',
         },
         input: userMsg.content, // só a mensagem do utilizador
       });

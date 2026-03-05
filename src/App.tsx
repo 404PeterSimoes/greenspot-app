@@ -258,7 +258,7 @@ const AppContent: React.FC = () => {
     setAiMessages([
       {
         role: 'assistant',
-        content: `Olá! Sou o assistente de IA da <span style='color:rgb(0, 109, 9)'><b>GreenSpot</b></span>. <br /><br />Qual é o resíduo que pretendes depositar?`,
+        content: `Olá! Sou o assistente de IA da <span style='color:rgb(0, 109, 9)'><b>GreenSpot</b></span>. <br /><br />Qual é o resíduo que pretende depositar?`,
       },
     ]);
   }, []);
