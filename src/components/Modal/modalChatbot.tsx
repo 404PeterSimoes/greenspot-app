@@ -16,7 +16,6 @@ import {
   IonBackButton,
 } from '@ionic/react';
 import React, { useState, useEffect, useRef } from 'react';
-import { openaiClient } from '../../services/openaiClient';
 import { Keyboard, KeyboardResize } from '@capacitor/keyboard';
 import './modalChatbot.css';
 import { PluginListenerHandle } from '@capacitor/core';
@@ -78,15 +77,18 @@ const ModalPageChatbot: React.FC<Props> = ({ messages, setMessages, setModalChat
     setIsTyping(true);
 
     try {
-      const res = await openaiClient.responses.create({
-        model: 'gpt-4o-mini',
-        prompt: {
-          id: 'pmpt_69a602da74508197b9d5780831d08ad605c62581dcc3e361',
-        },
-        input: userMsg.content, // só a mensagem do utilizador
+      // Chamada à Edge Function no Supabase e espera pela resposta da OpenAI API executada pela Edge Function
+      const res = await fetch('https://xrjuiwoasyziszupqwlt.supabase.co/functions/v1/openai-chatbot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userMsg.content,
+        }),
       });
+
       // Obter o texto da resposta
-      const content = res.output_text || '';
+      const data = await res.json();
+      const content = data.output[0].content[0].text || '';
 
       setMessages((prev) => [...prev, { role: 'assistant', content }]);
     } catch (err) {
