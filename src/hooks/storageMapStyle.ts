@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Preferences } from '@capacitor/preferences';
 
 const useMapStyle = () => {
-  //const [mapStyle, setMapStyle] = useState('mapbox://styles/mapbox/standard-satellite');
   const [mapStyle, setMapStyle] = useState(false);
 
   // Carrega define o estado ao abrir a aplicação

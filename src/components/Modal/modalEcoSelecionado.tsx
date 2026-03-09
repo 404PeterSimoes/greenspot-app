@@ -23,21 +23,7 @@ import imgVidro from '../../assets/vidro.png';
 import imgOleao from '../../assets/oleao.png';
 import imgPilhao from '../../assets/pilhao.png';
 
-import {
-  carOutline,
-  walk,
-  bicycle,
-  bicycleOutline,
-  walkOutline,
-  car,
-  compass,
-  trashBinOutline,
-  trashOutline,
-  trash,
-  compassOutline,
-  alert,
-  alertCircle,
-} from 'ionicons/icons';
+import { compass, alertCircle } from 'ionicons/icons';
 
 import './modalEcoSelecionado.css';
 import { GeolocationContext } from '../../context/geolocationContext';
@@ -103,7 +89,7 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({
               <IonCol style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
                 <div className="section">
                   <span style={{ color: 'rgba(0, 0, 0, 0.655)' }}>Distância:</span>
-                  <span style={{ textAlign: 'center', fontSize: '20px' /*fontWeight:'bold'*/ }}>
+                  <span style={{ textAlign: 'center', fontSize: '20px' }}>
                     {stringDistancia(objectDataDirecoes.walk.distance)}
                   </span>
                 </div>
@@ -131,7 +117,7 @@ const ModalPageEcoSelecionado: React.FC<Props> = ({
                 onClick={() => modalReportar(true)}
               >
                 <IonIcon slot="start" src={alertCircle} />
-                <span style={{fontSize: '11px'}}>Reportar problema</span>
+                <span style={{ fontSize: '11px' }}>Reportar problema</span>
               </IonButton>
             </IonCol>
           </IonRow>

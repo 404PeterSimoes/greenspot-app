@@ -3,11 +3,6 @@ import {
   IonHeader,
   IonToolbar,
   IonPage,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonToggle,
-  IonSpinner,
   IonGrid,
   IonRow,
   IonCol,
@@ -15,9 +10,9 @@ import {
   IonTitle,
   IonRippleEffect,
 } from '@ionic/react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import './modalResiduos.css';
-import { checkmarkOutline, closeOutline } from 'ionicons/icons';
+import { checkmarkOutline } from 'ionicons/icons';
 import { EcopontosContext } from '../../context/ecopontosContext';
 
 const ModalPageResiduos: React.FC = () => {

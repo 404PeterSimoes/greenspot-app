@@ -134,7 +134,7 @@ const ModalPageDirecoes: React.FC<Props> = ({
                     onClick={() => setFollowDirection(false)}
                   >
                     <IonIcon src={arrowForwardOutline} slot="start" />
-                    <span style={{fontSize: '13px'}}>Deixar de Seguir</span>
+                    <span style={{ fontSize: '13px' }}>Deixar de Seguir</span>
                   </IonButton>
                 ) : (
                   <IonButton

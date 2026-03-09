@@ -38,17 +38,6 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* import '@ionic/react/css/palettes/dark.always.css'; */
-/* import '@ionic/react/css/palettes/dark.class.css'; */
-// import '@ionic/react/css/palettes/dark.system.css'; ***********
-
 import './App.css';
 
 import Mapa from './pages/MapaReact';
@@ -58,8 +47,7 @@ import ModalPageChatbot from './components/Modal/modalChatbot';
 import ModalPageEcoSelecionado from './components/Modal/modalEcoSelecionado';
 
 import { EcopontosContext, EcopontosProvider } from './context/ecopontosContext';
-import { GeolocationProvider, GeolocationContext } from './context/geolocationContext';
-import { AccountContext, AccountProvider } from './context/accountContext';
+import { GeolocationProvider } from './context/geolocationContext';
 
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { Capacitor } from '@capacitor/core';
@@ -75,40 +63,18 @@ setupIonicReact();
 import { NavigationBar } from '@capgo/capacitor-navigation-bar';
 
 import { authService } from './services/auth';
-import ModalPageAccount from './components/Modal/modalAccount';
 import ModalPageDirecoes from './components/Modal/modalDirecoes';
 import ModalPageReportar from './components/Modal/modalReportar';
 
 import useMapStyle from './hooks/storageMapStyle';
 import SplashScreen from './pages/SplashScreen';
 
-// Colocar mapa no principal, não usar outras paginas, pagina principal (Mapa) sempre em load
-// Ion-Modals irão estão integrados noutras pastas mas trazidas para o App.tsx
-
-// https://ionicframework.com/docs/api/modal#controller-modals
-
 const AppContent: React.FC = () => {
+  // Definir barras do sistema
   useEffect(() => {
     NavigationBar.setNavigationBarColor({ color: 'TRANSPARENT', darkButtons: true });
     StatusBar.setStyle({ style: Style.Dark });
   }, []);
-
-  const initializeApp = async () => {
-    await authService.initializeSocialLogin();
-  };
-
-  useEffect(() => {
-    initializeApp();
-  }, []);
-
-  /*
-  authService.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_IN') {
-      console.log('User signed in:', session.user);
-    } else if (event === 'SIGNED_OUT') {
-      console.log('User signed out');
-    }
-  });*/
 
   // Código a executar quando botão back do Hardware é clicado
   document.addEventListener('ionBackButton', (event: any) => {
@@ -127,7 +93,6 @@ const AppContent: React.FC = () => {
   const [designSelected, setDesignSelected] = useState('mapa');
 
   const [showModalChatbot, setModalChatbot] = useState(false);
-  const [showModalAccount, setModalAccount] = useState(false);
   const [showModalReportar, setModalReportar] = useState(false);
 
   const [canClickMapa, setCanClickMapa] = useState(true);
@@ -148,10 +113,7 @@ const AppContent: React.FC = () => {
     setModalDirecoes,
   } = useContext(EcopontosContext);
 
-  const { position } = useContext(GeolocationContext)!;
-
-  const { profile } = useContext(AccountContext);
-
+  // Função para fechar todos os modals
   const closeModals = () => {
     setModalEcopontos(false);
     setModalResiduos(false);
@@ -159,7 +121,6 @@ const AppContent: React.FC = () => {
     setModalEcoSelecionado(false);
     setCallShowModalEcoSelecionado(false);
     setModalDirecoes(false);
-    setModalAccount(false);
     setFollowDirection(false);
     setModalReportar(false);
     setTimeout(() => setSelectedEcoponto(null), 150);
@@ -173,7 +134,6 @@ const AppContent: React.FC = () => {
       setModalEcopontos(false);
       setModalResiduos(false);
       setModalChatbot(false);
-      setModalAccount(false);
       setDesignSelected('mapa');
 
       setTimeout(() => {
@@ -193,7 +153,6 @@ const AppContent: React.FC = () => {
       !showModalChatbot &&
       !showModalEcoSelecionado &&
       !callShowModalEcoSelecionado &&
-      !showModalAccount &&
       !showModalDirecoes
     )
       return true;
@@ -290,32 +249,6 @@ const AppContent: React.FC = () => {
             {residuosPretendidos.Pilhao && <img style={{ marginRight: '-7px' }} src={imgPilhao} />}
           </div>
         </div>
-
-        {/*
-        // Desativado por agora
-
-        <IonAvatar
-          onClick={() => {
-            setModalAccount(true);
-            setDesignSelected('');
-          }}
-          className={`avatarMain containerAvatar ${showModalEcoSelecionado || showModalDirecoes ? 'active' : ''}`}
-        >
-          <img
-            referrerPolicy="no-referrer"
-            src={profile ? profile.avatar_url : 'https://ionicframework.com/docs/img/demos/avatar.svg'}
-          />
-        </IonAvatar> 
-
-        <IonModal
-          isOpen={showModalAccount}
-          onDidDismiss={() => {
-            setModalAccount(false);
-            if (showModalAccount) setDesignSelected('mapa');
-          }}
-        >
-          <ModalPageAccount />
-        </IonModal>*/}
 
         <IonFab className="fabTop" slot="fixed" vertical="bottom" horizontal="end">
           <IonFabButton
@@ -453,8 +386,6 @@ const AppContent: React.FC = () => {
           backdropDismiss={false}
           expandToScroll={false}
           handle={true}
-          //backdropBreakpoint={1} // nunca ativa o backdrop
-          //style={{ height: '400px' }}
         >
           <ModalPageEcoSelecionado
             stringDistancia={stringDistanciaFuncao}
@@ -505,7 +436,7 @@ const AppContent: React.FC = () => {
 
                 if (canClickMapa) {
                   // Voar para a localização atual caso nenhum modal estiver aberto, quando tab "Mapa" for clicado
-                  if (verificarTudoFechado() /* && position*/) {
+                  if (verificarTudoFechado()) {
                     setFlyUserLocTrigger((t) => t + 1);
 
                     // Não ser possível clicar muito rápido
@@ -575,15 +506,13 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
   return (
-    <AccountProvider>
-      <EcopontosProvider>
-        <GeolocationProvider>
-          {/*Splash screen nos primeiros segundos*/}
-          {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
-          <AppContent />
-        </GeolocationProvider>
-      </EcopontosProvider>
-    </AccountProvider>
+    <EcopontosProvider>
+      <GeolocationProvider>
+        {/*Splash screen nos primeiros segundos*/}
+        {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
+        <AppContent />
+      </GeolocationProvider>
+    </EcopontosProvider>
   );
 };
 

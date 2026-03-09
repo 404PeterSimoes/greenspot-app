@@ -18,8 +18,8 @@ export const GeolocationProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   // Para testes locais onde não há GPS:
   //useEffect(() => setPosition({ lat: 39.07816347970216, lng: -8.505462853182044 }), []);
-  
-  // Inicia o watchPosition ao abrir a App 
+
+  // Inicia o watchPosition ao abrir a App
   useEffect(() => {
     let watchId: string | null = null;
 
@@ -86,7 +86,5 @@ export const GeolocationProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   }
 
-  return (
-    <GeolocationContext.Provider value={{ position /*, getCurrentLocation*/ }}>{children}</GeolocationContext.Provider>
-  );
+  return <GeolocationContext.Provider value={{ position }}>{children}</GeolocationContext.Provider>;
 };

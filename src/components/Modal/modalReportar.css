@@ -7,7 +7,7 @@ ion-button.galleryButton {
   --border-color: rgb(0, 109, 9);
   --border-style: solid;
   --border-width: 1px;
-  --color: rgb(0, 109, 9)
+  --color: rgb(0, 109, 9);
 }
 
 ion-button.sendButton {

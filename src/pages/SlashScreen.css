@@ -17,7 +17,7 @@
 }
 
 ion-spinner.splash {
-    width: 40px;
-    height: 40px;
-    --color: rgb(0, 109, 9)
+  width: 40px;
+  height: 40px;
+  --color: rgb(0, 109, 9);
 }

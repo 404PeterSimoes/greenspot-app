@@ -23,13 +23,10 @@ export const usePhotoGallery = () => {
     });
   };
 
-  /** ---------------------------
-   * Pick a photo from the gallery
-   * --------------------------- */
   const pickPhotoFromGallery = async () => {
     const selectedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Uri,
-      source: CameraSource.Photos, // open gallery
+      source: CameraSource.Photos, // abrir galeria
       quality: 90,
     });
 
@@ -42,20 +39,17 @@ export const usePhotoGallery = () => {
 
     const base64Data = await blobToBase64(blob);
 
-    // save to temporary cache directory
     await Filesystem.writeFile({
       path: fileName,
       data: base64Data,
       directory: Directory.Cache,
     });
 
-    // get real file URI
     const fileUri = await Filesystem.getUri({
       directory: Directory.Cache,
       path: fileName,
     });
 
-    // save file URI in state
     setPhoto({
       webviewPath: isPlatform('hybrid') ? Capacitor.convertFileSrc(selectedPhoto.webPath!) : selectedPhoto.webPath!,
       filePath: fileUri.uri,

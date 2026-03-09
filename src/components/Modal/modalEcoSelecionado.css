@@ -1,4 +1,3 @@
-
 .section {
   display: flex;
   flex-direction: column;
@@ -24,5 +23,5 @@ h4.selecionadoMorada {
 }
 
 ion-button.ecoSelecionado {
-  --background: rgb(0, 109, 9)
+  --background: rgb(0, 109, 9);
 }

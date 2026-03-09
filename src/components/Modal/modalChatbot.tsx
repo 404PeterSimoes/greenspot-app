@@ -18,7 +18,6 @@ import {
 import React, { useState, useEffect, useRef } from 'react';
 import { Keyboard, KeyboardResize } from '@capacitor/keyboard';
 import './modalChatbot.css';
-import { PluginListenerHandle } from '@capacitor/core';
 
 interface Props {
   messages: { role: 'user' | 'assistant'; content: string }[];

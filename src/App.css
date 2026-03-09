@@ -1,13 +1,8 @@
 :root {
   color-scheme: light;
-  /*--ion-color-primary: #2e7e00; É ESTE*/
   --ion-color-primary: #164a00;
 }
-/*
-ion-tab-bar {
-    --background: #3fd400;
-}
-*/
+
 ion-tab-bar {
   --background: rgb(237, 237, 237);
   height: 68px;

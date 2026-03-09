@@ -18,7 +18,7 @@ const SplashScreen = ({ onFinish }: { onFinish: () => void }) => {
 
   return (
     <div className={`splash ${fadeOut ? 'fade-out' : ''}`}>
-      <IonSpinner className='spash' name='circular' />
+      <IonSpinner className="spash" name="circular" />
     </div>
   );
 };

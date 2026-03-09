@@ -8,7 +8,6 @@ import { EcopontosContext } from '../context/ecopontosContext';
 import { GeolocationContext } from '../context/geolocationContext';
 import { Feature, GeoJsonProperties, Geometry, LineString } from 'geojson';
 import mapboxgl, { MercatorCoordinate } from 'mapbox-gl';
-//import { forwardRef, useImperativeHandle } from 'react';
 
 interface Props {
   flyToUserLocation: number;
@@ -232,6 +231,7 @@ const Mapa: React.FC<Props> = ({
   const [geometryCarro, setGeometryCarro] = useState<LineString | null>(null);
   const [geometryBicicleta, setGeometryBicicleta] = useState<LineString | null>(null);
 
+  // Função para conseguir rota a pé
   const getRouteAndar = async (start: number[], end: number[]) => {
     const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
 
@@ -245,6 +245,7 @@ const Mapa: React.FC<Props> = ({
     setObjectDataDirecoes({ ...initialDirecoes, walk: { distance: data.distance, duration: data.duration } });
   };
 
+  // Função para conseguir rota de carro
   const getRouteCarro = async (start: number[], end: number[]) => {
     const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
 
@@ -258,6 +259,7 @@ const Mapa: React.FC<Props> = ({
     setObjectDataDirecoes((prev) => ({ ...prev, car: { distance: data.distance, duration: data.duration } }));
   };
 
+  // Função para conseguir rota de bicicleta
   const getRouteBicicleta = async (start: number[], end: number[]) => {
     const url = `https://api.mapbox.com/directions/v5/mapbox/cycling/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&overview=full&access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
 
@@ -271,6 +273,7 @@ const Mapa: React.FC<Props> = ({
     setObjectDataDirecoes((prev) => ({ ...prev, cycle: { distance: data.distance, duration: data.duration } }));
   };
 
+  // Função para desenhar linha de rota no mapa
   const setRouteMap = (data: LineString) => {
     const geojson: Feature<LineString> = {
       type: 'Feature',

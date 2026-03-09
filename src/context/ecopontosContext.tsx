@@ -100,7 +100,7 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
     Vidro: false,
     Oleao: false,
     Pilhao: false,
-  }); // um objeto
+  });
 
   async function fetchEcopontos() {
     const { data, error } = await supabase.from('table_ecopontos').select('*').order('Codigo', { ascending: true });
@@ -121,7 +121,6 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
   }, []);
 
   function updateEcopontosResiduos() {
-  
     if (showModalDirecoes && selectedEcoponto) {
       const novoArrayEcopontos = arrayEcopontos.map((eco) => {
         return {
@@ -129,7 +128,7 @@ export const EcopontosProvider: React.FC<{ children: ReactNode }> = ({ children 
           Mostrar: selectedEcoponto.Codigo === eco.Codigo,
         };
       });
-      
+
       setEcopontos(novoArrayEcopontos);
       return;
     }
