@@ -21,7 +21,6 @@ import './modalReportar.css';
 import { camera, cameraOutline, image, imageOutline, close, colorFill, send } from 'ionicons/icons';
 import { EmailComposer } from 'capacitor-email-composer';
 import { ExceptionCode } from '@capacitor/core';
-import { AccountContext } from '../../context/accountContext';
 
 interface Props {
   setModalReportar: (value: boolean) => void;
@@ -35,7 +34,6 @@ interface ProblemaProps {
 
 const ModalPageReportar: React.FC<Props> = ({ setModalReportar, setDesignSelected }) => {
   const { selectedEcoponto } = useContext(EcopontosContext);
-  const { profile } = useContext(AccountContext);
   const { pickPhotoFromGallery, photo, deletePhoto } = usePhotoGallery();
 
   const [problema, setProblema] = useState<ProblemaProps>({
