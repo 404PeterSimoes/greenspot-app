@@ -77,7 +77,7 @@ const ModalPageChatbot: React.FC<Props> = ({ messages, setMessages, setModalChat
 
     try {
       // Chamada à Edge Function no Supabase e espera pela resposta da OpenAI API executada pela Edge Function
-      const res = await fetch('https://xrjuiwoasyziszupqwlt.supabase.co/functions/v1/openai-chatbot', {
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/openai-chatbot`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
