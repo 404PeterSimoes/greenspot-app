@@ -31,7 +31,7 @@ div.formatacao {
 }
 
 .oleao1 {
-  width: 225px;
+  min-width: 200px;
 }
 
 div.containerCima {
