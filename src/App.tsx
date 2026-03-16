@@ -62,7 +62,6 @@ setupIonicReact();
 
 import { NavigationBar } from '@capgo/capacitor-navigation-bar';
 
-import { authService } from './services/auth';
 import ModalPageDirecoes from './components/Modal/modalDirecoes';
 import ModalPageReportar from './components/Modal/modalReportar';
 
@@ -482,7 +481,7 @@ const AppContent: React.FC = () => {
               <IonIcon icon={filter} />
               <IonLabel>Filtros</IonLabel>
             </IonTabButton>
-
+            {/*
             <IonTabButton
               tab="home"
               className={designSelected === 'chatbot' ? 'designSelectedClass' : ''}
@@ -495,7 +494,7 @@ const AppContent: React.FC = () => {
             >
               <IonIcon icon={helpOutline} />
               <IonLabel>Chatbot</IonLabel>
-            </IonTabButton>
+            </IonTabButton>*/}
           </IonTabBar>
         </IonTabs>
       </IonContent>
