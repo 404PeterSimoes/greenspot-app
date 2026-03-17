@@ -10,9 +10,9 @@ import {
   IonTitle,
   IonRippleEffect,
 } from '@ionic/react';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './modalResiduos.css';
-import { checkmarkOutline } from 'ionicons/icons';
+import { checkmarkOutline, closeOutline } from 'ionicons/icons';
 import { EcopontosContext } from '../../context/ecopontosContext';
 
 const ModalPageResiduos: React.FC = () => {
