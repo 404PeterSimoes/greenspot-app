@@ -88,10 +88,25 @@ import SplashScreen from './pages/SplashScreen';
 // https://ionicframework.com/docs/api/modal#controller-modals
 
 const AppContent: React.FC = () => {
+  // Style do mapa
+  const { mapStyle, updateMapStyle } = useMapStyle();
+
   useEffect(() => {
     NavigationBar.setNavigationBarColor({ color: 'TRANSPARENT', darkButtons: true });
-    StatusBar.setStyle({ style: Style.Dark });
+    setStatusBarColor();
   }, []);
+
+  useEffect(() => {
+    setStatusBarColor();
+  }, [mapStyle]);
+
+  const setStatusBarColor = () => {
+    if (mapStyle) {
+      StatusBar.setStyle({ style: Style.Dark });
+    } else {
+      StatusBar.setStyle({ style: Style.Light });
+    }
+  }
 
   const initializeApp = async () => {
     await authService.initializeSocialLogin();
@@ -205,9 +220,6 @@ const AppContent: React.FC = () => {
 
   // Trigger para remover o tilt do mapa quando modalEcoSelecionado fecha por gesture
   const [removeCameraTiltTrigger, setRemoveCameraTiltTrigger] = useState(0);
-
-  // Style do mapa
-  const { mapStyle, updateMapStyle } = useMapStyle();
 
   // Função para transformar corretamente a distância entre o user e o ecoponto
   const stringDistanciaFuncao = (distance: number) => {
@@ -395,7 +407,7 @@ const AppContent: React.FC = () => {
             StatusBar.setStyle({ style: Style.Light });
           }}
           onWillDismiss={() => {
-            StatusBar.setStyle({ style: Style.Dark });
+            setStatusBarColor();
           }}
         >
           <ModalPageChatbot
@@ -474,7 +486,7 @@ const AppContent: React.FC = () => {
             StatusBar.setStyle({ style: Style.Light });
           }}
           onWillDismiss={() => {
-            StatusBar.setStyle({ style: Style.Dark });
+            setStatusBarColor();
           }}
           onDidDismiss={(e) => {
             const { role } = e.detail;
