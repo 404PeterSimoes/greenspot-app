@@ -98,7 +98,7 @@ const Mapa: React.FC<Props> = ({
         center: [position.lng, position.lat],
         pitch: 0,
         bearing: 0,
-        zoom: 15.5,
+        zoom: 16.5,
         duration: 3000,
         essential: true,
         offset: [0, -10],
@@ -364,7 +364,7 @@ const Mapa: React.FC<Props> = ({
     if (followDirection && position && mapRef.current) {
       mapRef.current.flyTo({
         center: [position.lng, position.lat],
-        zoom: 16.5,
+        zoom: 17.5,
         padding: 0,
         offset: [0, -180],
         duration: 500,
