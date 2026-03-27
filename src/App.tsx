@@ -383,9 +383,13 @@ const AppContent: React.FC = () => {
         </IonModal>
         <IonModal
           isOpen={showModalChatbot}
-          onIonModalDidDismiss={() => {
-            setModalChatbot(false);
-            setDesignSelected('mapa');
+          onDidDismiss={(e) => {
+            const { role } = e.detail;
+
+            if (role === 'backdrop' || role === 'gesture') {
+              setDesignSelected('mapa');
+              setModalChatbot(false);
+            }
           }}
           onWillPresent={() => {
             StatusBar.setStyle({ style: Style.Light });
@@ -472,9 +476,13 @@ const AppContent: React.FC = () => {
           onWillDismiss={() => {
             StatusBar.setStyle({ style: Style.Dark });
           }}
-          onIonModalDidDismiss={() => {
-            setModalReportar(false);
-            setDesignSelected('mapa');
+          onDidDismiss={(e) => {
+            const { role } = e.detail;
+
+            if (role === 'backdrop' || role === 'gesture') {
+              setDesignSelected('mapa');
+              setModalReportar(false);
+            }
           }}
         >
           <ModalPageReportar setModalReportar={setModalReportar} setDesignSelected={setDesignSelected} />
